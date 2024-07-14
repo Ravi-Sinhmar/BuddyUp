@@ -115,7 +115,7 @@ friendPic.src = `/img/${localData.profilePic}`;
   // Send MSG to Socket
 
     // const socket = new WebSocket(`ws://localhost:8080?tid=${tid}`);
-    const socket = new WebSocket(`wss://msg-io.onrender.com/?tid=${tid}`);
+    const socket = new WebSocket('wss://msg-io.onrender.com');
 
     socket.addEventListener('open',(event)=>{
       alert("socket open")

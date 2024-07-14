@@ -1,0 +1,83 @@
+[
+    {
+      "name": "Alice Walker",
+      "password": "hashed_password_1", // Replace with actual hashed password
+      "profilePic": "profile_pic_1.jpg",
+      "friends": [],
+      "friendsDetails": [],
+      "createdAt": "2024-06-27T10:00:00.000Z"
+    },
+    {
+      "name": "Bob Dylan",
+      "password": "hashed_password_2", // Replace with actual hashed password
+      "profilePic": "profile_pic_2.jpg",
+      "friends": [],
+      "friendsDetails": [],
+      "createdAt": "2024-06-27T10:01:00.000Z"
+    },
+    {
+      "name": "Charles Dickens",
+      "password": "hashed_password_3", // Replace with actual hashed password
+      "profilePic": "profile_pic_3.jpg",
+      "friends": [],
+      "friendsDetails": [],
+      "createdAt": "2024-06-27T10:02:00.000Z"
+    },
+    {
+      "name": "Emily Brontë",
+      "password": "hashed_password_4", // Replace with actual hashed password
+      "profilePic": "profile_pic_4.jpg",
+      "friends": [],
+      "friendsDetails": [],
+      "createdAt": "2024-06-27T10:03:00.000Z"
+    },
+    {
+      "name": "F. Scott Fitzgerald",
+      "password": "hashed_password_5", // Replace with actual hashed password
+      "profilePic": "profile_pic_5.jpg",
+      "friends": [],
+      "friendsDetails": [],
+      "createdAt": "2024-06-27T10:04:00.000Z"
+    },
+    {
+      "name": "Gabriel García Márquez",
+      "password": "hashed_password_6", // Replace with actual hashed password
+      "profilePic": "profile_pic_6.jpg",
+      "friends": [],
+      "friendsDetails": [],
+      "createdAt": "2024-06-27T10:05:00.000Z"
+    },
+    {
+      "name": "Harper Lee",
+      "password": "hashed_password_7", // Replace with actual hashed password
+      "profilePic": "profile_pic_7.jpg",
+      "friends": [],
+      "friendsDetails": [],
+      "createdAt": "2024-06-27T10:06:00.000Z"
+    },
+    {
+      "name": "Isabel Allende",
+      "password": "hashed_password_8", // Replace with actual hashed password
+      "profilePic": "profile_pic_8.jpg",
+      "friends": [],
+      "friendsDetails": [],
+      "createdAt": "2024-06-27T10:07:00.000Z"
+    },
+    {
+      "name": "J.R.R. Tolkien",
+      "password": "hashed_password_9", // Replace with actual hashed password
+      "profilePic": "profile_pic_9.jpg",
+      "friends": [],
+      "friendsDetails": [],
+      "createdAt": "2024-06-27T10:08:00.000Z"
+    },
+    {
+      "name": "Khaled Hosseini",
+      "password": "hashed_password_10", // Replace with actual hashed password
+      "profilePic": "profile_pic_10.jpg",
+      "friends": [],
+      "friendsDetails": [],
+      "createdAt": "2024-06-27T10:09:00.000Z"
+    }
+  ]
+  

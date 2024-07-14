@@ -1,0 +1,81 @@
+<style>
+  #dialog {
+    transform: translate(-120%);
+  }
+
+  #dialog.visible{
+   transform: translate(0);
+  }
+ 
+</style>
+<div id="dialog" class=" fixed left-5 right-5 bottom-1/2 translate-y-1/2 justify-center items-center transition-transform duration-700 ease-out hover:scale-100">
+  <div class="flex flex-col justify-between items-center bg-blh py-4 border-2 border-blb rounded-lg gap-5 px-4">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-16 h-16 bg-blm p-3 rounded-full">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
+    </svg>
+    <p class="text-sm flex justify-center items-center text-center">
+      Enter your friend's "UID" and start a chat. "UID" is just like a temporary
+      Mobile Number
+    </p>
+    <div class="flex flex-col gap-4 items-center justify-center">
+      <input id="userId" placeholder="Your Friend ID" class="outline-none bg-blm text-sm py-3 text-blt rounded-md px-2 w-11/12 border border-black focus:ring-1 ring-blt" type="text" name="" id="" />
+      <div class="flex justify-end items-center gap-4 w-11/12">
+        <button id="Cancel" class="px-3 py-2 bg-blm rounded-md border border-blt text-blt text-xs">
+          Cancel
+        </button>
+        <button id="Request" class="px-3 py-2 bg-blf rounded-md border border-blt text-blm text-xs">
+          Request
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+  const sendRequest = document.getElementById('Request');
+  const cancel = document.getElementById('Cancel');
+  const dialog = document.getElementById('dialog');
+    const userId = document.getElementById('userId')
+    sendRequest.addEventListener('click',  (event) => {
+    event.preventDefault(); // Prevent default form submission
+    const id = userId.value.trim();
+    // Assuming you have the data to send in a variable named 'content'
+    const content ={id}
+    fetch ('/messages', {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify(content)
+    }).then((data) => {
+       return data.json();
+    }).then((data)=>{
+
+     if(data.message){
+        console.log("added")
+        window.location.href = '/success'
+     }
+})
+.catch(err => console.log(err))
+})
+  
+// for diaog box animation 
+setTimeout(() => {
+   dialog.classList.add('visible');
+}, 500);
+  
+    cancel.addEventListener('click', () => {
+      dialog.classList.remove('visible');});
+
+   //  const bt = document.getElementById('bt');
+   //  const dialog = document.getElementById('dialog');
+   //  bt.addEventListener('click', () => {
+   //    dialog.classList.add('visible');
+   //  });
+   //  cancel.addEventListener('click', () => {
+   //    dialog.classList.remove('visible');
+   //  });
+</script>

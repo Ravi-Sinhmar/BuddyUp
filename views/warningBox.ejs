@@ -1,0 +1,250 @@
+<style>
+    #warningBox{
+      z-index: 0;
+    }
+    #warningBox.visible {
+        transform: scale(1);
+        z-index: 11;
+    }
+</style>
+
+
+<main id="warningBox"
+    class="fixed top-0 left-0 bottom-32 right-0 px-4 flex items-center justify-center scale-0 transition-transform duration-700 ease-in-out">
+    <div
+        class="flex w-full flex-col items-center justify-center gap-6 bg-blm rounded-lg px-4 py-16">
+        <div class="flex justify-center self-center items-center">
+            <img id="warningIcon" src="/img/success.png" alt=""
+                class="w-20 h-20 rounded-full" />
+        </div>
+        <div id="data" uid=""
+            class="flex flex-col justify-center items-center px-2">
+            <h1 id="warningHeading" class="text-xl text-black font-[600]">
+                Warning</h1>
+            <p id="warningMessage" class="text-blt text-sm text-center">
+                This is the message
+            </p>
+        </div>
+        <div id="bothBtn" class="flex justify-between items-center gap-4">
+            <button id="warningLeftBtn"
+                class="bg-blm text-black px-4 py-2 rounded-lg border border-blb text-sm">
+                Cancel
+            </button>
+            <button id="warningRightBtn"
+                class="bg-blf text-blm px-6 py-2 rounded-lg border border-blb text-sm">
+                Continue
+            </button>
+        </div>
+    </div>
+</main>
+
+<script>
+    const warningBox = document.getElementById("warningBox");
+    let warningIcon = document.getElementById("warningIcon");
+    let warningHeading = document.getElementById("warningHeading");
+    let warningMessage = document.getElementById("warningMessage");
+    let warningLeftBtn = document.getElementById("warningLeftBtn");
+    let warningRightBtn = document.getElementById("warningRightBtn");
+    let bothBtn = document.getElementById("bothBtn");
+
+
+    // -------------------------------------------custom Boxes ---------------------
+    // Boxes need to use to show the result status 
+    // success box
+    const successBox = (heading, message, href) => {
+        loaderOut();
+        warningIcon.src = "/img/success.png";
+        warningHeading.innerText = heading;
+        warningMessage.innerText = message;
+        warningRightBtn.innerText = "Close";
+        warningRightBtn.classList.add('bg-blf');
+        warningRightBtn.classList.remove('bg-blin');
+        warningRightBtn.classList.remove('bg-ble');
+        warningLeftBtn.classList.add("hidden");
+        blurIn();
+        warningBox.classList.add("visible");
+        warningRightBtn.addEventListener('click', (event) => {
+            warningBox.classList.remove("visible");
+            blurOut();
+
+            window.location.href = `${href}`;
+        });
+    }
+
+    // info Box
+    const infoBox = (heading, message, href) => {
+        loaderOut();
+        warningIcon.src = "/img/info.png";
+        warningHeading.innerText = heading;
+        warningMessage.innerText = message;
+        warningRightBtn.innerText = "Close";
+        warningRightBtn.classList.remove('bg-blf');
+        warningRightBtn.classList.add('bg-blin');
+        warningRightBtn.classList.remove('bg-ble');
+        warningLeftBtn.classList.add("hidden");
+        blurIn();
+        warningBox.classList.add("visible");
+        warningRightBtn.addEventListener('click', (event) => {
+            warningBox.classList.remove("visible");
+            blurOut();
+            window.location.href = `${href}`;
+        });
+    }
+
+
+    // notFound box 
+    const notFoundBox = (heading, message, href) => {
+        loaderOut();
+        warningIcon.src = "/img/404.png";
+        blurIn();
+        warningHeading.innerText = heading;
+        warningMessage.innerText = message;
+        warningRightBtn.innerText = "Close";
+        warningRightBtn.classList.remove('bg-blf');
+        warningRightBtn.classList.add('bg-blin');
+        warningRightBtn.classList.remove('bg-ble');
+        warningLeftBtn.classList.add("hidden");
+        warningBox.classList.add("visible");
+        warningRightBtn.addEventListener('click', (event) => {
+            warningBox.classList.remove("visible");
+            blurOut();
+            window.location.href = `${href}`;
+        });
+    }
+
+
+        // fail box 
+        const fail = (heading, message, href) => {
+        loaderOut();
+        warningIcon.src = "/img/fail.png";
+        blurIn();
+        warningHeading.innerText = heading;
+        warningMessage.innerText = message;
+        warningRightBtn.innerText = "Try Again";
+        warningRightBtn.classList.remove('bg-blf');
+        warningRightBtn.classList.remove('bg-blin');
+        warningRightBtn.classList.add('bg-ble');
+        warningLeftBtn.classList.add("hidden");
+        warningBox.classList.add("visible");
+        warningRightBtn.addEventListener('click', (event) => {
+            warningBox.classList.remove("visible");
+            blurOut();
+            window.location.href = `${href}`;
+        });
+    }
+
+            // networkerror box 
+            const networkEr = (heading, message, href) => {
+        loaderOut();
+        warningIcon.src = "/img/network.png";
+        blurIn();
+        warningHeading.innerText = heading;
+        warningMessage.innerText = message;
+        warningRightBtn.innerText = "Try Again";
+        warningRightBtn.classList.remove('bg-blf');
+        warningRightBtn.classList.add('bg-blin');
+        warningRightBtn.classList.remove('bg-ble');
+        warningLeftBtn.classList.add("hidden");
+        warningBox.classList.add("visible");
+        warningRightBtn.addEventListener('click', (event) => {
+            warningBox.classList.remove("visible");
+            blurOut();
+            window.location.href = `${href}`;
+        });
+    }
+    // -----------------------------------------done with custom boxes ------------
+
+
+
+
+
+
+
+    // logout handlers
+    const logoutFun = () => {
+        warningIcon.src = "/img/info.png";
+        warningHeading.innerText = "Warning";
+        warningMessage.innerText =
+            "Before you logout make sure you remamber your UID otherwise you will never be able to login again";
+        warningRightBtn.classList.add("bg-blin");
+        warningBox.classList.add("visible");
+        blurIn();
+        warningRightBtn.innerText = "Logout";
+        warningLeftBtn.addEventListener("click", (event) => {
+            warningBox.classList.remove("visible");
+            blurOut();
+        });
+        warningRightBtn.addEventListener("click", (event) => {
+            warningBox.classList.remove('visible');
+            loaderIn();
+            fetch("/logout", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json; charset=UTF-8",
+                        Accept: "application/json",
+                    },
+                })
+                .then((data) => {
+                    return data.json();
+                })
+                .then((jsonData) => {
+                    if (jsonData.status === "success") {
+                        successBox("Successfully Logged Out",
+                            "You can login any time by using UID & Password",
+                            "/")
+                       
+                    } else {
+                       fail("Failed","You are not logged out please try again",'/profile')
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        });
+    };
+
+    // Delete Account
+    const deleteAccountFun = () => {
+        warningIcon.src = "/img/delete.png";
+        warningHeading.innerText = "Warning";
+        warningMessage.innerText =
+            "It will Permanently Delete your account. And your all chats, friends everything will be delted";
+        warningRightBtn.classList.add("bg-ble");
+        warningBox.classList.add("visible");
+        blurIn();
+        warningRightBtn.innerText = "Delete Account";
+        warningLeftBtn.addEventListener("click", (event) => {
+            warningBox.classList.remove("visible");
+            blurOut();
+        });
+
+        warningRightBtn.addEventListener("click", (event) => {
+            warningBox.classList.remove("visible");
+            loaderIn();
+            fetch("/delete", {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json; charset=UTF-8",
+                        Accept: "application/json",
+                    },
+                })
+                .then((data) => {
+                    return data.json();
+                })
+                .then((jsonData) => {
+                    if (jsonData.status === "success") {
+                      successBox("Account Deleted Successfully","Your all data , chats , friends has been removed from platform","/")
+                        
+                    } else {
+                        fail("Fail to Delete Account","Your account is not deleted yet. Please try again","/profile")
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        });
+    };
+
+
+    //   Blocked Users 
+</script>

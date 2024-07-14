@@ -1,0 +1,116 @@
+<style>
+    
+/* Dailog Box */
+
+#blurBox{
+    background-color: rgb(35, 71, 169);
+    /* background: #000; */
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    transition:opacity;
+    transition-duration: 700ms;
+    transition-timing-function: ease-in-out;
+    position: fixed;
+    opacity: 0;
+    z-index: -1; 
+    
+   
+}
+#blurBox.visible{
+    opacity: 0.7;
+    z-index: 11;
+}
+#blurBox.visible2{
+    opacity: 0.7;
+    z-index: 30;
+}
+
+
+/* Status box  */
+#statusBox{
+    left: 20px;
+    right: 20px;
+    top: 15%;
+    bottom: 45%;
+    transition:transform;
+    transform: translateX(120%);
+    transition-duration: 700ms;
+    transition-timing-function: ease-in-out;
+    position: fixed;
+    z-index: 0;
+}
+
+#statusBox.visible{
+        transform: translateX(0);
+        z-index: 11;
+}
+
+/* Loader */
+
+
+
+/* Input Box */
+#inputBox{
+    left: 20px;
+    right: 20px;
+    top: 15%;
+    bottom: 45%;
+    transition:transform;
+    transform: translateX(120%);
+    transition-duration: 700ms;
+    transition-timing-function: ease-in-out;
+    position: fixed;
+    z-index: 0;
+}
+
+#inputBox.visible{
+    transform: translateX(0);
+    z-index: 10;
+}
+</style>
+
+
+<div id="blurBox"></div>
+
+
+<script>
+    
+
+
+// Blur Box 
+const blurBox = document.getElementById('blurBox');
+const blurIn = ()=>{
+  
+blurBox.classList.add('visible');
+
+}
+const blurOut = ()=>{
+        blurBox.classList.remove('visible');
+   
+}
+
+const blurIn2 = ()=>{
+    blurBox.classList.add('visible2');
+    }
+
+const blurOut2 = ()=>{
+    blurBox.classList.remove('visible2');
+
+}
+  
+// Status Box
+const statusBox = document.getElementById('statusBox');
+const statusIfr = ()=>{
+    statusBox.classList.add('visible');
+}
+const statusOfr = ()=>{
+    statusBox.classList.remove('visible');
+}
+
+
+
+
+
+</script>

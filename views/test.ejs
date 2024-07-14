@@ -1,0 +1,102 @@
+
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      position: relative; /* Make the outer div the reference point */
+  width: 100vw;
+  height: 100vh;
+    }
+
+    .container {
+      padding: 20px;
+    }
+
+    .modal {
+    padding: 2px;
+    width: fit-content;
+    height: fit-content;
+    background: #000;
+      background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+      justify-content: center;
+      align-items: center;
+      transition: opacity 0,3s ease-out;
+      opacity: 0; /* Initially hidden */
+      position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center the element */
+  background-color: transparent;
+  border-radius: 5px;
+    }
+
+    .modal.visible {
+      opacity: 1; /* Make visible on button click */
+    }
+
+    .modal-content {
+      background-color: white;
+      padding: 20px;
+      border-radius: 5px;
+      animation: modal-show 0.4s ease-out forwards; /* Smooth appearance animation */
+      
+    }
+
+    @keyframes modal-show {
+      from { transform: scale(0); } /* Start from small size */
+      to { transform: scale(1); } /* Grow to full size */
+    }
+
+   
+
+    .modal button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background-color: #333;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body class="flex flex-col justify-center items-center relative ">
+  <div  style="background-color: grey;" class="container flex flex-col justify-center items-center h-screen w-screen">
+    <h1 class="text-sm">This is some random content on the page.</h1>
+    <p class="text-sm">Lorem i Pelleneget ipsum placerat, quis fringilla turpis conlamcorper rutrum quis quis vel turpis.</p>
+    <button style="cursor: pointer;" type="button"  id="openmodal"><svg  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 text-white">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+      </svg>
+      </button>
+  </div>
+  <div  id="modal" class="modal hidden absolute top-20 left-1/2 w-36 h-36 bg-blue-700">
+    <div class="modal-content bg-green-600">
+      <h2>Modal Dialog</h2>
+      <p>This is the content of the modal dialog.</p>
+      <button id="close-modal">Close Modal</button>
+    </div>
+  </div>
+
+  <script>
+   
+    const openModalButton = document.getElementById('openmodal');
+    const modal = document.getElementById('modal');
+    const closeModalButton = document.getElementById('close-modal');
+    openModalButton.addEventListener('click', () => {
+      modal.classList.remove('hidden');
+      modal.classList.add('visible');
+    });
+
+    closeModalButton.addEventListener('click', () => {
+      modal.classList.remove('visible');
+      modal.classList.add('hidden');
+    });
+
+    // Prevent clicking behind the modal when it's visible
+    modal.addEventListener('click', (event) => {
+      if (event.target === modal) {
+        modal.classList.remove('visible');
+        modal.classList.add('hidden');
+      }
+    });
+  </script>

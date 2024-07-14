@@ -1,0 +1,43 @@
+
+<div id="loader" class="fixed rounded-full bg-black  hidden left-1/2 right-1/2  top-10 " >
+    <svg id=""
+class="w-12 h-12 bg-black rounded-full -translate-x-1/2"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+    <radialGradient id="a12" cx=".66" fx=".66" cy=".3125" fy=".3125"
+        gradientTransform="scale(1.5)">
+        <stop offset="0" stop-color="#F8F8F8"></stop>
+        <stop offset=".3" stop-color="#F8F8F8" stop-opacity=".9"></stop>
+        <stop offset=".6" stop-color="#F8F8F8" stop-opacity=".6"></stop>
+        <stop offset=".8" stop-color="#F8F8F8" stop-opacity=".3"></stop>
+        <stop offset="1" stop-color="#F8F8F8" stop-opacity="0"></stop>
+    </radialGradient>
+    <circle transform-origin="center" fill="none " stroke="url(#a12)"
+        stroke-width="15" stroke-linecap="square"
+        stroke-dasharray="200 1000" stroke-dashoffset="0" cx="100" cy="100"
+        r="70">
+        <animateTransform type="rotate" attributeName="transform"
+            calcMode="spline" dur="0.7" values="360;0" keyTimes="0;1"
+            keySplines="0 0 1 1" repeatCount="indefinite">
+        </animateTransform>
+    </circle>
+    <circle transform-origin="center" fill="none" opacity=".2"
+        stroke="#F8F8F8" stroke-width="15" stroke-linecap="round" cx="100"
+        cy="100" r="70"></circle>
+    </svg>
+</div>
+
+<script>
+    // Loader 
+const loader = document.getElementById('loader');
+const loaderIn = ()=>{
+    loader.classList.remove('hidden');
+    loader.classList.remove('-z-10');
+    loader.classList.add('z-50');
+}
+const loaderOut = ()=>{
+    loader.classList.add('hidden');
+    loader.classList.remove('z-50');
+    loader.classList.add('-z-10');
+
+}
+</script>

@@ -1,0 +1,170 @@
+<style>
+#picBox{
+  transform: translateY(130%);
+  z-index: 1;
+}
+#picBox.visible{
+z-index: 11;
+transform: translateY(0);
+}
+#cut{
+  z-index: 20;
+ 
+}
+#cut.visible{
+  bottom: 50px;
+}
+
+
+</style>
+<div id="cut" class="fixed -bottom-64 bg-blm  px-3 py-1 text-xs rounded-md transition-all duration-700 ease-in-out left-1/2 -translate-x-1/2 z-50 text-black">
+  Cancel
+ </div>
+<div id="blurBox"></div>
+  <div id="picBox" class="flex flex-col bg-blh border-2 border-blb  fixed border-b-8 border-b-blh px-1  left-2 right-2  top-28 bottom-20    rounded-lg overflow-y-scroll overflow-auto transition-transform ease-in-out duration-700 ">
+   
+    <div class="  text-blm flex   justify-between items-center  py-4 px-4  rounded-md ">
+        <img src="/img/35.png" alt="" class="aspect-square w-1/2 profileImg   rounded-full border-2 border-blm ">
+        <img src="/img/dp.png" alt="" class="aspect-square w-1/2 profileImg   rounded-full border-2 border-blm ">
+    </div>
+    <!-- row 1 -->
+    <div class="  text-blm flex   justify-between gap-4 items-center  py-1 px-4  rounded-md ">
+        <img src="/img/21.png" alt="" class="aspect-square w-1/2 profileImg  rounded-full border-2 border-blm ">
+        <img src="/img/22.png" alt="" class="aspect-square w-1/2 profileImg  rounded-full border-2 border-blm ">
+    </div>
+    <!-- row 1 -->
+    <div class="  text-blm flex   justify-between gap-4 items-center  py-1 px-4  rounded-md ">
+        <img src="/img/1.png" alt="" class="aspect-square w-1/2 profileImg  rounded-full border-2 border-blm ">
+        <img src="/img/2.png" alt="" class="aspect-square w-1/2 profileImg  rounded-full border-2 border-blm ">
+    </div>
+    <!-- row 2 -->
+    <div class="  text-blm flex   justify-between gap-4 items-center  py-1 px-4  rounded-md ">
+        <img src="/img/3.png" alt="" class="aspect-square w-1/2 profileImg  rounded-full border-2 border-blm ">
+        <img src="/img/4.png" alt="" class="aspect-square w-1/2 profileImg  rounded-full border-2 border-blm ">
+      </div>
+   
+    <!-- row 3-->
+    <div class="  text-blm flex   justify-between gap-4 items-center  py-1 px-4  rounded-md ">
+        <img src="/img/5.png" alt="" class="aspect-square w-1/2 profileImg  rounded-full border-2 border-blm ">
+        <img src="/img/6.png" alt="" class="aspect-square w-1/2 profileImg  rounded-full border-2 border-blm ">
+     
+    </div>
+    <!-- row 4-->
+    <div class="  text-blm flex   justify-between gap-4 items-center  py-1 px-4  rounded-md ">
+        <img src="/img/7.png" alt="" class="aspect-square w-1/2 profileImg  rounded-full border-2 border-blm ">
+        <img src="/img/8.png" alt="" class="aspect-square w-1/2 profileImg  rounded-full border-2 border-blm ">
+    </div>
+    <!-- row 5  -->
+   
+   
+    <!-- row 2 -->
+    <div class="  text-blm flex   justify-between gap-4 items-center  py-1 px-4  rounded-md ">
+        <img src="/img/23.png" alt="" class="aspect-square w-1/2 profileImg  rounded-full border-2 border-blm ">
+        <img src="/img/24.png" alt="" class="aspect-square w-1/2 profileImg  rounded-full border-2 border-blm ">
+     
+    </div>
+    <!-- row 3-->
+    <div class="  text-blm flex   justify-between gap-4 items-center  py-1 px-4  rounded-md ">
+        <img src="/img/25.png" alt="" class="aspect-square w-1/2 profileImg  rounded-full border-2 border-blm ">
+        <img src="/img/26.png" alt="" class="aspect-square w-1/2 profileImg  rounded-full border-2 border-blm ">
+      
+    </div>
+    <!-- row 4-->
+    <div class="  text-blm flex   justify-between gap-4 items-center  py-1 px-4  rounded-md ">
+        <img src="/img/27.png" alt="" class="aspect-square w-1/2 profileImg  rounded-full border-2 border-blm ">
+        <img src="/img/28.png" alt="" class="aspect-square w-1/2 profileImg  rounded-full border-2 border-blm ">
+     
+    </div>
+    <!-- row 5  -->
+    <div class="  text-blm flex   justify-between gap-4 items-center  py-1 px-4  rounded-md ">
+        <img src="/img/29.png" alt="" class="aspect-square w-1/2 profileImg  rounded-full border-2 border-blm ">
+        <img src="/img/30.png" alt="" class="aspect-square w-1/2 profileImg  rounded-full border-2 border-blm ">
+    
+    </div>
+
+
+
+
+    <!-- row 1 -->
+    <div class="  text-blm flex   justify-between gap-4 items-center  py-1 px-4  rounded-md ">
+        <img src="/img/11.png" alt="" class="aspect-square w-1/2 profileImg  rounded-full border-2 border-blm ">
+        <img src="/img/12.png" alt="" class="aspect-square w-1/2 profileImg  rounded-full border-2 border-blm ">
+     
+    </div>
+    <!-- row 2 -->
+    <div class="  text-blm flex   justify-between gap-4 items-center  py-1 px-4  rounded-md ">
+        <img src="/img/13.png" alt="" class="aspect-square w-1/2 profileImg  rounded-full border-2 border-blm ">
+        <img src="/img/14.png" alt="" class="aspect-square w-1/2 profileImg  rounded-full border-2 border-blm ">
+    </div>
+    <!-- row 3-->
+    <div class="  text-blm flex   justify-between gap-4 items-center  py-1 px-4  rounded-md ">
+        <img src="/img/15.png" alt="" class="aspect-square w-1/2 profileImg  rounded-full border-2 border-blm ">
+        <img src="/img/1.png" alt="" class="aspect-square w-1/2 profileImg  rounded-full border-2 border-blm ">
+    </div>
+    <!-- row 4-->
+    <div class="  text-blm flex   justify-between gap-4 items-center  py-1 px-4  rounded-md ">
+        <img src="/img/16.png" alt="" class="aspect-square w-1/2 profileImg  rounded-full border-2 border-blm ">
+        <img src="/img/17.png" alt="" class="aspect-square w-1/2 profileImg  rounded-full border-2 border-blm ">
+    </div>
+    <!-- row 5  -->
+    <div class="  text-blm flex   justify-between gap-4 items-center  py-1 px-4  rounded-md ">
+        <img src="/img/18.png" alt="" class="aspect-square w-1/2 profileImg  rounded-full border-2 border-blm ">
+        <img src="/img/19.png" alt="" class="aspect-square w-1/2 profileImg  rounded-full border-2 border-blm ">
+    </div>
+
+
+
+    <!-- row 1 -->
+    <div class="  text-blm flex   justify-between gap-4 items-center  py-1 px-4  rounded-md ">
+        <img src="/img/20.png" alt="" class="aspect-square w-1/2 profileImg  rounded-full border-2 border-blm ">
+        <img src="/img/1.png" alt="" class="aspect-square w-1/2 profileImg  rounded-full border-2 border-blm ">
+    </div>
+    <!-- row 2 -->
+    <div class="  text-blm flex   justify-between gap-4 items-center  py-1 px-4  rounded-md ">
+        <img src="/img/31.png" alt="" class="aspect-square w-1/2 profileImg  rounded-full border-2 border-blm ">
+        <img src="/img/32.png" alt="" class="aspect-square w-1/2 profileImg  rounded-full border-2 border-blm ">
+    </div>
+    <!-- row 3-->
+    <div class="  text-blm flex   justify-between gap-4 items-center  py-1 px-4  rounded-md ">
+        <img src="/img/33.png" alt="" class="aspect-square w-1/2 profileImg  rounded-full border-2 border-blm ">
+        <img src="/img/34.png" alt="" class="aspect-square w-1/2 profileImg  rounded-full border-2 border-blm ">
+    </div>
+   
+    <!-- row 5  -->
+    <div class=" text-blm flex   justify-between gap-4 items-center  py-1 px-4  rounded-md ">
+        <img src="/img/9.png" alt="" class="aspect-square w-1/2 profileImg  rounded-full border-2 border-blm ">
+        <img src="/img/10.png" alt="" class="aspect-square w-1/2 profileImg  rounded-full border-2 border-blm ">
+    </div>
+</div>
+
+<script src="/js/blurBox.js"></script>
+<script>
+// url extracting logic
+function extractFilenameFromUrl(url) {
+  
+  if (!url || !url.trim()) {
+    return "";
+  }
+  const parts = url.split("/");
+  const imgName = parts[parts.length - 1];
+  return imgName;
+}
+
+const picBox = document.getElementById('picBox');
+const cut = document.getElementById('cut');
+const profileImg = document.querySelectorAll('.profileImg')
+let newProfilePic = 'default.png'
+profileImg.forEach(el =>{
+el.addEventListener('click',(event)=>{
+  let url = event.target.src;
+  newProfilePic = extractFilenameFromUrl(url);
+  mainProfile.src = `/img/${newProfilePic}`;
+  blurOut();
+  picBox.classList.remove('visible');
+  cut.classList.remove('visible');
+  return newProfilePic;
+})
+});
+  
+</script>
+

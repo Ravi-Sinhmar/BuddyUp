@@ -1,0 +1,65 @@
+<main class="h-svh flex flex-col justify-between bg-blm">
+   
+  <nav class="flex justify-between items-center h-16 w-full px-4 py-4   border-blb text-blm bg-blf ">
+    <div class="flex  items-center   gap-5">
+      <svg id="back" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5">
+        <path fill-rule="evenodd" d="M7.72 12.53a.75.75 0 0 1 0-1.06l7.5-7.5a.75.75 0 1 1 1.06 1.06L9.31 12l6.97 6.97a.75.75 0 1 1-1.06 1.06l-7.5-7.5Z" clip-rule="evenodd" />
+      </svg>
+      <h1 class="font[700] text-xl">Login</h1>
+      
+    </div>
+    <a href="/register"  class=" text-black text-xs bg-blm px-2 py-1 rounded-md font-[500] flex justify-between text-center items-center gap-1">Register<span>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
+      </svg>
+      
+    </span></a>
+  </nav>
+
+
+  <div class="flex flex-col px-4 py-4 gap-1 ">
+    <h1 class="font-[500]">Enter Your UID and Password</h1>
+    <p class="text-xs text-blt">Enter Your UID (Unique ID) & Passoword which you set during reigstration</p>
+</div>
+
+  <form action="/login" method="post" class="flex flex-col justify-between w-full h-full text-sm gap-2 px-4 py-4">
+    <div class="flex flex-col gap-4">
+      <div class="flex flex-col">
+        <label for="uniqueId">Your name</label>
+        <input name="uniqueId" type="text" placeholder="Eg: Ravi Sinhmar" class="  bg-transparent text-blt px-3 py-3 outline-none border border-blt  rounded-lg">
+       
+       </div>
+       
+       <div class="flex flex-col">
+        <label for="password">Enter Password</label>
+        <input name="password"  type="password" placeholder="Eg: MyPass@#1212" class=" bg-transparent text-blt px-3 py-3 outline-none border border-blt   rounded-lg">
+       </div>
+    </div>
+     <button id="login" class="  bg-blf text-blm text-lg font-[500] rounded-md py-3">
+    Login
+    </button>
+    </form>
+
+
+
+
+
+</main>
+
+
+
+
+<script>
+// Use of back button
+const back = document.getElementById('back');
+back.addEventListener('click',(event)=>{
+history.back();
+});
+
+</script>
+
+
+
+
+
+

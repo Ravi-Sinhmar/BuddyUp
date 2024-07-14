@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start Chat</title>
+    <style>
+        .box{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width:100%;
+            height: 100vh;
+            box-sizing: border-box;
+            background: rgb(0, 178, 181);
+        }
+        input{
+            background: white;
+            border: 2px solid black;
+       padding: 1rem;
+       border-radius: 5px;
+      
+       
+        }
+    </style>
+</head>
+<body>
+        
+<input id="checkId" type="text" placeholder="Friend Id" >
+  <button id="checkBtn" onclick="checkId(friendId)">Check Id</button>
+    <script>
+       
+       let inputElement = document.getElementById('checkId');
+       let friendId = "Enter data"
+       inputElement.addEventListener('change' , function(){
+             friendId = this.value;
+        });
+     
+
+       function checkId(id){
+            console.log(id);
+            try {
+                const response = fetch('/chats',{
+                    method:'POST',
+                    headers:{
+                        'Content-Type' : 'application/json'
+                    },
+                    body: JSON.stringify({id:id})
+                });
+                if(!response.ok){
+                    throw new Error(`HTTP error! status : ${response.status}`)
+                }
+                const data = await response.json();
+                if(data){
+                    console.log(`User Found: ${data}`)
+                }
+                else{
+                    console.log("Id not Found");
+                }
+             
+                
+            } catch (error) {
+                console.error(`Error checking ID :${error}`)
+                
+            }
+
+        }
+
+        
+
+
+    </script>
+</body>
+</html>

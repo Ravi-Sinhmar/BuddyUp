@@ -1,0 +1,68 @@
+
+/* Dailog Box */
+
+#blurBox{
+    background-color: rgb(35, 71, 169);
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    transition:opacity;
+    transition-duration: 700ms;
+    transition-timing-function: ease-in-out;
+    position: fixed;
+    opacity: 0;
+    z-index: 0;
+   
+}
+#blurBox.visible{
+    opacity: 0.7;
+    z-index: 10;
+}
+#blurBox.visible2{
+    opacity: 0.7;
+    z-index: 30;
+}
+
+
+/* Status box  */
+#statusBox{
+    left: 20px;
+    right: 20px;
+    top: 15%;
+    bottom: 45%;
+    transition:transform;
+    transform: translateX(120%);
+    transition-duration: 700ms;
+    transition-timing-function: ease-in-out;
+    position: fixed;
+    z-index: 0;
+}
+
+#statusBox.visible{
+        transform: translateX(0);
+        z-index: 12;
+}
+
+/* Loader */
+
+
+
+/* Input Box */
+#inputBox{
+    left: 20px;
+    right: 20px;
+    top: 15%;
+    bottom: 45%;
+    transition:transform;
+    transform: translateX(120%);
+    transition-duration: 700ms;
+    transition-timing-function: ease-in-out;
+    position: fixed;
+    z-index: 0;
+}
+
+#inputBox.visible{
+    transform: translateX(0);
+    z-index: 12;
+}

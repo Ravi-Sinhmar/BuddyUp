@@ -1,0 +1,197 @@
+<main id="wrapper" class="px-3 py-3  bg-blh  font-[400] justify-between items-center ">
+  <nav id=""  class="bg-blm  border-blb rounded-2xl w-full messageId flex justify-between items-center px-4 py-4  ">
+    <div class="flex items-center justify-center gap-4">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+      </svg>
+      <img
+        class="profilePic w-12 h-12 rounded-full"
+        src="/img/dp.png"
+        alt=""
+      />
+      <div class="flex flex-col items-start justify-center gap-0.5">
+        <h1 class="name text-sm text-black font-semibold"><%= name %></h1>
+        <div
+          class=" flex items-center justify-start gap-1 "
+        ><div class="h-2 w-2 bg-blf rounded-full"></div>
+        <p class="text-xs">Active</p>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-col items-center justify-center gap-0.5">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-black more">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z" />
+      </svg>
+    </div>
+  </nav>
+
+<!-- Chats Section -->
+<section id="chatSection" class="">
+<div id="sMsg" class="">
+  <div class="px-2 py-1 flex  gap-1 ">
+ <h1 class="text-sm bg-white  text-blt px-3 py-2 shadow-black shadow-sm rounded-3xl rounded-bl-sm w-11/12 ">My name is Radha, what about you, My name is Radha, what about youMy name is Radha, what about youMy name is Radha, what about youMy name is Radha, what about youMy name is Radha, what about youMy name is Radha, what about youMy name is Radha, what about youMy name is Radha, what about youMy name is Radha, what about you
+ </h1>
+</div>
+</div>
+<div id="sMsg" class="">
+<div class="px-2 py-1 flex  gap-1 ">
+<h1 class="text-sm bg-white  text-blt px-3 py-2 shadow-black shadow-sm rounded-3xl rounded-bl-sm w-11/12 ">My name is Radha, what about you, My name is Radha, what about youMy name is Radha, what about youMy name is Radha, what about youMy name is Radha, what about youMy name is Radha, what about youMy name is Radha, what about youMy name is Radha, what about youMy name is Radha, what about youMy name is Radha, what about you
+</h1>
+</div>
+</div>
+<div id="sMsg" class="">
+<div class="px-2 py-1 flex  gap-1 ">
+<h1 class="text-sm bg-white  text-blt px-3 py-2 shadow-black shadow-sm rounded-3xl rounded-bl-sm w-11/12 ">My name is Radha, what about you, My name is Radha, what about youMy name is Radha, what about youMy name is Radha, what about youMy name is Radha, what about youMy name is Radha, what about youMy name is Radha, what about youMy name is Radha, what about youMy name is Radha, what about youMy name is Radha, what about you
+</h1>
+</div>
+</div>
+<div id="sMsg" class="">
+<div class="px-2 py-1 flex  gap-1 ">
+<h1 class="text-sm bg-white  text-blt px-3 py-2 shadow-black shadow-sm rounded-3xl rounded-bl-sm w-11/12 ">My name is Radha, what about you, My name is Radha, what about youMy name is Radha, what about youMy name is Radha, what about youMy name is Radha, what about youMy name is Radha, what about youMy name is Radha, what about youMy name is Radha, what about youMy name is Radha, what about youMy name is Radha, what about you
+</h1>
+</div>
+</div>
+
+<div id="sMsg" class=" ">
+<div class=" px-2 py-1 flex justify-end gap-1">
+<h1 class="text-sm text-blm px-3 py-2 bg-blf shadow-black shadow-sm rounded-3xl rounded-br-sm w-11/12 ">Hi
+</h1>
+</div>
+</div>
+<div id="sMsg" class=" ">
+<div class=" px-2 py-1 flex justify-end gap-1">
+<h1 class="text-sm text-blm px-3 py-2 bg-blf shadow-black shadow-sm rounded-3xl rounded-br-sm w-11/12 ">Hi
+</h1>
+</div>
+</div>
+<div id="sMsg" class=" ">
+<div class=" px-2 py-1 flex justify-end gap-1">
+<h1 class="text-sm text-blm px-3 py-2 bg-blf shadow-black shadow-sm rounded-3xl rounded-br-sm w-11/12 ">Hi
+</h1>
+</div>
+</div>
+
+
+
+</section>
+
+<!-- Chat write  -->
+<footer id="extraInfo" tid="<%= tid %>"  rid="<%= chatId %>" sid="<%= userId %>" class="text-blm ">
+  <div class="px-2 py-2 rounded-xl  h-14 flex justify-between items-center shadow-md shadow-black  bg-white text-black ps-2 pr-4 gap-2">
+      <textarea rows="1" cols="20" placeholder="Thinking..."   id="sendMsg"  class=" text-black w-9/12  h-10 text-sm outline-none" ></textarea>
+      <div  class="flex justify-between items-center gap-5">
+       <div class="h-6 w-[2px] bg-blb"></div>
+        <svg id="sendBtn" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
+        </svg>
+     </div>
+  </div>
+</footer>
+</main>
+
+
+
+ <script>
+const sendInput = document.getElementById('sendMsg'); // Get the input element
+const chatSection = document.getElementById('chatSection'); // Get the chat section
+const sendButton = document.getElementById('sendBtn'); // Get the send button (image)
+const extraInfo = document.getElementById('extraInfo')
+
+
+
+
+const rid = extraInfo.getAttribute('rid');
+const sid = extraInfo.getAttribute('sid');
+const tid = extraInfo.getAttribute('tid'); 
+
+
+
+
+// Websocket code 
+// Send MSG to Socket
+const socket = new WebSocket(`ws://localhost:8080?tid=${tid}`);
+function sendSocket(){
+let messageContent =  {
+content:sendInput.value,
+rid:rid,
+sid:sid
+}
+messageContent = JSON.stringify(messageContent);
+socket.send(messageContent);
+}
+
+
+
+
+// Function to create and add a new message
+function appendMsg(side, radius, messageData) {
+const message = messageData;
+if (message) {
+  const newMessageDiv = document.createElement('div');
+  newMessageDiv.id = "sMsg";
+  newMessageDiv.classList.add('w-full');
+
+  const messageContentDiv = document.createElement('div');
+  messageContentDiv.classList.add('px-2', 'py-1', 'flex', `${side}`, 'gap-1');
+
+  const messageText = document.createElement('h1');
+  messageText.textContent = message;
+  messageText.classList.add('text-xs', 'bg-white', 'px-3', 'py-2', 'shadow-black', 'shadow-sm','break-words', 'rounded-2xl', `${radius}`, 'max-w-64');
+
+  messageContentDiv.appendChild(messageText);
+  newMessageDiv.appendChild(messageContentDiv);
+  chatSection.appendChild(newMessageDiv);
+  sendInput.value = ''; // Clear the input field
+}
+
+}
+
+
+// scroll to bootom on send or receive the message
+function scrollToSet(){
+chatSection.scrollTop = chatSection.scrollHeight; // Scroll to bottom
+};
+scrollToSet();
+
+
+
+
+// ----------------------------------------------Receiving Data---------------------------------------------
+// Recive MSG from Socket
+function receiveSocket(data){
+const content = data.content
+const senderId = data.senderId;
+return
+}
+
+socket.addEventListener('message',function(event){
+const data = JSON.parse(event.data);
+receiveSocket(data);
+const messageData = data.content
+appendMsg('justify-start','rounded-bl-sm', messageData);
+scrollToSet();
+});
+
+
+
+
+
+// -------------------------------------- Sending Data ------------------------------------------------
+// Event listener for Enter key press
+sendInput.addEventListener('keyup', (event) => {
+if (event.keyCode === 13) {
+  sendSocket();
+const messageData = sendInput.value.trim(); // Get the trimmed message value
+appendMsg('justify-end','rounded-br-sm',messageData);
+scrollToSet()
+}
+});
+
+// Event listener for clicking the send button (image)
+sendButton.addEventListener('click', (event)=>{
+sendSocket();
+const messageData = sendInput.value.trim(); // Get the trimmed message value
+appendMsg('justify-end','rounded-br-sm',messageData);
+scrollToSet()
+});
+ </script>

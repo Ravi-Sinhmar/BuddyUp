@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modal Dialog Box</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      padding: 20px;
+    }
+
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 0.3s ease-in-out;
+      opacity: 0; /* Initially hidden */
+    }
+
+    .modal.visible {
+      opacity: 1; /* Make visible on button click */
+    }
+
+    .modal-content {
+      background-color: white;
+      padding: 20px;
+      border-radius: 5px;
+      animation: modal-show 0.3s ease-in-out forwards; /* Smooth appearance animation */
+    }
+
+    @keyframes modal-show {
+      from { transform: scale(0); } /* Start from small size */
+      to { transform: scale(1); } /* Grow to full size */
+    }
+
+    .modal button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background-color: #333;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div style="background-color: red;" class="container">
+    <h1>This is some random content on the page.</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod odio in risus porta, ut consectetur magna placerat. Maecenas lacinia magna non magna sollicitudin, eget rhoncus odio blandit. Nullam id tortor id risus ullamcorper rutrum quis quis vel turpis. Pellentesque at magna ac lorem aliquam consectetur sed id eget eros. Donec placerat magna eget ipsum placerat, quis fringilla turpis condimentum. Nullam id tortor id risus ullamcorper rutrum quis quis vel turpis.</p>
+    <button style="cursor: pointer;" type="button"  id="open-modal">Open Modal</button>
+  </div>
+
+  <div id="modal" class="modal hidden">
+    <div class="modal-content">
+      <h2>Modal Dialog</h2>
+      <p>This is the content of the modal dialog.</p>
+      <button id="close-modal">Close Modal</button>
+    </div>
+  </div>
+
+  <script>
+    console.log("hlo")
+    const openModalButton = document.getElementById('open-modal');
+    const modal = document.getElementById('modal');
+    const closeModalButton = document.getElementById('close-modal');
+
+    openModalButton.addEventListener('click', () => {
+      console.log('clicked');
+      modal.classList.remove('hidden');
+      modal.classList.add('visible');
+    });
+
+    closeModalButton.addEventListener('click', () => {
+      modal.classList.remove('visible');
+      modal.classList.add('hidden');
+    });
+
+    // Prevent clicking behind the modal when it's visible
+    modal.addEventListener('click', (event) => {
+      if (event.target === modal) {
+        modal.classList.remove('visible');
+        modal.classList.add('hidden');
+      }
+    });
+  </script>
+</body>
+</html>

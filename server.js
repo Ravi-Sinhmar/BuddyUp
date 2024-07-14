@@ -20,6 +20,6 @@ mongoose.connect(process.env.REMOTE_DB_STR).then((conn)=>{
 
   const port = process.env.PORT; // Still keep this line to check for a custom port
 
-  app.listen(port || 3000, () => {
-    console.log(`Server is listening at port ${port || process.env.PORT || 3000}`);
+  app.listen(port || process.env.VERCEL_PORT || 3000, () => {
+    console.log(`Server is listening at port ${port || process.env.VERCEL_PORT || 3000}`);
   });

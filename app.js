@@ -323,7 +323,6 @@ if(uid === receiverId){
 }
   
   console.log(receiverId);
-
   const senderData = {
     state: "received",
     name: req.name,

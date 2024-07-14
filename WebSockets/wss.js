@@ -1,12 +1,11 @@
 // Websockets Setup
 const WS_PORT = process.env.WS_PORT;
-const { json } = require("body-parser");
+
 const { WebSocket, WebSocketServer } = require("ws");
 const wss = new WebSocketServer({ port: WS_PORT });
 const jwt = require("jsonwebtoken");
 const chats = require("./../Models/chats");
 const mongoose = require("mongoose");
-const { map } = require("../app");
 const users = require("../Models/users");
 
 wss.on("listening", () => {

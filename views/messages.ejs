@@ -1,10 +1,7 @@
 
-<%- include('inputDialog.ejs') %>
-
-
 
 <!-- Messagees Content -->
-<main id="wrapper"
+<main id="wrapper" style="z-index: 1;"
     class="  bg-blm z-0  fixed top-0 bottom-0 left-0 right-0  flex flex-col justify-between items-center transition-colors duration-500 ease-in-out ">
     <nav class="px-6 py-5 pt-5 space-y-4  w-full ">
         <div class="flex justify-between items-center">
@@ -137,10 +134,12 @@
         </div>
     </footer>
 </main>
-<%- include('navM') %>
 <%- include('blurBox.ejs') %>
 <%- include('loader.ejs') %>
 <%- include('warningBox.ejs') %>
+<%- include('inputDialog.ejs') %>
+<%- include('navM') %>
+
 
 
 

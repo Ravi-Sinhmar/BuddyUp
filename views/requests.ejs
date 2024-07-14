@@ -34,7 +34,7 @@
           <% if (friendData.length > 0) { %>
            <div class=" bg-blm flex flex-col space-y-3 px-4 fixed top-40 bottom-24 py-2 left-0 right-0 overflow-y-scroll">
             <% friendData.forEach(friend => {  %>
-             <% if (friend.state == "connected") { %>
+             <% if (friend.state == "received") { %>
    
     <div  id="<%= friend.chatId %>"  class=" bg-blh border border-blb rounded-xl requestId flex justify-between items-center px-4 py-4 relative ">
       <div class="flex justify-center gap-2">

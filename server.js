@@ -18,7 +18,7 @@ mongoose.connect(process.env.REMOTE_DB_STR).then((conn)=>{
     console.log("DB not Connected , Some error");
   })
 
-port = process.env.PORT || 5000;
+port = process.env.PORT;
 app.listen(port , ()=>{
     console.log(`Sever is listining at port ${port}`);
 })

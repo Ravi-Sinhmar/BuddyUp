@@ -1,15 +1,15 @@
 // Websockets Setup
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.WS_PORT || 5000;
 
 const { WebSocket, WebSocketServer } = require("ws");
-const wss = new WebSocketServer({ port: PORT });
+const wss = new WebSocketServer({ port: WS_PORT });
 const jwt = require("jsonwebtoken");
 const chats = require("./../Models/chats");
 const mongoose = require("mongoose");
 const users = require("../Models/users");
 
 wss.on("listening", () => {
-  console.log(`Web Sockets are listening on port ${PORT}`);
+  console.log(`Web Sockets are listening on port ${WS_PORT}`);
 });
 
 let checkData = "default";

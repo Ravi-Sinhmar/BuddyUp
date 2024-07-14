@@ -1,5 +1,5 @@
 // Websockets Setup
-const PORT = process.env.WS_PORT || 5000;
+const WS_PORT = process.env.WS_PORT || 5000;
 
 const { WebSocket, WebSocketServer } = require("ws");
 const wss = new WebSocketServer({ port: WS_PORT });

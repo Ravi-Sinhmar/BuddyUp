@@ -26,12 +26,12 @@
   </header>
 
 
-  <% if (!message.length > 0) { %>
-      <div class="tempMsg flex-col flex justify-center items-center w-full h-full ">
+ 
+      <!-- <div id="tempMsg" class=" flex-col flex justify-center items-center w-full h-full ">
         <h1 class="font-[600] text-lg z-10 ">Start Chat Now!</h1>
         <p class=" text-blt font-[500] z-10 text-sm">Say them hi, everyone has one life...</p>
        </div>
-      <% } %>
+       -->
 
   <!-- Mid  -->
  
@@ -87,27 +87,14 @@
 <script>
 const friendName =  document.getElementById('fname');
 const friendPic =  document.getElementById('fprofilePic');
-const tempMsg = document.querySelector('.tempMsg');
+const tempMsg = document.getElementById('tempMsg');
 
 const localData = getLocalData();
 console.log(localData);
 
 friendName.innerHTML = localData.name;
 friendPic.src = `/img/${localData.profilePic}`;
-
-
-
-  function autoReload() {
-    setTimeout(function() {
-      // window.location.reload();
-    }, 3000);
-  }
-
-  // Call the function to start automatic reloading
-  // autoReload();
-</script>
-
-<script>
+ 
   const sendInput = document.getElementById("sendMsg"); // Get the input element
   const chatSection = document.getElementById("chatSection"); // Get the chat section
   const sendButton = document.getElementById("sendBtn"); // Get the send button (image)
@@ -122,11 +109,9 @@ friendPic.src = `/img/${localData.profilePic}`;
   const tid = extraInfo.getAttribute("tid");
   // Websocket code
   // Send MSG to Socket
-    // const socket = new WebSocket(`ws://localhost:3000/?tid=${tid}`);
-    const socket = new WebSocket(`wss://msg-io.onrender.com/?tid=${tid}`);
+    const socket = new WebSocket(`ws://localhost:3000/?tid=${tid}`);
+    // const socket = new WebSocket(`wss://msg-io.onrender.com/?tid=${tid}`);
   
-  
-
 
 
   function sendSocket() {
@@ -215,10 +200,7 @@ friendPic.src = `/img/${localData.profilePic}`;
     const messageData = data.content;
     appendMsg("justify-start", "rounded-bl-sm", messageData);
     scrollToSet();
-    if(!tempMsg.classList.contains('hidden')){
-      tempMsg.classList.add('hidden');
-
-    }
+ 
   });
 
   // -------------------------------------- Sending Data ------------------------------------------------
@@ -233,11 +215,6 @@ friendPic.src = `/img/${localData.profilePic}`;
         scrollToSet();
       }
       sendInput.focus();
-      if(!tempMsg.classList.contains('hidden')){
-      tempMsg.classList.add('hidden');
-
-    }
-
     }
   });
 
@@ -250,9 +227,6 @@ friendPic.src = `/img/${localData.profilePic}`;
       scrollToSet();
     }
     sendInput.focus();
-    if(!tempMsg.classList.contains('hidden')){
-      tempMsg.classList.add('hidden');
-
-    }
+   
   });
 </script>

@@ -1,24 +1,30 @@
 
+//  .env config
+const dotenv = require('dotenv');
+dotenv.config({path: './.env'});
 // Node.js Core Moudles
 const path = require("path");
+
+// Importing  Express Modules + Third Party Modules
+const express = require("express");
+const http = require('http');
+const app = express();
+const port = process.env.PORT ;
+const server = http.createServer(app);
+
+
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const ejsLayouts = require("express-ejs-layouts");
 
-
-const express = require("express");
-const http = require('http');
-const app = express();
-const server = http.createServer(app);
-
-
+// Importing Database connection module 
+const connection = require('./Database/connection');
 
 // Database Models (Total 2 -> users , chats(Used Indexing here))
 const users = require("./Models/users");
 const chats = require("./Models/chats");
-const quotes = require("./Models/quotes");
 
 // Middlewares
 app.use(express.static(path.join(__dirname, "public")));
@@ -30,6 +36,7 @@ app.use(cookieParser());
 app.use(ejsLayouts);
 app.set("layout", "./layouts/main");
 app.set("view engine", "ejs");
+
 // Importing custom Modules (Controllers),Controllers are simple function to do a tasks but defined in other file and using here
 const userRoutes = require("./Routes/userRoutes");
 app.use(userRoutes);
@@ -37,89 +44,187 @@ app.use(userRoutes);
 // Importing custom Middlewares
 const cookieAuth = require("./Middlewares/auth");
 const checkCookies = require("./Middlewares/checkCookies");
-const setCookies = require("./Controllers/setCookies");
 
 
 
-const wsHandler = require('./WebSockets/wsHandlers');
 const WebSocket = require("ws");
-
-
 const wss = new WebSocket.Server({ server });
-wss.on("connection", wsHandler);
 
 
-// Route 1 , /
-app.get("/",checkCookies, (req, res) => {
-  if (req.cookies.token && req.uid) {
-    return res.status(301).redirect("messages");
+// Actually I have set the conversation id of any 2 users by combining their unique is so now in msg form client i get their unique id
+// (sid -> sender id)  and the converstation id (rid -> room id) and getting the id of frined whom we want to send msg (fid -> friend id)
+
+function getFid(rid, sid) {
+  // Check if both rid and sid have the expected lengths
+  if (rid.length !== 48 || sid.length !== 24) {
+    return "Invalid input lengths. rid should be 48 characters, sid should be 24 characters.";
   }
-  res.render("welcome.ejs", { title: "Welcome" });
+
+  // Trim any leading or trailing spaces from rid and sid
+  const trimmedRid = rid.trim();
+  const trimmedSid = sid.trim();
+
+  // Check if the first 24 characters of trimmedRid match trimmedSid
+  if (trimmedRid.slice(0, 24) === trimmedSid) {
+    return trimmedRid.slice(24); // Return remaining characters of rid
+  } else if (trimmedRid.slice(-24) === trimmedSid) {
+    // Check if last 24 characters of rid match sid
+    return trimmedRid.slice(0, 24); // Return first 24 characters of rid
+  } else {
+    return "No matching FID found.";
+  }
+}
+
+//   Global Varables
+// Map to store ws object of every new user start entering in coonection (not specific in chat ), connection means if 20 user using our webiste then all have to store
+// in map to make sure that when their friend text them , we can find him/her from all connected users (which may or may not be his/her friend but
+// just using our website or platfrom (or specificly server))
+const allConnections = new Map();
+
+wss.on("connection", (ws, req) => {
+ 
+  let countIn = 0;
+  // Client side Authentication  and getting user _id --> userId
+  function validateToken(token) {
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+      return decoded.id; // Assuming the user ID is stored in the _id property
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  const token = req.url.split("?tid=")[1];
+  const userId = validateToken(token); // function defined above
+
+  console.log("This is joined time user id " , userId);
+
+  // If validate then this code will execute ---->
+  if (userId) {
+    // storing the socket of user by key as their userId (most imp: Even if this is the same id as user's sid when he/she is sending in every
+    // message , but in this case we extracted from jwt tocken so  that user can't send our somebody else's id in msg and we store that , then
+    // anybody can get anybody's chat , because sid or userId knon to everyone [for more info learn how jwt works])
+
+
+ws.userId = userId;
+    allConnections.set(userId, ws);
+    ws.on("message", async (data) => {
+
+      
+        console.log(`Received message => ${data}`)
+     
+
+      let dataObj = JSON.parse(data);
+    
+      // Extracting data form msgs ->
+      const content = dataObj.content;
+      const rid = dataObj.rid;
+      const sid = dataObj.sid;
+      const rname = dataObj.rname;
+      const sname = dataObj.sname
+      const fid = getFid(rid, sid);
+      
+      console.log("this is chat id",rid);
+
+      // Now we will varify that this user who sent us this msg is the same who we stored in map using thier tocket varification (if same then
+      // send the recived msg to his/her friend whose id is in (fid -> frined id))
+
+      // Checking Reciver id get in msg with reciver id get from db document
+
+    
+        // Firt if to check the valid sender id
+        if (allConnections.has(sid)) {
+          // Here we have checked that sender and revicer are authenicate friends (So store each msg in databse definetly)
+// lets create document 
+let doc = {
+    chatId:rid,
+    sid:sid,
+    fid:fid,
+    content:content,
+    sname:sname,
+    rname:rname 
+}
+
+const newChat =await chats.create(doc);
+console.log(newChat)
+
+          //  2nd if to check weather reciver is present in connection or not
+          if (allConnections.has(fid)) {
+            console.log("In connections");
+            const myws = allConnections.get(fid);
+            if (myws.readyState === WebSocket.OPEN) {
+              console.log("Your Friend is online send any msg ");
+              myws.send(JSON.stringify({ content: content, senderId: sid , sname:sname , rname:rname }));
+            } else {
+              console.log("May or may be online but connected");
+            }
+          } else {
+            console.log("Not In coonection");
+          }
+        } else {
+       return  console.log("Not Authenicated");
+        }
+      
+    });
+  } else {
+    ws.terminate(); // Close connection if authentication fails
+  }
+
+  ws.on("error", (err) => {
+    console.error(`Error from ws.on error ${err}`);
+  });
+
+  ws.on('close' , ()=>{
+    console.log("this is close time userid",userId);
+    allConnections.delete(userId);
+  })
 });
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Route 1 , /
+app.get("/", (req, res) => {
+  res.render("welcome.ejs", { title: "Welcome" });
+});
+
+// testing
+app.get("/var", (req, res) => {
+res.render('chosePic',{title:"Test"});
+});
+
 // Route 2 , /register
-app.get("/register",checkCookies, (req, res) => {
-  if (req.cookies.token && req.uid) {
-    return res.status(301).redirect("messages");
-  }
+app.get("/register", (req, res) => {
+  // if (req.uid.length === 24) {
+  // return res.status(200).render("register", { title: "Register", status:"Important Information",message:"You are already logged In. Do you still want to Register or Skip it", icon:'info.png', left:'Register',right:'Skip'})
+  // }
   return res.status(200).render("register", {
     title: "Register",
     status: "Success",
     message:
       "You have registerd successfully & this is you UID which you can see on profile section",
     icon: "success.png",
+    left: "Copy UID",
     right: "Continue",
     uid: "tempUID",
   });
 });
 
-
-app.get('/quotes',cookieAuth,async(req,res)=>{
-  const myPic = req.profilePic;
-  try {
-    const data = await quotes.find({});
-    const allQuotes = data.map((qData) => ({
-      wName: qData.wName,
-      wPic: qData.wPic,
-      wId: qData.wId , // Set default if profilePic is missing
-      qId: qData._id,
-      qPic: qData.qPic,
-      quote : qData.quote,
-      likes:qData.likes
-    }));
-
-    res.render('quotes.ejs',{title:"Quotes",allQuotes,myPic});
-
-  } catch (error) {
-    console.log(error)
-  
-  }
-
-
-});
-
-app.patch('/quotes',cookieAuth,async(req,res)=>{
-const wId = req.id;
-const wName = req.name;
-const wPic = req.profilePic;
-const qPic = req.body.qPic;
-const likes = 0;
-const quote = req.body.quote;
-const result =await quotes.create({wId ,wName,wPic,likes,quote,qPic})
-console.log(result);
-if(result){
-  res.status(201).json({status:'success',message:'Created'})
-}
-
-});
-
-
-app.get('/q',cookieAuth,(req,res)=>{
-  const myPic = req.profilePic
-res.render('quoteInput.ejs',{title:"Quotes",myPic});
-});
-
+const setCookies = require("./Controllers/setCookies");
+const { count } = require("console");
 
 app.post("/register", async (req, res) => {
   try {
@@ -129,6 +234,7 @@ app.post("/register", async (req, res) => {
     }
     const token = setCookies(user); // Generate token
     res.cookie("token", token, { httpOnly: true }); // Set cookie after token generation
+
     res.status(201).render("status", {
       title: "Success",
       status: "Success",
@@ -138,8 +244,6 @@ app.post("/register", async (req, res) => {
       left: "hidden",
       right: "Continue",
       uid: user._id,
-      href :'/profile/edit',
-      bg:'bg-blf'
     });
   } catch (error) {
     console.error(error);
@@ -150,7 +254,7 @@ app.post("/register", async (req, res) => {
 // Page 1 , Route '/register' , Get , Serving register.ejs File  [No Auth EveryOne can Access , if auth then send to /messages]
 app.get("/login", checkCookies, (req, res) => {
   if (req.cookies.token && req.uid) {
-    return res.status(301).redirect("messages");
+    return res.status(200).redirect("messages");
   }
   return res.render("login", { title: "Login" });
 });
@@ -165,7 +269,6 @@ app.post("/login", checkCookies, async (req, res) => {
       left: "hidden",
       right: "Try Again",
       href: "/login",
-      bg:'bg-ble'
     });
   }
   const uid = req.body.uniqueId;
@@ -183,7 +286,6 @@ app.post("/login", checkCookies, async (req, res) => {
         left: "hidden",
         right: "Try Again",
         href: "/login",
-        bg:'bg-ble'
       });
     }
     const token = setCookies(user[0]); // Generate token
@@ -198,7 +300,6 @@ app.post("/login", checkCookies, async (req, res) => {
       right: "Continue",
       uid: user._id,
       href: "/messages",
-      bg:'bg-blf'
     });
   } catch (error) {
     console.log(error);
@@ -210,7 +311,6 @@ app.post("/login", checkCookies, async (req, res) => {
       left: "hidden",
       right: "Try Again",
       href: "/login",
-      bg:'bg-blin'
     });
   }
 });
@@ -257,7 +357,6 @@ return res.redirect('/profile');
         icon: "404.png",
         right: "Try Again",
         href: "/messages",
-        bg:'bg-blin'
       });
     }
     const { _id: id, name, profilePic, bio } = user;
@@ -273,16 +372,14 @@ app.get("/profile", cookieAuth, (req, res) => {
   const name = req.name;
   const profilePic = req.profilePic;
   const bio = req.bio;
-  const myPic = req.profilePic;
 
   res.render("profile", {
     title: "My Profile",
     name: name,
     uid: uid,
-    myPic: myPic,
+    profilePic: profilePic,
     bio: bio,
     blcount: "0",
-
   });
 });
 
@@ -357,7 +454,7 @@ app.get("/messages", cookieAuth, async (req, res) => {
     const user = await users.findById(userId);
     console.log(user);
     if (!user) {
-      return res.status(404).render('status',{ status:"Network Error",message:'Please try Again',right:'Try Again',href:'/messages',title:"Network error",icon:'network.png',bg:'bg-blin'})
+      return res.status(404).json({ message: "User not found" });
     }
     const friendData = user.friendsDetails.map((friend) => ({
       state: friend.state,
@@ -369,7 +466,7 @@ app.get("/messages", cookieAuth, async (req, res) => {
     res.render("messages", { friendData, title: "Messages", myPic });
   } catch (error) {
     console.error(error);
-    return res.status(500).render('status',{ status:"Network Error",message:'Please try Again',right:'Try Again',href:'/messages',title:"Network error",icon:'network.png',bg:'bg-blin'})
+    res.status(500).json({ message: "Internal server error" });
   }
 
   // res.render("share" , {title:"Messages"});
@@ -470,7 +567,6 @@ const receiverData = {
 // Page 3 , Register -> Post at /register
 app.get("/requests", cookieAuth, async (req, res) => {
   const userId = req.id;
-  const myPic = req.profilePic;
   try {
     console.log(userId);
     const user = await users.findById(userId);
@@ -485,7 +581,7 @@ app.get("/requests", cookieAuth, async (req, res) => {
       chatId: friend._id,
     })); // Create an array of friend objects with only name and profilePic
 
-    res.render("requests", { friendData, title: "Requests",myPic });
+    res.render("requests", { friendData, title: "Requests" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
@@ -792,5 +888,6 @@ app.get("/exist", (req, res) => {
 
 // });
 // Exporting app (Express object)
-
-module.exports = { server , app}
+server.listen(port || 3000, () => {
+  console.log(`Server is listening at port ${port || process.env.VERCEL_PORT || 3000}`);
+});

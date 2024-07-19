@@ -4,7 +4,7 @@
 
     <!-- ------------------------ -->
 <div id="blurBox" class=""></div>
-<main class="z-10 flex flex-col items-center fixed left-0 right-0 top-0 bottom-0 bg-blh gap-3">
+<main class="z-10 flex flex-col items-center h-svh w-full left-0 right-0 top-0 bottom-0 bg-blh gap-3">
  
   <div class="flex flex-col w-full gap-2 ">
 
@@ -29,7 +29,7 @@
    </div>
    <div class="  text-blm flex flex-col  justify-between items-center  py-1 px-4 gap-1 rounded-md" >
      <div class="border-2 border-blt rounded-full  overflow-hidden">
-     <img src="/img/<%= profilePic %>" alt="" class=" h-20 w-20 rounded-full border-2 border-blm "> 
+     <img src="/img/<%= myPic %>" alt="" class=" h-20 w-20 rounded-full border-2 border-blm "> 
 
      </div>
          <div class=" py-1 flex w-full items-center justify-center flex-col gap-1">
@@ -63,13 +63,7 @@
             </div>
             <div class="flex items-center gap-1 ">
               
-              <div id="shareDiv" class="flex items-center justify-center gap-1 py-1.5 px-2 rounded-full border border-blb text-black bg-blm">
-                <button id="shareBtn" class="text-[10px]">Share</button>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-3">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="m15 15 6-6m0 0-6-6m6 6H9a6 6 0 0 0 0 12h3" />
-                </svg>
-                
-              </div>
+            
             </div>
           
             </div>
@@ -97,9 +91,7 @@
               <h1 class="text-xs">User who can't text you anymor</h1>
             </div>
             </div>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-              <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-            </svg>
+          
             </div>
           <!-- Horizonatal line -->
           <div class="h-[1px] bg-blt mx-5 opacity-20 rounded-full"></div>
@@ -185,6 +177,8 @@
     <%- include('nav.ejs') %>
     <%- include('loader.ejs') %>
    <%- include('blurBox.ejs') %>
+   <%- include('footer.ejs') %>
+
 <!-- ----------------------------- -->
 <script>
   // Action Buttons (like logout ,deleteAccount)

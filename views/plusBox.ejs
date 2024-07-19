@@ -1,0 +1,96 @@
+<style>
+   
+    #plusBox{
+        z-index: 10;
+
+    }
+    #plusBox.visible{
+        bottom: 112px;
+
+    }
+</style>
+
+    <div id="plusBox" class="  -bottom-48 transition-all duration-500 ease-in-out fixed left-16 right-16  bg-blm border text-sm border-blb font-[500] text-black  rounded-lg py-3 pt-5 ">
+      
+        <div id="blockedUsers" class=" cursor-pointer flex px-12 py-3   ">
+            <button id="plsQuote" class="flex items-center justify-between w-full px-2    ">
+             
+            <h1 class="">Write a Quote</h1>
+    
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+              </svg>
+            </button>
+          
+            </div>
+          <!-- Horizonatal line -->
+          <div class="h-[1px] bg-blt mx-5 opacity-20 rounded-full"></div>
+    
+          <div id="blockedUsers" class=" cursor-pointer flex px-12  py-3  ">
+            <button id="plsChat" class="flex items-center justify-between w-full px-2   ">
+             
+            <h1 class="">Start a new chat</h1>
+    
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+              </svg>
+            </button>
+            </div>
+            <div class=" flex  justify-center items-center text-center w-full"> 
+                <button id="cut" class="px-2 py-1 rounded-md bg-blf text-xs text-blm">
+                    Cancel
+                </button>
+            </div>
+    
+    </div>
+
+
+
+<script>
+    const plusBox = document.getElementById('plusBox')
+    const plsChat = document.getElementById('plsChat')
+    const plsQuote = document.getElementById('plsQuote')
+    const cut = document.getElementById('cut')
+// PlusBox IN
+function plusBoxIn(){
+    blurIn();
+plusBox.classList.add('visible');
+}
+
+// PlusBox Out
+function plusBoxOut(){
+    blurOut();
+plusBox.classList.remove('visible');
+}
+
+
+// Clicking on Plus button 
+plsBt.addEventListener('click', (event) => {
+        event.preventDefault();
+        if (event.target.closest('#plsBt')) {
+            plusBoxIn();
+
+        }
+    });
+
+        plsChat.addEventListener('click', (event) => {
+        event.preventDefault();
+        if (event.target.closest('#plsChat')) {
+            plusBoxOut();
+            uidInput();
+        }
+    });
+
+    plsQuote.addEventListener('click',(event)=>{
+        alert("hi")
+        plusBoxOut();
+        blurIn();
+       quoteInput.classList.add('visible');
+    });
+
+    cut.addEventListener('click',(event)=>{
+        plusBoxOut();
+    });
+
+
+</script>

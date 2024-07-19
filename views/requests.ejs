@@ -1,42 +1,65 @@
 
-<main id="wrapper" class=" bg-blm rounded-xl fixed top-0 bottom-0 left-0 right-0  flex flex-col justify-between items-center ">
-  <nav class="px-6 py-5 pt-5 space-y-4  w-full    z-10">
+<style>
+
+
+  #sentSection.visible{
+    transform: translateX(0);
+  }
+  #receivedSection.hide{
+    transform: translateX(-120%);
+  }
+
+</style>
+
+
+
+
+
+
+
+
+<main style="z-index: 1;" id="wrapper" class=" bg-blm rounded-xl h-svh top-0 bottom-0 left-0 right-0  flex flex-col justify-between items-center ">
+  <nav class="px-6 py-5 space-y-4  w-full  z-10 shadow-sm shadow-blb">
+    <div class="flex justify-between items-center">
     <h1 class="font-[600] text-blf text-2xl" >Wassup</h1>
-    <div class="flex justify-start items-center gap-2 text-black">
-        <div class="flex justify-start items-center gap-0.5 w-full  ">
-            <svg  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-              </svg>
-            <input placeholder="Search Requests..." type="text" class="w-4/5 bg-transparent outline-none ">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
-              </svg>
-        </div>
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
+
+      <a  id="navBtn" class="cursor-pointer">
+        <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-7 text-black">
+            <path fill-rule="evenodd" d="M3 6.75A.75.75 0 0 1 3.75 6h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 6.75ZM3 12a.75.75 0 0 1 .75-.75H12a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 12Zm0 5.25a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd" />
           </svg>
-        </div>
-  
+        </a>
+
+    </div>
         <div class="flex justify-center items-start h-8">
-  <div class="w-1/2 flex flex-col  items-center justify-start h-full">
-    <h3 class="h-full text-black ">Messages</h3>
-    <div class="w-full  h-1 rounded-full"></div>
-  </div>
-  <div class="w-1/2 flex flex-col  items-center justify-start h-full">
-    <h3 class="h-full ">Requests</h3>
-    <div class="w-full bg-blh  h-1 rounded-full"></div>
-   
-  </div>
-        </div>
+          <div class="w-1/2 flex flex-col  items-center justify-start h-full">
+              <button id="received" class="h-full px-6 text-black ">Received</button>
+              <div id="receivedUnderline" class="w-full  bg-blh h-1 rounded-full"></div>
+          </div>
+          <div class="w-1/2 flex flex-col  items-center justify-start h-full">
+              <button id="sent" class="h-full px-6 ">Sent</button>
+              <div id="sentUnderline" class="w-full   h-1 rounded-full"></div>
+
+          </div>
+      </div>
   </nav>
         
+  <% if (!friendData.length > 0 ) { %>
+
+    <div  class=" bg-blm flex flex-col justify-center h-full w-full items-center space-y-3 px-4 fixed top-28 bottom-24 py-2 left-0 right-0 overflow-y-scroll">
+      <div class="flex-col flex justify-center items-center mb-44">
+       <h1 class="font-[600] text-xl">No Requests</h1>
+       <p class=" text-blt font-[500]">New requests will appear here</p>
+      </div>
+       </div>
+<% } %>
           <!-- List of people with whom  user doing chat -->
+        
           <% if (friendData.length > 0) { %>
-           <div class=" bg-blm flex flex-col space-y-3 px-4 fixed top-40 bottom-24 py-2 left-0 right-0 overflow-y-scroll">
-            <% friendData.forEach(friend => {  %>
-             <% if (friend.state == "received") { %>
-   
-    <div  id="<%= friend.chatId %>"  class=" bg-blh border border-blb rounded-xl requestId flex justify-between items-center px-4 py-4 relative ">
+           <div id="receivedSection" class="transition-transform duration-500 ease-in-out bg-blm flex flex-col space-y-3 px-4 fixed top-28 bottom-24 py-2 left-0 right-0 overflow-y-scroll">
+           
+              <% friendData.forEach(friend => {  %>
+            <% if (friend.state === "received") { %>
+    <div  id="<%= friend.chatId %>"  class="  bg-blh border border-blb rounded-xl requestId flex justify-between items-center px-4 py-4 relative ">
       <div class="flex justify-center gap-2">
         <img
           class="profilePic w-12 h-12 rounded-full"
@@ -55,81 +78,100 @@
       </div>
   
      
-   </div>
+    </div>
     <% } %>
     <% })}  %>
-   
+  </div>
+  
+
+  
+           <!-- ----------------------sent section  -->
+
+           <% if (friendData.length > 0) { %>
+     
+            <div id="sentSection" class="translate-x-[120%] transition-transform duration-500 ease-in-out bg-blm flex flex-col space-y-3 px-4 fixed top-28 bottom-24 py-2 left-0 right-0 overflow-y-scroll">
+             
+                <% friendData.forEach(friend => {  %>
+              <% if (friend.state === "sent") { %>
+            <div  id="<%= friend.chatId %>"  class="   bg-blh border border-blb rounded-xl requestId flex justify-between items-center px-4 py-4 relative ">
+              <div class="flex justify-center gap-2">
+                <img
+                  class="profilePic w-12 h-12 rounded-full"
+                  src="/img/<%= friend.profilePic %>"
+                  alt=""
+                />
+                <div class="flex flex-col items-start justify-center gap-0.5">
+                  <h1 class="name  text-sm text-black "><%= friend.name %></h1>
+                  <!-- <p class="  text-blf  text-xs ">View Profile</p> -->
+                </div>
+              </div>
+              <div class="flex justify-center items-center gap-4">
+                <button id="remove" class=" delete px-2 py-1.5 bg-red-600 rounded-md border border-blb  text-blm text-sm" >Remove</button>
+                
+              </div>
+          
+      
            </div>
+      
+           <% } %>
+    <% })}  %>
+
+                 </div>
+              
+               
+                 
          
 
  <!-- Plus Anything, aboslute with above div  -->
-  
-        <footer class="">
-          <div
-            class="fixed bottom-6 left-3 right-3  px-6 h-16 text-center  flex justify-around items-center bg-blm border-2 border-blb  py-4 rounded-full "
-          >
-            <a id="msgBt"  href="" class="footAnc flex flex-col items-center justify-center w-1/3">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                class="w-6 h-6 text-blf"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M4.804 21.644A6.707 6.707 0 0 0 6 21.75a6.721 6.721 0 0 0 3.583-1.029c.774.182 1.584.279 2.417.279 5.322 0 9.75-3.97 9.75-9 0-5.03-4.428-9-9.75-9s-9.75 3.97-9.75 9c0 2.409 1.025 4.587 2.674 6.192.232.226.277.428.254.543a3.73 3.73 0 0 1-.814 1.686.75.75 0 0 0 .44 1.223ZM8.25 10.875a1.125 1.125 0 1 0 0 2.25 1.125 1.125 0 0 0 0-2.25ZM10.875 12a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Zm4.875-1.125a1.125 1.125 0 1 0 0 2.25 1.125 1.125 0 0 0 0-2.25Z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-              <p class="text-[8px] text-blf ">Messages</p>
-            </a>
-        
-            <div class="bg-blb w-[1px] h-full"></div>
-            <a id="quoteBt" href="" class="footAnc flex flex-col items-center justify-center w-1/3">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                class="w-6 h-6 text-black "
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M7.502 6h7.128A3.375 3.375 0 0 1 18 9.375v9.375a3 3 0 0 0 3-3V6.108c0-1.505-1.125-2.811-2.664-2.94a48.972 48.972 0 0 0-.673-.05A3 3 0 0 0 15 1.5h-1.5a3 3 0 0 0-2.663 1.618c-.225.015-.45.032-.673.05C8.662 3.295 7.554 4.542 7.502 6ZM13.5 3A1.5 1.5 0 0 0 12 4.5h4.5A1.5 1.5 0 0 0 15 3h-1.5Z"
-                  clip-rule="evenodd"
-                />
-                <path
-                  fill-rule="evenodd"
-                  d="M3 9.375C3 8.339 3.84 7.5 4.875 7.5h9.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-9.75A1.875 1.875 0 0 1 3 20.625V9.375ZM6 12a.75.75 0 0 1 .75-.75h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75H6.75a.75.75 0 0 1-.75-.75V12Zm2.25 0a.75.75 0 0 1 .75-.75h3.75a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75ZM6 15a.75.75 0 0 1 .75-.75h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75H6.75a.75.75 0 0 1-.75-.75V15Zm2.25 0a.75.75 0 0 1 .75-.75h3.75a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75ZM6 18a.75.75 0 0 1 .75-.75h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75H6.75a.75.75 0 0 1-.75-.75V18Zm2.25 0a.75.75 0 0 1 .75-.75h3.75a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75Z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-              <p class="text-[8px] text-black ">Quotes</p>
-            </a>
-        
-            <div class="bg-blb w-[1px] h-full"></div>
-        
-            <button id="moreBt" type="button" class="flex flex-col items-center justify-center w-1/3">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                class="w-6 h-6 text-black"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M3 6.75A.75.75 0 0 1 3.75 6h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 6.75ZM3 12a.75.75 0 0 1 .75-.75H12a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 12Zm0 5.25a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75Z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-              <p class="text-[8px] text-black">More</p>
-            </button>
-          </div>
-        </footer>
 </main>
+<%- include('footer.ejs') %>
+<%- include('blurBox.ejs') %>
+<%- include('loader.ejs') %>
+<%- include('plusBox') %>
+<%- include('warningBox.ejs') %>
+<%- include('inputDialog.ejs') %>
+<%- include('quoteInput.ejs') %>
 
 <script>
+
+  
   const acceptReq = document.querySelectorAll('.accept');
   const deleteReq = document.querySelectorAll('.delete');
+  const sent = document.getElementById('sent');
+  const received = document.getElementById('received');
+  const receivedUnderline = document.getElementById('receivedUnderline');
+  const sentUnderline = document.getElementById('sentUnderline');
+  const sentSection = document.getElementById('sentSection');
+  const receivedSection = document.getElementById('receivedSection');
+  
+
+
+
+
+received.addEventListener('click',(event)=>{
+sentUnderline.classList.remove('bg-blh')
+receivedUnderline.classList.add('bg-blh')
+receivedSection.classList.remove('hide');
+sentSection.classList.remove('visible');
+
+});
+sent.addEventListener('click',(event)=>{
+receivedUnderline.classList.remove('bg-blh')
+sentUnderline.classList.add('bg-blh')
+
+sentSection.classList.add('visible');
+receivedSection.classList.add('hide');
+
+});
+
+
+
+
+
+
+
+
+
   acceptReq.forEach(element => {
     element.addEventListener('click', (event) => {
       event.preventDefault(); // Prevent default form submission

@@ -1,4 +1,4 @@
-<section id="tops" class="top-0 left-0 right-0 bottom-0 fixed px-7 bg-blh">
+<section id="tops" class="top-0 left-0 right-0 bottom-0 h-svh  w-full px-7 bg-blh">
   <!-- Top  -->
 
   <header  class="flex justify-between items-center rounded-xl overflow-hidden fixed top-3 left-3 right-3 h-16 px-2 z-10 bg-blm">
@@ -25,12 +25,15 @@
     </div>
   </header>
 
+
   <!-- Mid  -->
+  <% if (message.length > 0) { %>
   <section id="chatSection" class="overflow-y-scroll bg-blh fixed top-16 py-8 px-2 bottom-20 left-0 right-0">
-    <% message.forEach(message => { %>
-
-
-
+  
+     
+    
+    
+    <% message.forEach(message => { %>`
     <% if (message.sid === userId) { %>
     <div uid="<%= message._id %>" rid="<%= message.chatId %>" sid="<%= userId %>" id="sMsg" class="px-2 py-1 flex items-center justify-end gap-1">
       <h1 class="text-xs bg-white px-3 py-2 shadow-black shadow-sm break-words rounded-2xl rounded-br-sm max-w-10/12">
@@ -56,6 +59,7 @@
 
 
   </section>
+  <% } %>
 
   <!-- Bottom  -->
 
@@ -103,20 +107,16 @@ friendPic.src = `/img/${localData.profilePic}`;
   const chatSection = document.getElementById("chatSection"); // Get the chat section
   const sendButton = document.getElementById("sendBtn"); // Get the send button (image)
   const extraInfo = document.getElementById("extraInfo");
-
   const rid = extraInfo.getAttribute("rid");
   const rname = extraInfo.getAttribute("rname");
   const sid = extraInfo.getAttribute("sid");
   const sname = extraInfo.getAttribute("sname");
   const tid = extraInfo.getAttribute("tid");
- 
-
   // Websocket code
   // Send MSG to Socket
-
-    // const socket = new WebSocket(`ws://localhost:8080?tid=${tid}`);
+    // const socket = new WebSocket(`ws://localhost:3000/?tid=${tid}`);
     const socket = new WebSocket(`wss://msg-io.onrender.com/?tid=${tid}`);
-
+  
   
 
   function sendSocket() {

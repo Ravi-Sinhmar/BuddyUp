@@ -1,25 +1,14 @@
 //  .env config
 const dotenv = require('dotenv');
 dotenv.config({path: './.env'});
-const mongoose = require ('mongoose');
+const port = process.env.PORT || 3000;
 
-
-
+// Importing Database connection module 
+const connection = require('./Database/connection');
 
 // Imporing custom moduels
-const app = require('./app');
+const  {server }  = require('./app');
 
-
-
-// Connection with DB
-mongoose.connect(process.env.REMOTE_DB_STR).then((conn)=>{
-    console.log("DB Connected SuccessFully")
-  }).catch((err)=>{
-    console.log("DB not Connected , Some error");
-  })
-
-  const port = process.env.PORT; // Still keep this line to check for a custom port
-
-  app.listen(port || process.env.VERCEL_PORT || 3000, () => {
-    console.log(`Server is listening at port ${port || process.env.VERCEL_PORT || 3000}`);
-  });
+server.listen(port || 3000, () => {
+  console.log(`Server is listening at port ${port || process.env.VERCEL_PORT || 3000}`);
+});

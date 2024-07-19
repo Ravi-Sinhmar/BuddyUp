@@ -48,6 +48,7 @@
   const cancelBtn = document.getElementById('cancel');
   const viewProfileBtn = document.getElementById('view');
   const uid = document.getElementById('uid');
+  const cancel = document.getElementById('cancel');
 
 
 
@@ -58,6 +59,10 @@
     card.classList.add('visible');
   }
 
+  cancelBtn.addEventListener('click',(event)=>{
+       cancelDailog();
+        alert("hi")
+            });
   // box out and return the id function
     const uidReturn = () => {
       const uidData = uid.value;

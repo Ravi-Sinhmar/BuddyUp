@@ -5,8 +5,4 @@ const userControllers = require('../Controllers/userControllers');
 
 
 
-
-
-
-
 module.exports = router;

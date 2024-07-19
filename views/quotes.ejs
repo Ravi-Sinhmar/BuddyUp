@@ -1,0 +1,64 @@
+
+
+<main style="z-index: 1;" class="h-svh z-10 flex flex-col pb-16 gap-1 bg-blm">
+    <nav class="px-6 py-5 space-y-4  w-full  z-10 ">
+        <div class="flex justify-between items-center">
+        <h1 class="font-[600] text-blf text-2xl" >Wassup</h1>
+          <a  id="navBtn" class="cursor-pointer">
+            <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-7 text-black">
+                <path fill-rule="evenodd" d="M3 6.75A.75.75 0 0 1 3.75 6h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 6.75ZM3 12a.75.75 0 0 1 .75-.75H12a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 12Zm0 5.25a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd" />
+              </svg>
+            </a>
+    
+        </div>
+      </nav>
+
+    <div class="h-full flex flex-col overflow-y-scroll bg-blh gap-2 py-1 ">
+       <% allQuotes.forEach(el => { %>
+        
+       
+        <div class=" ring-black px-4 py-2 rounded-md bg-blm border border-blb ">
+            <div class="flex w-full flex-col  gap-3 py-2 " >
+                <div class="flex text-black items-center w-full  justify-between ">
+                    <div class="flex items-center gap-3 ">
+                     <img src="/img/<%= el.wPic %>" alt="" class=" h-10 min-h-10 w-10 min-w-10 rounded-full">
+                     <h1 class="font-[500]" uid="<%= el.wId %>" ><%= el.wName %></h1>
+                    </div>
+                   
+                 </div>
+                
+                
+                 <div id="quote" qId="<%= el.qId %>"  class="font-[500] text-black w-full relative flex text-sm  py-2 ">
+            
+                    <%= el.quote %>
+                  
+                </div>
+                <div class="flex text-black items-center w-full  justify-between ">
+                  <div class="flex justify-center items-center gap-5">
+                  </div>
+                 </div>
+            </div>
+            
+            
+            
+                    </div>
+                    <% }) %>
+
+    </div>
+
+</main>
+<%- include('footer.ejs') %>
+<%- include('blurBox.ejs') %>
+<%- include('loader.ejs') %>
+<%- include('plusBox') %>
+
+<%- include('warningBox.ejs') %>
+<%- include('inputDialog.ejs') %>
+<%- include('quoteInput.ejs') %>
+
+<script>
+  
+
+</script>
+
+

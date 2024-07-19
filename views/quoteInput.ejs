@@ -1,0 +1,109 @@
+<style>
+ 
+  #quoteInput{
+transform: translateX(120%);
+
+  }
+
+  #quoteInput.visible{
+transform: translateX(0);
+z-index: 20;
+  }
+</style>
+  <div id="quoteInput" style="z-index: 10;" class="fixed left-2 right-2 top-5 transition-transform duration-700 ease-in-out  flex flex-col  h-fit  rounded-md justify-start items-center bg-blh    px-1  py-2 ">
+    <div class="flex flex-col w-full justify-center items-center   rounded-md py-2 ">
+    
+    
+      <div id="quote" class="bg-black flex justify-center items-center relative w-8/12  max-w-1/4 py-2 h-28 rounded-lg overflow-hidden px-2 border-2 border-black">
+       
+        <div contenteditable="true" id="pIn" class="cursor-text outline-none bg-transparent  text-blm w-full  z-10 px-2 text-xs break-words text-wrap ">
+        You can change background of your quote from bellow 2 buttons (Black or White) and write your quote in bellow box...</div>
+      </div>
+
+    
+    
+    </div>
+    
+    <div  class="flex flex-col rounded-md py-1 px-2 bg-blh border border-gray-400 w-full">
+      <textarea id="message" rows="1" class="rounded-md  px-2 py-1 w-full text-sm text-black placeholder:text-black outline-none bg-transparent" maxlength="140" placeholder="Enter your message here..."></textarea>
+      <h1 id="char-count" class="text-xs text-end py-1">0/140 Characters</h1>
+    </div>
+    <div class="p-2 text-blm justify-end gap-5 text-xs w-full flex">
+      <button id="cancelQuote" class="px-3 py-1 bg-blh border border-black text-black rounded-full">
+        Cancel
+      </button>
+      <button id="postQuote" class="px-3 py-1 bg-blf rounded-full text-blm">POST</button>
+    </div>
+  </div>
+
+
+
+<script>
+  const messageInput = document.getElementById("message");
+  const charCount = document.getElementById("char-count");
+  const quote = document.getElementById('quote');
+  const quoteInput = document.getElementById('quoteInput');
+  const postQuote = document.getElementById('postQuote');
+  const cancelQuote = document.getElementById('cancelQuote');
+  
+
+  const message = document.getElementById('message');
+const pIn = document.getElementById('pIn');
+
+
+
+// cancel quote
+
+cancelQuote.addEventListener('click',(event)=>{
+  message.value = '';
+  blurOut();
+  quoteInput.classList.remove('visible');
+
+})
+
+// Posting quote
+postQuote.addEventListener('click',(event)=>{
+
+  const content = { quote:message.value, qPic:qBg }
+  fetch (`/quotes`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify(content)
+        
+    }).then((data)=>{
+      return data.json();
+    }).then((jsonData)=>{
+    if(jsonData.status === 'success'){
+      window.location.href = '/quotes'
+    }
+    }).catch(err => console.log(err));
+
+
+});
+
+
+
+message.addEventListener('keyup', function() {  const textWithNewlines = message.value.replace(/\r?\n/g, '<br>'); // Replace newlines with <br> tags
+  pIn.innerHTML = textWithNewlines; // Update paragraph content with HTML for line breaks
+});
+
+
+  messageInput.addEventListener("keyup", function() {
+    const charLength = messageInput.value.length;
+    charCount.textContent = `${charLength}/140 characters`;
+
+    // Optional: Disable submit button or display warning message if character limit is exceeded
+    if (charLength > 140) {
+      charCount.classList.add("text-red-500"); // Add red color class
+      postQuote.classList.add('hidden');
+    } else {
+      charCount.classList.remove("text-red-500"); // Remove red color class
+      postQuote.classList.remove('hidden');
+
+    }
+  });
+</script>
+<!-- <script src="/js/load.js"></script> -->

@@ -50,6 +50,11 @@
     </div>
 </footer>
 
+<%- include('blurBox.ejs') %>
+<%- include('loader.ejs') %>
+<%- include('plusBox') %>
+<%- include('inputDialog.ejs') %>
+<%- include('quoteInput.ejs') %>
 
 
 <script>
@@ -60,18 +65,54 @@ const footBt = document.querySelectorAll('.footBt');
 footBt.forEach(el =>{
    
 if(el.classList.contains(`${lastPart}`)){
-   
     el.classList.add('text-blf');
 }
 else{
-    
     el.classList.remove('text-blf')
 
 }
-    
-
-
+  
 })
+
+
+
+// pls Button click 
+const plsBt = document.getElementById('plsBt');
+// Clicking on Plus button 
+plsBt.addEventListener('click', (event) => {
+        event.preventDefault();
+        if (event.target.closest('#plsBt')) {
+            plusBoxIn();
+
+        }
+    });
+
+
+    plsChat.addEventListener('click', (event) => {
+        event.preventDefault();
+        if (event.target.closest('#plsChat')) {
+            plusBoxOut();
+            uidInput();
+        }
+    });
+
+    plsQuote.addEventListener('click',(event)=>{
+        alert("hi")
+        plusBoxOut();
+        blurIn();
+       quoteInput.classList.add('visible');
+    });
+
+    cut.addEventListener('click',(event)=>{
+        plusBoxOut();
+    });
+
+    viewProfileBtn.addEventListener('click',(event)=>{
+           const uid = uidReturn();
+           if(uid.length === 24){
+           return window.location.href = `users/${uid}`;
+           }
+            });
 
 
 </script>

@@ -84,62 +84,27 @@
     
 </main>
   
-<%- include('blurBox.ejs') %>
-<%- include('loader.ejs') %>
-<%- include('plusBox') %>
+
 <%- include('warningBox.ejs') %>
-<%- include('inputDialog.ejs') %>
 <%- include('navM.ejs') %>
-<%- include('quoteInput.ejs') %>
+
 <script>
 // Variable defination
 
 
 const wrapper = document.getElementById('wrapper')
-const plsBt = document.getElementById('plsBt');
 
-// Clicking on Plus button 
-plsBt.addEventListener('click', (event) => {
-        event.preventDefault();
-        if (event.target.closest('#plsBt')) {
-            plusBoxIn();
 
-        }
-    });
-
-        plsChat.addEventListener('click', (event) => {
-        event.preventDefault();
-        if (event.target.closest('#plsChat')) {
-            plusBoxOut();
-            uidInput();
-        }
-    });
-
-    plsQuote.addEventListener('click',(event)=>{
-        alert("hi")
-        plusBoxOut();
-        blurIn();
-       quoteInput.classList.add('visible');
-    });
-
-    cut.addEventListener('click',(event)=>{
-        plusBoxOut();
-    });
 
 
     
     
 
 
-    viewProfileBtn.addEventListener('click',(event)=>{
-           const uid = uidReturn();
-           if(uid.length === 24){
-           return window.location.href = `users/${uid}`;
-           }
-            });
+
   
 
-   
+
     const messageIdBtn = document.querySelectorAll('.messageId');
     messageIdBtn.forEach(btn => {
         btn.addEventListener('click', (event) => {

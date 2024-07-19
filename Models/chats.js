@@ -18,7 +18,7 @@ const chatSchema = new mongoose.Schema({
     required: true,
     ref: 'User', // Reference to the User who received the message
   },
-  sname:{
+  rname:{
     type:String,
   },
   content: {

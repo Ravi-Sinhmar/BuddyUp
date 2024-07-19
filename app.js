@@ -722,6 +722,7 @@ app.get("/messages/:chatId", cookieAuth, async (req, res) => {
       const formattedMessages = messages.map((message) => ({
         sid: message.sid,
         fid: message.fid,
+        rname:message.rname,
         chatId: message.chatId,
         content: message.content,
         _id: message._id.toString(), // Convert ObjectId to string

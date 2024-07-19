@@ -26,14 +26,18 @@
   </header>
 
 
+  <% if (!message.length > 0) { %>
+      <div class="tempMsg flex-col flex justify-center items-center w-full h-full ">
+        <h1 class="font-[600] text-lg z-10 ">Start Chat Now!</h1>
+        <p class=" text-blt font-[500] z-10 text-sm">Say them hi, everyone has one life...</p>
+       </div>
+      <% } %>
+
   <!-- Mid  -->
-  <% if (message.length > 0) { %>
+ 
   <section id="chatSection" class="overflow-y-scroll bg-blh fixed top-16 py-8 px-2 bottom-20 left-0 right-0">
-  
-     
-    
-    
-    <% message.forEach(message => { %>`
+    <% if (message.length > 0) { %>
+    <% message.forEach(message => { %>
     <% if (message.sid === userId) { %>
     <div uid="<%= message._id %>" rid="<%= message.chatId %>" sid="<%= userId %>" id="sMsg" class="px-2 py-1 flex items-center justify-end gap-1">
       <h1 class="text-xs bg-white px-3 py-2 shadow-black shadow-sm break-words rounded-2xl rounded-br-sm max-w-10/12">
@@ -57,9 +61,9 @@
     <% }) %>
 
 
-
+    <% } %>
   </section>
-  <% } %>
+ 
 
   <!-- Bottom  -->
 
@@ -83,6 +87,7 @@
 <script>
 const friendName =  document.getElementById('fname');
 const friendPic =  document.getElementById('fprofilePic');
+const tempMsg = document.querySelector('.tempMsg');
 
 const localData = getLocalData();
 console.log(localData);
@@ -108,7 +113,10 @@ friendPic.src = `/img/${localData.profilePic}`;
   const sendButton = document.getElementById("sendBtn"); // Get the send button (image)
   const extraInfo = document.getElementById("extraInfo");
   const rid = extraInfo.getAttribute("rid");
-  const rname = extraInfo.getAttribute("rname");
+  let rname = extraInfo.getAttribute("rname");
+  if(rname === ''){
+    rname = localData.name;
+  }
   const sid = extraInfo.getAttribute("sid");
   const sname = extraInfo.getAttribute("sname");
   const tid = extraInfo.getAttribute("tid");
@@ -118,6 +126,8 @@ friendPic.src = `/img/${localData.profilePic}`;
     const socket = new WebSocket(`wss://msg-io.onrender.com/?tid=${tid}`);
   
   
+
+
 
   function sendSocket() {
     let messageContent = {
@@ -205,6 +215,7 @@ friendPic.src = `/img/${localData.profilePic}`;
     const messageData = data.content;
     appendMsg("justify-start", "rounded-bl-sm", messageData);
     scrollToSet();
+    tempMsg.classList.add('hidden');
   });
 
   // -------------------------------------- Sending Data ------------------------------------------------
@@ -219,6 +230,8 @@ friendPic.src = `/img/${localData.profilePic}`;
         scrollToSet();
       }
       sendInput.focus();
+    tempMsg.classList.add('hidden');
+
     }
   });
 
@@ -231,5 +244,7 @@ friendPic.src = `/img/${localData.profilePic}`;
       scrollToSet();
     }
     sendInput.focus();
+    if(!tempMsg.classList.contains('hidden'))
+    tempMsg.classList.add('hidden');
   });
 </script>

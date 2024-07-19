@@ -215,7 +215,10 @@ friendPic.src = `/img/${localData.profilePic}`;
     const messageData = data.content;
     appendMsg("justify-start", "rounded-bl-sm", messageData);
     scrollToSet();
-    tempMsg.classList.add('hidden');
+    if(!tempMsg.classList.contains('hidden')){
+      tempMsg.classList.add('hidden');
+
+    }
   });
 
   // -------------------------------------- Sending Data ------------------------------------------------
@@ -230,7 +233,10 @@ friendPic.src = `/img/${localData.profilePic}`;
         scrollToSet();
       }
       sendInput.focus();
-    tempMsg.classList.add('hidden');
+      if(!tempMsg.classList.contains('hidden')){
+      tempMsg.classList.add('hidden');
+
+    }
 
     }
   });
@@ -244,7 +250,9 @@ friendPic.src = `/img/${localData.profilePic}`;
       scrollToSet();
     }
     sendInput.focus();
-    if(!tempMsg.classList.contains('hidden'))
-    tempMsg.classList.add('hidden');
+    if(!tempMsg.classList.contains('hidden')){
+      tempMsg.classList.add('hidden');
+
+    }
   });
 </script>

@@ -2,8 +2,6 @@
 
 
 
-    <!-- ------------------------ -->
-<div id="blurBox" class=""></div>
 <main class="z-10 flex flex-col items-center h-svh w-full left-0 right-0 top-0 bottom-0 bg-blh gap-3">
  
   <div class="flex flex-col w-full gap-2 ">
@@ -178,13 +176,11 @@
     <%- include('warningBox.ejs') %>
     <%- include('nav.ejs') %>
     <%- include('loader.ejs') %>
-   <%- include('blurBox.ejs') %>
    <%- include('footer.ejs') %>
 
 <!-- ----------------------------- -->
 <script>
   // Action Buttons (like logout ,deleteAccount)
-  
   const editProfile = document.getElementById('editProfile');
   const logout = document.querySelectorAll('.logout');
   const issue = document.querySelectorAll('.issue');
@@ -192,7 +188,6 @@
   const deleteAccount = document.getElementById('deleteAccount');
   const hardRefresh = document.getElementById('hardRefresh');
   const blockedUsers = document.getElementById('blockedUsers');
-
 // back button action
 
 

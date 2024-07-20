@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const chats = require("./../Models/chats");
 const mongoose = require("mongoose");
 const users = require("../Models/users");
+
 function getFid(rid, sid) {
   // Check if both rid and sid have the expected lengths
   if (rid.length !== 48 || sid.length !== 24) {

@@ -194,9 +194,7 @@ app.get('/quotes',cookieAuth,async(req,res)=>{
       wPic: qData.wPic,
       wId: qData.wId , // Set default if profilePic is missing
       qId: qData._id,
-      qPic: qData.qPic,
       quote : qData.quote,
-      likes:qData.likes
     }));
 
     res.render('quotes.ejs',{title:"Quotes",allQuotes,myPic});
@@ -213,10 +211,8 @@ app.patch('/quotes',cookieAuth,async(req,res)=>{
 const wId = req.id;
 const wName = req.name;
 const wPic = req.profilePic;
-const qPic = req.body.qPic;
-const likes = 0;
 const quote = req.body.quote;
-const result =await quotes.create({wId ,wName,wPic,likes,quote,qPic})
+const result =await quotes.create({wId ,wName,wPic,quote})
 console.log(result);
 if(result){
   res.status(201).json({status:'success',message:'Created'})

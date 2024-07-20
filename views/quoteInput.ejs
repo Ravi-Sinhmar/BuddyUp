@@ -64,7 +64,7 @@ cancelQuote.addEventListener('click',(event)=>{
 // Posting quote
 postQuote.addEventListener('click',(event)=>{
 
-  const content = { quote:message.value, qPic:qBg }
+  const content = {quote:message.value}
   fetch (`/quotes`, {
         method: 'PATCH',
         headers: {

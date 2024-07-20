@@ -554,7 +554,7 @@ const receiverData = {
     else{
       console.log("exist")
       res.status(400).json({
-        status:'fail',
+        status:'exists',
         message:'Cannot send Request'
       })
     }

@@ -84,6 +84,9 @@ if(jsonData.message === 'YourSelf'){
 if(jsonData.status === 'fail'){
   return fail("Fail","Please Enter a valid UID or Try Again","/messages");
 }
+if(jsonData.status === 'exists'){
+  return fail("Already Sent","You have already sent the request to the user","/requests");
+}
 
 })
 .catch(err => {

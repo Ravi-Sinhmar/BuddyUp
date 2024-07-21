@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
   },
   profilePic: {
     type: String,
-    default: "default.jpg",
+    default: "default.png",
   }, bio: {
     type: String,
     default: "When You Lose Interest In Life, Life Shows Interest In You - The Story Of 777 Charlie",

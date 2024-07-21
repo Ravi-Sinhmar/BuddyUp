@@ -1,0 +1,81 @@
+
+<% if (type === 'success') { %>
+    <main class=" h-svh flex flex-col items-center justify-center bg-blm">
+        <div class="flex flex-col items-center  justify-center gap-6 border border-blt rounded-lg px-10 py-6  ">
+         
+            <div class="flex justify-center self-center items-center rounded-full"> <img src="/img/success.png" alt="" class="w-24 h-24 rounded-full">
+            </div>
+          
+             <div  class="flex flex-col justify-center items-center px-6">
+              
+                <h1 id="statusHeading" class="text-xl text-black font-[600]"><%= status %></h1>
+         <p  id="statusMessage" class="text-blt text-sm text-center"><%= message %></p>
+             </div>
+             <div uid="<%= href %>" id="redirectionLink" class="flex justify-between items-center gap-4">
+                <%- include('./partials/timer.ejs') %>       </div>
+         </div>
+         </div>
+    </main>
+<% } %>
+<% if (type === 'fail') { %>
+    <main class=" h-svh flex items-center justify-center">
+        <div class="flex flex-col items-center  justify-center gap-6 border border-blt rounded-lg px-10 py-6  ">
+
+            <div class="flex justify-center self-center items-center rounded-full"> <img src="/img/fail.png" alt="" class="w-24 h-24 rounded-full">
+         </div>
+             <div  class="flex flex-col justify-center items-center px-6">
+                 <h1 id="statusHeading" class="text-xl text-black font-[600]"><%= status %></h1>
+         <p  id="statusMessage" class="text-blt text-sm text-center"><%= message %></p>
+             </div>
+             <div uid="<%= href %>" id="redirectionLink" class="flex justify-between items-center gap-4">
+                <%- include('./partials/timer.ejs') %>       </div>
+         </div>
+      
+    </main>
+<% } %>
+
+<% if (type === 'alert') { %>
+    <main class=" h-svh flex items-center justify-center">
+        <div class="flex flex-col items-center  justify-center gap-6 border border-blt rounded-lg px-10 py-6  ">
+
+            <div class="flex justify-center self-center items-center rounded-full"> <img src="/img/alert.png" alt="" class="w-24 h-24 rounded-full">
+         </div>
+             <div  class="flex flex-col justify-center items-center px-6">
+                 <h1 id="statusHeading" class="text-xl text-black font-[600]"><%= status %></h1>
+         <p  id="statusMessage" class="text-blt text-sm text-center"><%= message %></p>
+             </div>
+             <div uid="<%= href %>" id="redirectionLink" class="flex justify-between items-center gap-4">
+                <%- include('./partials/timer.ejs') %>       </div>
+         </div>
+         </div>
+      
+    </main>
+<% } %>
+
+
+<% if (type === '500') { %>
+    <main class=" h-svh flex items-center justify-center">
+        <div class="flex flex-col items-center  justify-center gap-6 border border-blt rounded-lg px-10 py-6  ">
+
+            <div class="flex justify-center self-center items-center rounded-full"> <img src="/img/500.png" alt="" class="w-24 h-24 rounded-full">
+         </div>
+             <div  class="flex flex-col justify-center items-center px-6">
+                 <h1 id="statusHeading" class="text-xl text-black font-[600]"><%= status %></h1>
+         <p  id="statusMessage" class="text-blt text-sm text-center"><%= message %></p>
+             </div>
+             <div uid="<%= href %>" id="redirectionLink" class="flex justify-between items-center gap-4">
+                <%- include('./partials/timer.ejs') %>       </div>
+         </div>
+      
+    </main>
+<% } %>
+
+<script>
+    
+// redirecting the window after 5 sec of timer  
+     let redirectionLink = document.getElementById('redirectionLink');
+     let href =  redirectionLink.getAttribute('uid');
+    setTimeout(() => {
+        window.location.href = href;
+    }, 4500);
+</script>

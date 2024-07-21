@@ -1,29 +1,25 @@
 
 
 <main style="z-index: 1;" class="h-svh z-10 flex flex-col pb-16 gap-1 bg-blm">
-    <nav class=" px-6 py-5 space-y-4  w-full  z-10 border-b border-b-blb ">
-        <div class="flex  justify-between items-center">
-        <h1 class="font-[500] text-black text-xl" >All Quotes</h1>
-        <a href="/yourQuotes"  class=" text-xs bg-blf text-blm px-2 py-2 rounded-md font-[500] flex justify-between text-center items-center gap-1">Your quotes<span>
+    <nav class="px-6 py-5 space-y-4  w-full  z-10 border-b  ">
+        <div class="flex justify-between items-center">
+        <h1 class="font-[500] text-black text-xl" ><%= navHead %> </h1>
+        <a href="/quotes"  class=" text-xs bg-blf text-blm px-2 py-2 rounded-md font-[500] flex justify-between text-center items-center gap-1">All quotes<span>
         </span></a>
       </div>
-        
       </nav>
-
-      <% if (!allQuotes.length > 0 ) { %>
-        <div id="preReq" class="flex h-full w-full flex-col justify-center items-center ">
-          <div class="flex flex-col justify-center items-center mb-20 ">
-           <img src="/bg/quotes.png"  alt="" class="w-32 h-32">
-           <h1 class="font-[600] text-xl">No quotes</h1>
-           <h1 class="text-blt ">All quotes will appear here</h1>
-          </div>
+    <div class="h-full flex flex-col  overflow-y-scroll bg-blm ">
+      <% if (!allQuotes.length > 0) { %>
+        <div class="flex h-full w-full flex-col justify-center items-center ">
+         <div class="flex flex-col justify-center items-center ">
+          <img src="/bg/quotes.png"  alt="" class="w-32 h-32">
+          <h1 class="font-[600] text-xl">No quotes</h1>
+          <h1 class="text-blt ">Quotes will appear here</h1>
          </div>
-    <% } %>
-
-
-    <% if (allQuotes.length > 0 ) { %>
-    <div class="h-full flex flex-col overflow-y-scroll bg-blh ">
-       <% allQuotes.forEach(el => { %>
+        </div>
+        <% } %>
+      <% if (allQuotes.length > 0) { %>
+      <% allQuotes.forEach(el => { %>
         <div class=" px-4 py-2 rounded-md bg-blm border-2 border-blg ">
             <div class="flex w-full flex-col   py-2 px-2  " >
                 <div class="flex  text-black gap-4 w-full ">
@@ -35,7 +31,8 @@
                  <div class="flex flex-col justify-center gap-1 ">
 
                     <h1 class="text-black font-[500]" uid="<%= el.wId %>" ><%= el.wName %></h1>
-                     <p  id="quote" qId="<%= el.qId %>" class="">
+                  
+                    <p  id="quote" qId="<%= el.qId %>" class="">
                       <pre-wrap style="overflow-wrap: anywhere;" class="text-blt text-sm"><%= el.quote %></pre-wrap>
                     </p>
                   </div>
@@ -43,11 +40,14 @@
                  </div>
               </div>
             </div>
-          
+            
+            
+            
+                   
                     <% }) %>
+                    <% } %>
 
     </div>
-    <% } %>
 
 </main>
 <%- include('./partials/footer.ejs') %>

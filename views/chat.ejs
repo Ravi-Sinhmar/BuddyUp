@@ -1,12 +1,13 @@
 <section id="tops" class="top-0 left-0 right-0 bottom-0 h-svh  w-full px-7 bg-blh">
   <!-- Top  -->
 
-  <header  class="flex justify-between items-center rounded-xl overflow-hidden fixed top-3 left-3 right-3 h-16 px-2 z-10 bg-blm">
+  <header  id="fhead" toId="<%= toId %>" class="cursor-pointer flex justify-between items-center rounded-xl overflow-hidden fixed top-3 left-3 right-3 h-16 px-2 z-10 bg-blm">
     <div class="flex items-center gap-2">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
-      </svg>
-
+  <a id="back" href="/messages">
+    <svg id="backIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+    </svg>
+  </a>
 
       <img id="fprofilePic" class="profilePic w-12 h-12 rounded-full" src="" alt="" />
       <div>
@@ -18,8 +19,8 @@
       </div>
     </div>
 
-    <div id="navBtn" class="cursor-pointer">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-black more">
+    <div id="navBtn" class="cursor-pointer  h-full w-10 flex justify-center items-center text-center">
+      <svg id="navIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-black more">
         <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z" />
       </svg>
     </div>
@@ -78,9 +79,12 @@
   </footer>
 </section>
 
-<%- include('blurBox.ejs') %>
-<%- include('navChat.ejs') %>
-<%- include('loader') %>
+<%- include('./partials/blurBox.ejs') %>
+<%- include('./partials/loader') %>
+<%- include('./partials/navChat.ejs') %>
+<%- include('./partials/warningBox.ejs') %>
+
+
 
 
 <script src="/js/localStorage.js"></script>
@@ -88,9 +92,27 @@
 const friendName =  document.getElementById('fname');
 const friendPic =  document.getElementById('fprofilePic');
 const tempMsg = document.getElementById('tempMsg');
+const fhead = document.getElementById('fhead');
+const back = document.getElementById('back');
+const backIcon = document.getElementById('backIcon');
+
+
+// block user click 
+block.addEventListener('click',(event)=>{
+let toId = block.getAttribute('toId');
+blockUserFun(toId);
+});
+
+
+
+fhead.addEventListener('click',(event)=>{
+if(event.target != navBtn && event.target != back && event.target != backIcon && event.target != navIcon){
+let href = fhead.getAttribute('toId');
+window.location.href = `/users/${href}`;
+}});
 
 const localData = getLocalData();
-console.log(localData);
+
 
 friendName.innerHTML = localData.name;
 friendPic.src = `/img/${localData.profilePic}`;
@@ -127,13 +149,7 @@ friendPic.src = `/img/${localData.profilePic}`;
     socket.send(messageContent);
   }
 
-  sendInput.addEventListener("focus", () => {
-    // alert(chatSection.offsetTop);
-    // alert(main.offsetTop);
-    // alert(nav.offsetTop);
-    // alert(tops.offsetTop);
-    // alert(extraInfo.offsetTop);
-  });
+ 
 
   // Function to create and add a new message
   function appendMsg(side, radius, messageData) {

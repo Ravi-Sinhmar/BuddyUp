@@ -30,19 +30,7 @@
       
     </div>
     <div class="h-[2px] bg-blb w-full rounded-full"></div>
-    
-    <div class="flex w-full">
-      <button  class="navBtns issue text-black flex justify-between text-center items-center gap-2"><span>
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
-        </svg>
-        
-        
-      </span>Report Issue</button>
-      
-    </div>
-    <div class="h-[2px] bg-blb w-full rounded-full"></div>
-    
+
     <div class="flex w-full">
       <button class="navBtns contact text-black flex justify-between text-center items-center gap-2"><span>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
@@ -67,7 +55,7 @@ back.addEventListener('click',(event)=>{
 
 // toggle button comes
   navBtn.addEventListener('click',(event)=>{
-    console.log(event.target);
+   
 nav.classList.add('visible');
 blurIn();
   });
@@ -78,17 +66,11 @@ blurIn();
   navCut.addEventListener('click',(event)=>{
     nav.classList.remove('visible');
   blurOut();
-  
   }
   );
   // & by click on blur anywhere on screen (blurBox)
 
-  blurBox.addEventListener('click',(event)=>{
-    nav.classList.remove('visible');
-  blurOut();
-  }
-  );
-
+ 
 
   const navBtns = document.querySelectorAll('.navBtns');
   navBtns.forEach(el=>{

@@ -5,6 +5,8 @@
  
 }
 </style>
+
+
 <nav id="nav" class="fixed bg-blm z-20 text-xs rounded-lg  border-blb left-36 top-5 right-0 ps-6 pr-1  pb-12 pt-3 flex flex-col gap-2 justify-center items-center translate-x-[120%]  transition-transform duration-500 ease-in-out">
     <button  class="flex w-full  justify-end px-4 text-blf">
       <svg id="navCut" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8 bg-blf rounded-md p-2 text-blm">
@@ -12,9 +14,9 @@
     </svg>
     </button>
  
-    
+   
 <div class="flex w-full">
-  <a href="/profile" class="navBtns contact text-black flex justify-between text-center items-center gap-2"><span>
+  <a id="profile" href="/users/<%= toId %>" class="navBtns contact text-black flex justify-between text-center items-center gap-2"><span>
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
       <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
     </svg>
@@ -26,7 +28,7 @@
 <div class="h-[2px] bg-blb w-full rounded-full"></div>
    
     <div class="flex w-full">
-      <div id="editProfile" class="navBtns text-black flex justify-between text-center items-center gap-2"><span>
+      <div id="clearChat" class="navBtns text-black flex justify-between text-center items-center gap-2"><span>
       <img src="/img/clearChat.png" alt="" class="w-4 h-4">
         
       </span>Clear Chat</div>
@@ -35,14 +37,12 @@
     <div class="h-[2px] bg-blb w-full rounded-full"></div>
     
     <div class="flex w-full">
-      <button id="clearChat"  class="cursor-pointer navBtns contact text-black flex justify-between text-center items-center gap-2"><span>
+      <div id="block" toId="<%= chatId %>"  class="cursor-pointer navBtns contact text-black flex justify-between text-center items-center gap-2"><span>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
           <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 0 0 5.636 5.636m12.728 12.728A9 9 0 0 1 5.636 5.636m12.728 12.728L5.636 5.636" />
         </svg>
       </span>Block User</button>
-    
     </div>
-       
       </nav>
 
 
@@ -51,12 +51,21 @@
   
   const nav = document.getElementById('nav');
   const navBtn = document.getElementById('navBtn');
+  const navIcon = document.getElementById('navIcon');
   const navCut = document.getElementById('navCut');
+  const navBtns = document.querySelectorAll('.navBtns');
+
+
+  const profile = document.getElementById('profile');
+  const block = document.getElementById('block');
+  const clearChat = document.getElementById('clearChat');
+
 
 
 // toggle button comes
   navBtn.addEventListener('click',(event)=>{
-    console.log(event.target);
+    
+   
 nav.classList.add('visible');
 blurIn();
   });
@@ -70,16 +79,9 @@ blurIn();
   
   }
   );
-  // & by click on blur anywhere on screen (blurBox)
-
-  blurBox.addEventListener('click',(event)=>{
-    nav.classList.remove('visible');
-  blurOut();
-  }
-  );
+  
 
 
-  const navBtns = document.querySelectorAll('.navBtns');
   navBtns.forEach(el=>{
     el.addEventListener('click',(event)=>{
       nav.classList.remove('visible');
@@ -87,4 +89,10 @@ blurIn();
     })
     
   })
+
+
+
+
+
+
 </script>

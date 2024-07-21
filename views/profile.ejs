@@ -2,24 +2,30 @@
 
 
 
-<main class="z-10 flex flex-col items-center h-svh w-full left-0 right-0 top-0 bottom-0 bg-blh gap-3">
+<main class="z-10 flex flex-col items-center h-svh w-full left-0 right-0 top-0 bottom-0 bg-blm gap-3">
  
-  <div class="flex flex-col w-full gap-2 ">
+  <div class="flex flex-col w-full">
 
   <!-- Main Content Start -->
-  <div class=" h-16 flex flex-col py-2 text-blm bg-blf  px-6 ">
-    <div class="flex items-center justify-between  rounded-xl  py-3  ">
+  <div class="  flex flex-col  text-black   ">
+    <div class="flex items-center justify-between border-b  py-5 px-6  ">
      <div class="flex items-center gap-4">
        <a href="/messages"><svg id="back" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
         <path fill-rule="evenodd" d="M7.72 12.53a.75.75 0 0 1 0-1.06l7.5-7.5a.75.75 0 1 1 1.06 1.06L9.31 12l6.97 6.97a.75.75 0 1 1-1.06 1.06l-7.5-7.5Z" clip-rule="evenodd" />
       </svg></a>
-       <h1 class="text-xl">My Profile</h1>
-      </div>
+      <h1 class="font-[500] text-black text-xl" >Profile</h1>
+    
+    </div>
+     <div class="flex items-center gap-4">
+      <a href="/yourQuotes"  class=" text-xs bg-blf text-blm px-2 py-1 rounded-md font-[500] flex justify-between text-center items-center gap-1">Your quotes<span>
+      </span></a>
       <button id="navBtn">
         <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
           <path fill-rule="evenodd" d="M3 6.75A.75.75 0 0 1 3.75 6h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 6.75ZM3 12a.75.75 0 0 1 .75-.75H12a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 12Zm0 5.25a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd" />
         </svg>
       </button>
+     </div>
+     
   
    
     </div>
@@ -45,7 +51,7 @@
         <h1 class="font-[600] ps-2">Info</h1>
        
         
-          <div class="flex flex-col bg-blf text-blm  rounded-lg">
+          <div class="flex flex-col bg-blh text-black rounded-lg">
           <!-- Unique Id Section -->
           <div class="bg- flex items-center  justify-between px-2 py-3">
            
@@ -75,7 +81,7 @@
         <h1 class="font-[600] ps-2">More</h1>
        
         
-          <div class="flex flex-col bg-blh border  text-black rounded-lg">
+          <div class="flex flex-col  text-black rounded-lg">
           <!-- Unique Id Section -->
           <div id="blockedUsers" class=" cursor-pointer flex items-center  justify-between px-2 py-3 pr-4 ">
             <div class="flex items-start gap-3  ">
@@ -171,10 +177,10 @@
 </main>
 
     <!-- Inclding warning box -->
-    <%- include('warningBox.ejs') %>
-    <%- include('nav.ejs') %>
-    <%- include('loader.ejs') %>
-   <%- include('footer.ejs') %>
+   <%- include('./partials/footer.ejs') %>
+    <%- include('./partials/warningBox.ejs') %>
+    <%- include('./partials/nav.ejs') %>
+  
 
 <!-- ----------------------------- -->
 <script>
@@ -193,7 +199,7 @@
 // logout
 logout.forEach(el=>{
   el.addEventListener('click',(event)=>{
-    alert("Want to Logout");
+   
     logoutFun();
   
   })
@@ -201,7 +207,7 @@ logout.forEach(el=>{
 
 // delete account
 deleteAccount.addEventListener('click',(req,res)=>{
-alert("want to delte it")
+
 deleteAccountFun();
 });
 

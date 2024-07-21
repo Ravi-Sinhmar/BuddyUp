@@ -8,9 +8,7 @@
 <link rel="stylesheet" href="/css/blurBox.css">
 
 
-<!-- Including Pics Section -->
- <%- include('blurBox.ejs') %>
- <%- include('chosePic.ejs') %>
+
 
 <main class="flex flex-col items-center fixed left-0 right-0 top-0 bottom-0 bg-blh gap-3  ">
  <div class="flex flex-col w-full gap-2 ">
@@ -57,8 +55,11 @@
    </div>
  </div> 
 </main>
-<%- include('loader.ejs') %>
-<%- include('warningBox.ejs') %>
+<!-- Including Pics Section -->
+<%- include('./partials/blurBox.ejs') %>
+<%- include('./partials/loader.ejs') %>
+<%- include('./partials/chosePic.ejs') %>
+<%- include('./partials/warningBox.ejs') %>
 <script>
 
 
@@ -84,6 +85,7 @@ cut.addEventListener('click',(event)=>{
 save.addEventListener('click',(event)=>{
 let newName = name.value.trim();
 let newBio = bio.value.trim();
+
 const content = {name:`${newName}`, bio:`${newBio}`,profilePic:`${newProfilePic}`};
 fetch('/profile/edit',{
   method:'PATCH',
@@ -96,16 +98,16 @@ fetch('/profile/edit',{
   return data.json();
 }).then((jsonData)=>{
   if (jsonData.status === "success") {
-                        successBox("Profile Updated",
+                       return successBox("Profile Updated",
                             "Your profile has been updated successfully",
                             "/profile")
                        
-                    } else {
-                       fail("Failed","Sorry, their may be some netword issue. Please try again",'/profile')
+                    } 
+                    else if(jsonData.status === "fail") {
+                      networkEr("Try Again","We Encountered a Problem with updating your profile",'/profile')
                     }
 }).catch((err)=>{
-
-  networkEr("Error","There is some issue , Try again. And if still face the problem then go in Help section")
+  networkEr("Try Again","We Encountered a Problem with updating your profile",'/profile')
 
 });
 

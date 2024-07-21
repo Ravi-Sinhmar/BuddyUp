@@ -74,7 +74,7 @@
     // info Box
     const infoBox = (heading, message, href) => {
         loaderOut();
-        warningIcon.src = "/img/info.png";
+        warningIcon.src = "/img/alert.png";
         warningHeading.innerText = heading;
         warningMessage.innerText = message;
         warningRightBtn.innerText = "Close";
@@ -95,7 +95,7 @@
     // notFound box 
     const notFoundBox = (heading, message, href) => {
         loaderOut();
-        warningIcon.src = "/img/404.png";
+        warningIcon.src = "/img/fail.png";
         blurIn();
         warningHeading.innerText = heading;
         warningMessage.innerText = message;
@@ -136,7 +136,7 @@
             // networkerror box 
             const networkEr = (heading, message, href) => {
         loaderOut();
-        warningIcon.src = "/img/network.png";
+        warningIcon.src = "/img/500.png";
         blurIn();
         warningHeading.innerText = heading;
         warningMessage.innerText = message;
@@ -162,7 +162,7 @@
 
     // logout handlers
     const logoutFun = () => {
-        warningIcon.src = "/img/info.png";
+        warningIcon.src = "/img/alert.png";
         warningHeading.innerText = "Warning";
         warningMessage.innerText =
             "Before you logout make sure you remamber your UID otherwise you will never be able to login again";
@@ -198,7 +198,7 @@
                     }
                 })
                 .catch((err) => {
-                    console.log(err);
+                   
                 });
         });
     };
@@ -242,11 +242,56 @@
                     }
                 })
                 .catch((err) => {
-                    console.log(err);
+                   
                 });
         });
     };
 
 
     //   Blocked Users 
+   // Delete Account
+   const blockUserFun = (uid) => {
+        warningIcon.src = "/img/block.png";
+        warningHeading.innerText = "Warning";
+        warningMessage.innerText =
+            "Do you really want to block. You will not able to Chat";
+        warningRightBtn.classList.add("bg-ble");
+        warningRightBtn.classList.remove("bg-blin");
+        warningRightBtn.classList.remove("bg-blf");
+        warningBox.classList.add("visible");
+        blurIn();
+        warningRightBtn.innerText = "Block User";
+        warningLeftBtn.addEventListener("click", (event) => {
+            warningBox.classList.remove("visible");
+            blurOut();
+        });
+
+        warningRightBtn.addEventListener("click", (event) => {
+            warningBox.classList.remove("visible");
+            loaderIn();
+            const content = {chatId:`${uid}`}
+            fetch('/block',{
+  method:'PATCH',
+  headers:{
+    'Content-Type':'application/json; charset=UTF-8',
+    'Accept':'application/json',
+  },
+  body: JSON.stringify(content)
+}).then((data) => {
+                    return data.json();
+                })
+                .then((jsonData) => {
+                    if (jsonData.status === "success") {
+                      successBox("Blocked","Now if you want to chat again then go to profile section and then in blocked Users.Unblock whoever you want","/blockedUsers")
+                    } else {
+                        fail("Fail to block user","We encountered some issue in blocking this account. Please try again","/messages")
+                    }
+                })
+                .catch((err) => {
+                   
+                });
+        });
+    };
+
+
 </script>

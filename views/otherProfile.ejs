@@ -1,7 +1,7 @@
 <main id="othersProfile" class=" rounded-xl h-svh   py-4 flex flex-col items-center bg-blm transition-all duration-700 ease-in-out">
   <nav class=" px-6 py-5 space-y-4  w-full  z-10 border-b border-b-blb ">
     <div class="flex  justify-between items-center">
-    <h1 id="state" state="<%= state %>" class="font-[500] text-black text-xl" >Other's Profile</h1>
+    <h1 id="fstate" fstate="<%= fstate %>" mstate="<%= mstate %>" class="font-[500] text-black text-xl" >Other's Profile</h1>
     <p id="theirQuotes" class=" text-xs cursor-pointer bg-blf text-blm px-2 py-2 rounded-md font-[500] flex justify-between text-center items-center gap-1">Quotes<span>
     </span></p>
   </div>
@@ -37,11 +37,11 @@
           <!-- Horizonatal line -->
           <div class="h-[1px] bg-blt  opacity-20 rounded-full "></div>
          
-<% if (state === 'unset') { %>
+<% if (fstate === 'unset') { %>
 
            <div class=" flex gap-2 items-center  justify-between  pt-3">
-            <div id="" class="flex items-center justify-center gap-1 w-full py-1 px-2 rounded-md border border-blb text-black bg-blh">
-              <button id="" class="">Cancel</button>
+            <div id="" class="back flex items-center justify-center gap-1 w-full py-1 px-2 rounded-md border border-blb text-black bg-blh">
+              <button  class="">Back</button>
               
             </div>
             <div id="requestBtn" class="flex items-center justify-center gap-1 w-full py-1 px-2 rounded-md border border-blb text-blm bg-blf">
@@ -52,10 +52,10 @@
           
             </div>
             <% } %>
-            <% if (state === 'received') { %>
+            <% if (fstate === 'received') { %>
               <div  class=" flex gap-2 items-center  justify-between  pt-3">
-               <div id="" class="flex items-center justify-center gap-1 w-full py-1 px-2 rounded-md border border-blb text-black bg-blh">
-                 <button id="" class="">Cancel</button>
+               <div id="" class="back flex items-center justify-center gap-1 w-full py-1 px-2 rounded-md border border-blb text-black bg-blh">
+                <button  class="">Back</button>
                </div>
                <div id="removeBtn" rid="<%= rid %>"  class="flex items-center justify-center gap-1 w-full py-1 px-2 rounded-md border border-blb text-blm bg-blb">
                    <button disabled id="" class="">Remove</button>
@@ -63,10 +63,10 @@
                </div>
                <% } %>
 
-               <% if (state === 'connected') { %>
+               <% if (fstate === 'connected' && mstate === 'connected') { %>
                 <div  class=" flex gap-2 items-center  justify-between  pt-3">
-                 <div id="" class="flex items-center justify-center gap-1 w-full py-1 px-2 rounded-md border border-blb text-black bg-blh">
-                   <button id="" class="">Cancel</button>
+                 <div id="" class=" back flex items-center justify-center gap-1 w-full py-1 px-2 rounded-md border border-blb text-black bg-blh">
+                  <button  class="back">Back</button>
                  </div>
                  <div id="message" rid="<%= rid %>"  class="flex items-center justify-center gap-1 w-full py-1 px-2 rounded-md border border-blb text-blm bg-blf">
                      <button  id="" class="">Message</button>
@@ -74,7 +74,20 @@
                  </div>
                  <% } %>
 
-               <% if (state === 'sent') { %>
+                 <% if (fstate === 'connected' && mstate === 'blocked') { %>
+                  <div  class=" flex gap-2 items-center  justify-between  pt-3">
+                   <div id="" class="back flex items-center justify-center gap-1 w-full py-1 px-2 rounded-md border border-blb text-black bg-blh">
+                    <button >Back</button>
+                   </div>
+                   <div id="unblock" rid="<%= rid %>"   class="flex items-center justify-center gap-1 w-full py-1 px-2 rounded-md border border-blb text-blm bg-blf">
+                       <button   class="">Unblock</button>
+                     </div>
+                   </div>
+                   <% } %>
+
+
+
+               <% if (fstate === 'sent') { %>
                 <div  class=" flex gap-2 items-center  justify-between  pt-3">
                  <div id="acceptBtn" class="flex items-center justify-center gap-1 w-full py-1 px-2 rounded-md border border-blb text-black bg-blf">
                    <button id="" class="">Accept</button>
@@ -94,10 +107,20 @@
 <%- include('./partials/warningBox.ejs') %>
 
 <script>
-const stateContainer = document.getElementById('state');
-const state =  stateContainer.getAttribute('state');
+const fstateContainer = document.getElementById('fstate');
+const fstate =  fstateContainer.getAttribute('fstate');
+const mstate =  fstateContainer.getAttribute('mstate');
 const uid = document.getElementById('uid');
 const theirQuotes = document.getElementById("theirQuotes");
+const back = document.querySelectorAll('.back');
+back.forEach(el=>{
+  el.addEventListener('click',(event)=>{
+    event.preventDefault();
+    window.location.href = '/messages';
+
+
+  })
+})
 
 theirQuotes.addEventListener('click',(event)=>{
    event.preventDefault();
@@ -105,8 +128,8 @@ theirQuotes.addEventListener('click',(event)=>{
   });
 
 
-// case 1  state is unset
-if (state === 'unset'){
+// case 1  fstate is unset
+if (fstate === 'unset'){
   const sendRequest = document.getElementById('requestBtn');
   sendRequest.addEventListener('click',  (event) => {
     event.preventDefault(); // Prevent default form submission
@@ -145,8 +168,8 @@ if(jsonData.status === 'exists'){
 })
 }
 
-// case 2 state sent
-if(state === 'received'){
+// case 2 fstate sent
+if(fstate === 'received'){
   const removeBtn = document.getElementById('removeBtn');
   const rid = removeBtn.getAttribute('rid')
   removeBtn.addEventListener('click',(event)=>{
@@ -174,8 +197,8 @@ if(state === 'received'){
   })
 }
 
-// case 2 state sent
-if(state === 'sent'){
+// case 2 fstate sent
+if(fstate === 'sent'){
   const acceptBtn = document.getElementById('acceptBtn');
   const deleteBtn = document.getElementById('deleteBtn');
   const rid = deleteBtn.getAttribute('rid')
@@ -233,7 +256,7 @@ fail("Some Issue,Try again","We encountered some issue in deleting the request",
 }
 
 
-if(state === 'connected'){
+if(fstate === 'connected' && mstate === 'connected'){
   message = document.getElementById('message');
  const rid = message.getAttribute('rid');
   message.addEventListener('click',(event)=>{
@@ -242,6 +265,17 @@ if(state === 'connected'){
   })
 }
 
+
+if (fstate === 'connected' && mstate === 'blocked'){
+
+  const unblock = document.getElementById('unblock');
+  const rid = unblock.getAttribute('rid');
+  unblock.addEventListener('click',(event)=>{
+    event.preventDefault();
+    unblockUserFun(rid);
+  })
+
+}
 
 
 

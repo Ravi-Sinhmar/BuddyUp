@@ -112,6 +112,7 @@ window.location.href = `/users/${href}`;
 }});
 
 const localData = getLocalData();
+console.log(localData);
 
 
 friendName.innerHTML = localData.name;
@@ -121,7 +122,10 @@ friendPic.src = `/img/${localData.profilePic}`;
   const chatSection = document.getElementById("chatSection"); // Get the chat section
   const sendButton = document.getElementById("sendBtn"); // Get the send button (image)
   const extraInfo = document.getElementById("extraInfo");
-  const rid = extraInfo.getAttribute("rid");
+  let rid = extraInfo.getAttribute("rid");
+  if(rid === ''){
+    rid  = localData.rid;
+  }
   let rname = extraInfo.getAttribute("rname");
   if(rname === ''){
     rname = localData.name;
@@ -131,8 +135,9 @@ friendPic.src = `/img/${localData.profilePic}`;
   const tid = extraInfo.getAttribute("tid");
   // Websocket code
   // Send MSG to Socket
-    // const socket = new WebSocket(`ws://localhost:3000/?tid=${tid}`);
-    const socket = new WebSocket(`wss://msg-io.onrender.com/?tid=${tid}`);
+    // const socket = new WebSocket(`ws://localhost:3000/?tid=${tid}&rid=${rid}`);
+    
+    const socket = new WebSocket(`wss://msg-io.onrender.com/?tid=${tid}&rid=${rid}`);
   
 
 
@@ -149,7 +154,6 @@ friendPic.src = `/img/${localData.profilePic}`;
     socket.send(messageContent);
   }
 
- 
 
   // Function to create and add a new message
   function appendMsg(side, radius, messageData) {

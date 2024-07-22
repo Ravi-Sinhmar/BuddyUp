@@ -1,30 +1,29 @@
 
-<main id="wrapper" class=" bg-blm rounded-xl fixed top-0 bottom-0 left-0 right-0  flex flex-col justify-between items-center ">
+<main style="z-index: 1;" id="wrapper" class=" bg-blm rounded-xl h-svh flex flex-col justify-between items-center ">
   <nav class="px-6 py-5 pt-5 space-y-4  w-full  z-10 border-b border-b-blb">
     <h1 class="font-[500] text-black text-xl">Blocked users</h1>
     
   
   </nav>
 
-  <% if (!friendData.length > 0) { %>
-    <div id="preMsg" class="flex h-full w-full flex-col justify-center items-center ">
-        <div class="flex flex-col justify-center items-center mb-20 ">
-         <img src="/bg/blocked.png"  alt="" class="w-32 h-32">
-         <h1 class="font-[600] text-xl">Empty blocked list</h1>
-         <h1 class="text-blt ">Blocked users will appear here</h1>
-        </div>
-       </div>
-<% } %>
+ 
+    <!-- <div id="preMsg" class="flex h-full w-full flex-col justify-center items-center ">
+      <div class="flex flex-col justify-center items-center mb-20 ">
+       <img src="/bg/blocked.png"  alt="" class="w-32 h-32">
+       <h1 class="font-[600] text-xl">Empty blocked list</h1>
+       <h1 class="text-blt ">Blocked users will appear here</h1>
+      </div>
+     </div> -->
 
     
           <!-- List of people with whom  user doing chat -->
-          <% if (friendData.length > 0) { %>
+          
          
            <div class="bg-blm flex flex-col space-y-3 px-4 fixed top-20 bottom-24 py-2 left-0 right-0 overflow-y-scroll">
             <% friendData.forEach(friend => {  %>
              <% if (friend.state == "blocked") { %>
    
-    <div  id="<%= friend.chatId %>"  class=" bg-blh border border-blb rounded-xl requestId flex justify-between items-center px-4 py-4 relative ">
+    <div   class=" blockDiv bg-blh border border-blb rounded-xl  flex justify-between items-center px-4 py-4 relative ">
       <div class="flex justify-center gap-2">
         <img
           class="profilePic w-12 h-12 rounded-full"
@@ -37,16 +36,16 @@
         </div>
       </div>
       <div class="flex justify-center items-center gap-4">
-        <button  class="viewProfile px-2 py-1.5 bg-blm rounded-md border border-blb text-blf text-sm " >View Profile</button>
+        <button chatId="<%= friend.chatId %>"  class="viewProfile px-2 py-1.5 bg-blm rounded-md border border-blb text-blf text-sm " >View Profile</button>
 
-        <button class="unblock px-2 py-1.5 bg-blm rounded-md border border-blb text-blf text-sm " >Unblock</button>
+        <button chatId="<%= friend.chatId %>"  class="unblock px-2 py-1.5 bg-blm rounded-md border border-blb text-blf text-sm " >Unblock</button>
         
       </div>
   
      
    </div>
     <% } %>
-    <% })}  %>
+    <% }) %>
    
            </div>
          
@@ -57,126 +56,30 @@
 </main>
 
 <%- include('./partials/footer.ejs') %>
+<%- include('./partials/warningBox.ejs') %>
 
 <script>
   const viewProfile = document.querySelectorAll('.viewProfile');
   const unblock = document.querySelectorAll('.unblock');
-  viewProfile.forEach(element => {
-    element.addEventListener('click', (event) => {
-      event.preventDefault(); // Prevent default form submission
-    
-
-      if (event.target.closest('.requestId')) {
-
-        // getting parent div
-        const requestDiv = event.target.closest('.requestId');
-
-        // getting  uid 
-        const rid = requestDiv.getAttribute('id');
-      
-
-        // Assuming you have the data to send in a variable named 'content'
-        const content = {
-          Details: "hlo gys"
-        };
-
-        fetch(`/requests/accept/${rid}`, {
-            method: 'PATCH',
-            headers: {
-              'Content-Type': 'application/json; charset=UTF-8',
-              'Accept': 'application/json'
-            },
-            body: JSON.stringify(content)
-          }).then((data) => {
-            
-            return data.json();
-          }).then((data) => {
-
-            if (data.message == "Accepted") {
-              
-              window.location.href = '/success'
-            } else if (data.message == "Invalid") {
-              window.location.href = '/invalid'
-
-            }
-
-          })
-          .catch(err => console.log(err))
-
-
-      }
-    })
-
-  });
-
-
-  deleteReq.forEach(element => {
-    element.addEventListener('click', (event) => {
-      event.preventDefault(); // Prevent default form submission
-
-      if (event.target.closest('.requestId')) {
-
-        // getting parent div
-        const requestDiv = event.target.closest('.requestId');
-
-        // getting  uid 
-        const rid = requestDiv.getAttribute('id');
-        // Assuming you have the data to send in a variable named 'content'
-        const content = {
-          Details: "hlo gys"
-        };
-
-        fetch(`/requests/delete/${rid}`, {
-
-            method: 'DELETE',
-            headers: {
-              'Content-Type': 'application/json; charset=UTF-8',
-              'Accept': 'application/json'
-            },
-            body: JSON.stringify(content)
-          }).then((data) => {
-            console.log(data.status)
-            return data.json();
-          }).then((data) => {
-
-            if (data.message == "Deleted") {
-          
-              window.location.href = '/success'
-            }
-          })
-          .catch(err => console.log(err))
-
-
-      }
-    })
-
-  });
-
-// Go On Profile......
-const requestIdBtn = document.querySelectorAll('.requestId');
-requestIdBtn.forEach(btn =>{
-btn.addEventListener('click', (event)=>{
-  // to avoid recognzaton of click on childs
-  if (event.target.closest('.requestId') && event.target !=viewProfile && event.target != deleteReq ) {
+  const blockDiv = document.querySelectorAll('.blockDiv');
   
-// getting parent div
-const requestDiv = event.target.closest('.requestId');
+viewProfile.forEach(el =>{
+el.addEventListener('click',(event)=>{
+  event.preventDefault();
+  const chatId = el.getAttribute('chatId');
+  window.location.href = `/users/${chatId}`
 
-// getting person name 
-const userNameElement = requestDiv.querySelector('.name');
-console.log(userNameElement);
-const name = userNameElement.textContent.trim();
-// getting image name 
-const profilePic = requestDiv.querySelector('.profilePic');
-let profilePicSrc = profilePic.src;
+});
 
-profilePicSrc = profilePicSrc.split('/');
-const imageName = profilePicSrc[profilePicSrc.length - 1];
+});
+  
+unblock.forEach(el =>{
+  el.addEventListener('click',(event)=>{
+   const chatId = el.getAttribute('chatId');
+    unblockUserFun(chatId);
 
-}
-
+  })
 })
 
-})
 
 </script>

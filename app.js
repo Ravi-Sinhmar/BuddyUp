@@ -70,9 +70,11 @@ function getFid(rid, sid) {
     return "No matching FID found.";
   }
 }
+
+
 const allConnections = new Map();
-wss.on("connection", (ws, req) => {
-  let countIn = 0;
+wss.on("connection",async(ws, req) => {
+ 
   
   function validateToken(token) {
     try {
@@ -83,31 +85,42 @@ wss.on("connection", (ws, req) => {
     }
   }
 
-  const token = req.url.split("?tid=")[1];
+  const parts = req.url.split("?tid=")[1];
+  const token = parts.split("&rid=")[0];
+  const conId = parts.split("&rid=")[1];
+  console.log(token)
+  console.log(conId);
   const userId = validateToken(token); // function defined above
-
-  console.log("This is joined time user id ", userId);
-
-  if (userId) {
-    
+  const user = await users.find({
+  'friendsDetails._id': conId, // friendId is a placeholder for your actual friend's _id field name
+  'friendsDetails.state': "connected", 
+  '_id':userId,
+});
+if(!user){
+  return  ws.terminate();
+}
+  if(user && userId){
     ws.userId = userId;
+    ws.rid = conId;
     allConnections.set(userId, ws);
     ws.on("message", async (data) => {
       console.log(`Received message => ${data}`);
-
       let dataObj = JSON.parse(data);
-
       // Extracting data form msgs ->
       const content = dataObj.content;
       const rid = dataObj.rid;
-      const sid = dataObj.sid;
+      let sid = dataObj.sid;
       const rname = dataObj.rname;
       const sname = dataObj.sname;
       const fid = getFid(rid, sid);
-
       console.log("this is chat id", rid);
-      if (allConnections.has(sid)) {
-        let doc = {
+     
+      if (allConnections.has(sid) && conId === rid) {
+        console.log("this is rid and conId bellow ");
+console.log(conId) ;
+console.log(rid);
+
+       let doc = {
           chatId: rid,
           sid: sid,
           fid: fid,
@@ -122,7 +135,8 @@ wss.on("connection", (ws, req) => {
         if (allConnections.has(fid)) {
           console.log("In connections");
           const myws = allConnections.get(fid);
-          if (myws.readyState === WebSocket.OPEN) {
+          
+          if (myws.readyState === WebSocket.OPEN && myws.rid === rid) {
             console.log("Your Friend is online send any msg ");
             myws.send(
               JSON.stringify({
@@ -151,6 +165,7 @@ wss.on("connection", (ws, req) => {
   });
 
   ws.on("close", () => {
+    console.log("I am out");
     console.log("this is close time userid", userId);
     allConnections.delete(userId);
   });
@@ -370,13 +385,15 @@ if(result){
 });
 
 
-
 // Page 1 , Route '/register' , Get , Serving register.ejs File  [No Auth EveryOne can Access , if auth then send to /messages]
-
-
 app.get("/users/:uid", cookieAuth, async (req, res) => {
-  const uid = req.params.uid;
+  let uid = req.params.uid;
   const myId = req.id;
+  if(uid.length === 48){
+    let fid  = extractString(uid,myId);
+    uid = fid[0];
+  }
+ 
   if(uid === req.id){
   return res.redirect('/profile');
   }
@@ -393,17 +410,36 @@ app.get("/users/:uid", cookieAuth, async (req, res) => {
         }
       )
     }
+
+    const user2 = await users.findById(myId);
+    if (!user2) {
+      return res.status(500).render('resultBox',
+        {
+          title:"Failed",
+          type:"500",
+          status:"Try Again",
+          message:"We Encountered a Problem with showing profile",
+          href:"/messages"
+        }
+      )
+    }
+let mstate = 'unset'
+user2.friendsDetails.forEach(el=>{
+  if(el._id === `${myId}${uid}` || `${uid}${myId}`){
+    mstate = el.state;
+    }
+});
     const { _id: id, name, profilePic, bio, } = user;
-let state = 'unset';
+let fstate = 'unset';
 let rid = ''
    user.friendsDetails.forEach(el =>{
 if(el._id === `${myId}${uid}` || `${uid}${myId}`){
-state = el.state;
+fstate = el.state;
 rid = el._id;
 }
     });
 
-if(state === 'blocked'){
+if(fstate === 'blocked'){
   return res.status(200).render('resultBox',
     {
       title:"Failed",
@@ -419,7 +455,7 @@ if(state === 'blocked'){
 
 
     let title = `${name}-Profile`;
-    res.status(200).render("otherProfile", { id, name, profilePic, bio, title,state,rid});
+    res.status(200).render("otherProfile", { id, name, profilePic, bio, title,fstate,mstate,rid});
   } catch (error) {
     return res.status(500).render('resultBox',
       {
@@ -697,11 +733,14 @@ app.get("/blockedUsers", cookieAuth, async (req, res) => {
         }
       ) 
     }
+
+
     const friendData = user.friendsDetails.map((friend) => ({
       state: friend.state,
       name: friend.name,
       profilePic: friend.profilePic,
       chatId: friend._id,
+      
     }));
   
     res.status(200).render("blocked", { title: "Blocked", friendData, myPic });
@@ -716,6 +755,20 @@ app.get("/blockedUsers", cookieAuth, async (req, res) => {
       }
     ) 
   }
+});
+app.patch("/unblock",cookieAuth,async(req,res)=>{
+  const chatId = req.body.chatId;
+console.log(chatId);
+const user = await users.updateOne(
+  { _id: req.id, "friendsDetails._id": chatId }, // Filter by both user ID and chat ID
+  { $set: { "friendsDetails.$.state": "connected" } } // Update state using positional operator
+);
+
+if(user.modifiedCount === 1){
+  console.log("done");
+  res.status(200).json({status:'success',message:"unblock"})
+}
+
 });
 
 app.patch("/block",cookieAuth,async(req,res)=>{

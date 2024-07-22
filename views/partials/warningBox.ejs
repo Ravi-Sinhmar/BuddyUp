@@ -249,7 +249,7 @@
 
 
     //   Blocked Users 
-   // Delete Account
+   
    const blockUserFun = (uid) => {
         warningIcon.src = "/img/block.png";
         warningHeading.innerText = "Warning";
@@ -293,5 +293,51 @@
         });
     };
 
+    const unblockUserFun = (uid) => {
+        warningIcon.src = "/img/alert.png";
+        warningHeading.innerText = "Warning";
+        warningMessage.innerText =
+            "Do you really want to unblock";
+        warningRightBtn.classList.add("bg-blin");
+        warningRightBtn.classList.remove("bg-ble");
+        warningRightBtn.classList.remove("bg-blf");
+        warningBox.classList.add("visible");
+        blurIn();
+        warningRightBtn.innerText = "Unblock User";
+        warningLeftBtn.addEventListener("click", (event) => {
+            warningBox.classList.remove("visible");
+            blurOut();
+        });
+
+        warningRightBtn.addEventListener("click", (event) => {
+            warningBox.classList.remove("visible");
+            loaderIn();
+            const content = {chatId:`${uid}`}
+            fetch('/unblock',{
+  method:'PATCH',
+  headers:{
+    'Content-Type':'application/json; charset=UTF-8',
+    'Accept':'application/json',
+  },
+  body: JSON.stringify(content)
+}).then((data) => {
+                    return data.json();
+                })
+                .then((jsonData) => {
+                    if (jsonData.status === "success") {
+                      successBox("Unblocked","Congrats , Now say them hi...","/messages")
+                    } else {
+                        fail("Fail to block user","We encountered some issue in unblocking this account. Please try again","/blockedUsers")
+                    }
+                })
+                .catch((err) => {
+                   
+                });
+        });
+    };
+
+
+
+    
 
 </script>

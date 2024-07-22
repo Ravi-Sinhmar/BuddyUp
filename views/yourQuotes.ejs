@@ -8,19 +8,18 @@
         </span></a>
       </div>
       </nav>
-    <div class="h-full flex flex-col  overflow-y-scroll bg-blm ">
-      <% if (!allQuotes.length > 0) { %>
-        <div class="flex h-full w-full flex-col justify-center items-center ">
-         <div class="flex flex-col justify-center items-center ">
-          <img src="/bg/quotes.png"  alt="" class="w-32 h-32">
-          <h1 class="font-[600] text-xl">No quotes</h1>
-          <h1 class="text-blt ">Quotes will appear here</h1>
-         </div>
+
+
+    <div id="quoteSection" class="h-full flex flex-col  overflow-y-scroll bg-blm ">
+      <div id="quotCustom" class="hidden flex h-full w-full flex-col justify-center items-center ">
+        <div class="flex flex-col justify-center items-center mb-20 ">
+         <img src="/bg/quotes.png"  alt="" class="w-32 h-32">
+         <h1 class="font-[600] text-xl">No quotes</h1>
+         <h1 class="text-blt ">All quotes will appear here</h1>
         </div>
-        <% } %>
-      <% if (allQuotes.length > 0) { %>
+       </div>
       <% allQuotes.forEach(el => { %>
-        <div class=" px-4 py-2 rounded-md bg-blm border-2 border-blg ">
+        <div class="quot px-4 py-2 rounded-md bg-blm border-b-2 border-b-blg ">
             <div class="flex w-full flex-col   py-2 px-2  " >
                 <div class="flex  text-black gap-4 w-full ">
                    
@@ -45,7 +44,7 @@
             
                    
                     <% }) %>
-                    <% } %>
+                 
 
     </div>
 
@@ -54,4 +53,19 @@
 <%- include('./partials/warningBox.ejs') %>
 
 
+<script>
+    const quoteSection = document.getElementById('quoteSection')
+  const quot = quoteSection.querySelectorAll('.quot');
+// const sen1 = document.querySelectorAll('.sen');
+const quotCustom = document.getElementById('quotCustom');
 
+
+if(quot.length === 0 ){
+  quotCustom.classList.remove('hidden');
+}
+else{
+  if(!quotCustom.classList.contains('hidden')){
+    quotCustom.classList.add('hidden');
+  }
+}
+</script>

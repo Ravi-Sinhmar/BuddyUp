@@ -28,23 +28,22 @@
       </div>
   </nav>
         
-  <% if (!friendData.length > 0 ) { %>
-    <div id="preReq" class="flex h-full w-full flex-col justify-center items-center ">
-      <div class="flex flex-col justify-center items-center mb-20 ">
-       <img src="/bg/requests.png"  alt="" class="w-32 h-32">
-       <h1 class="font-[600] text-xl">No requests</h1>
-       <h1 class="text-blt ">Your requests will appear here</h1>
-      </div>
-     </div>
-<% } %>
+  
+   
+
           <!-- List of people with whom  user doing chat -->
-        
-          
            <div id="receivedSection" class="transition-transform duration-500 ease-in-out bg-blm flex flex-col space-y-3 px-4 fixed top-32 bottom-24 py-2 left-0 right-0 overflow-y-scroll">
-            <% if (friendData.length > 0) { %>
+           
+              <div id="recCustom" class=" hidden flex h-full w-full flex-col justify-center items-center ">
+                <div class="flex flex-col justify-center items-center mb-20 ">
+                 <img src="/bg/requests.png"  alt="" class="w-32 h-32">
+                 <h1 class="font-[600] text-xl">No requests</h1>
+                 <h1 class="text-blt ">Your requests will appear here</h1>
+                </div>
+               </div>
               <% friendData.forEach(friend => {  %>
             <% if (friend.state === "received") { %>
-    <div  id="<%= friend.chatId %>"  class="  bg-blh border border-blb rounded-xl requestId flex justify-between items-center px-4 py-4 relative ">
+    <div  id="<%= friend.chatId %>" class="requestId rec bg-blh border border-blb rounded-xl  flex justify-between items-center px-4 py-4 relative ">
       <div class="flex justify-center gap-2">
         <img
           class="profilePic w-12 h-12 rounded-full"
@@ -67,19 +66,26 @@
     <% } %>
 
     
-    <% })}  %>
+    <% }) %>
   </div>
   
 
 
            <!-- ----------------------sent section  -->
 
-           <% if (friendData.length > 0) { %>
+            
             <div id="sentSection" class=" translate-x-[120%] transition-transform duration-500 ease-in-out bg-blm flex flex-col space-y-3 px-4 fixed top-32 bottom-24 py-2 left-0 right-0 overflow-y-scroll">
-
-                <% friendData.forEach(friend => {  %>
+          
+            <div id="senCustom" class=" hidden flex h-full w-full flex-col justify-center items-center ">
+              <div class="flex flex-col justify-center items-center mb-20 ">
+               <img src="/bg/requests.png"  alt="" class="w-32 h-32">
+               <h1 class="font-[600] text-xl">No requests</h1>
+               <h1 class="text-blt ">Your requests will appear here</h1>
+              </div>
+             </div>
+              <% friendData.forEach(friend => {  %>     
               <% if (friend.state === "sent") { %>
-            <div  id="<%= friend.chatId %>"  class="   bg-blh border border-blb rounded-xl requestId flex justify-between items-center px-4 py-4 relative ">
+            <div  id="<%= friend.chatId %>"  class="requestId sen bg-blh border border-blb rounded-xl  flex justify-between items-center px-4 py-4 relative ">
               <div class="flex justify-center gap-2">
                 <img
                   class="profilePic w-12 h-12 rounded-full"
@@ -100,7 +106,7 @@
            </div>
       
            <% } %>
-    <% })}  %>
+    <% })  %>
 
                  </div>
               
@@ -129,6 +135,30 @@
   const receivedSection = document.getElementById('receivedSection');
   
 
+const req = receivedSection.querySelectorAll('.req');
+const sen = sentSection.querySelectorAll('.sen');
+// const sen1 = document.querySelectorAll('.sen');
+const recCustom = document.getElementById('recCustom');
+const senCustom = document.getElementById('senCustom');
+
+if(req.length === 0 ){
+  recCustom.classList.remove('hidden');
+}
+else{
+  if(!recCustom.classList.contains('hidden')){
+    recCustom.classList.add('hidden');
+  }
+}
+
+if(sen.length === 0 ){
+  senCustom.classList.remove('hidden');
+}
+else{
+  if(!senCustom.classList.contains('hidden')){
+    senCustom.classList.add('hidden');
+
+  }
+}
 
 
 
@@ -263,16 +293,13 @@ acceptReq.forEach(element => {
 
             if (jsonData.status === "success") {
               successBox("Removed Successfully","You have remove your request","/requests")
-              sent.classList.add('visible');
+              
             }
           })
           .catch(err => {
             fail("Some Issue,Try again","We encountered some issue in removing your request","/requests")
-            sent.classList.add('visible');
+           
           });
-
-
-
       }
     })
 

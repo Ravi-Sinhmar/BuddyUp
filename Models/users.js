@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
       {
         state: {
           type: String,
-          default: "sent",
+          default: "unset",
         },
         name: {
           type: String,

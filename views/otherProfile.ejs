@@ -1,8 +1,7 @@
-
 <main id="othersProfile" class=" rounded-xl h-svh   py-4 flex flex-col items-center bg-blm transition-all duration-700 ease-in-out">
   <nav class=" px-6 py-5 space-y-4  w-full  z-10 border-b border-b-blb ">
     <div class="flex  justify-between items-center">
-    <h1 class="font-[500] text-black text-xl" >Other's Profile</h1>
+    <h1 id="state" state="<%= state %>" class="font-[500] text-black text-xl" >Other's Profile</h1>
     <p id="theirQuotes" class=" text-xs cursor-pointer bg-blf text-blm px-2 py-2 rounded-md font-[500] flex justify-between text-center items-center gap-1">Quotes<span>
     </span></p>
   </div>
@@ -29,7 +28,7 @@
                 <path fill-rule="evenodd" d="M12 3.75a6.715 6.715 0 0 0-3.722 1.118.75.75 0 1 1-.828-1.25 8.25 8.25 0 0 1 12.8 6.883c0 3.014-.574 5.897-1.62 8.543a.75.75 0 0 1-1.395-.551A21.69 21.69 0 0 0 18.75 10.5 6.75 6.75 0 0 0 12 3.75ZM6.157 5.739a.75.75 0 0 1 .21 1.04A6.715 6.715 0 0 0 5.25 10.5c0 1.613-.463 3.12-1.265 4.393a.75.75 0 0 1-1.27-.8A6.715 6.715 0 0 0 3.75 10.5c0-1.68.503-3.246 1.367-4.55a.75.75 0 0 1 1.04-.211ZM12 7.5a3 3 0 0 0-3 3c0 3.1-1.176 5.927-3.105 8.056a.75.75 0 1 1-1.112-1.008A10.459 10.459 0 0 0 7.5 10.5a4.5 4.5 0 1 1 9 0c0 .547-.022 1.09-.067 1.626a.75.75 0 0 1-1.495-.123c.041-.495.062-.996.062-1.503a3 3 0 0 0-3-3Zm0 2.25a.75.75 0 0 1 .75.75c0 3.908-1.424 7.485-3.781 10.238a.75.75 0 0 1-1.14-.975A14.19 14.19 0 0 0 11.25 10.5a.75.75 0 0 1 .75-.75Zm3.239 5.183a.75.75 0 0 1 .515.927 19.417 19.417 0 0 1-2.585 5.544.75.75 0 0 1-1.243-.84 17.915 17.915 0 0 0 2.386-5.116.75.75 0 0 1 .927-.515Z" clip-rule="evenodd" />
               </svg>
             <div class="flex text-black flex-col items-start gap-1">
-            <h1 id="uid" class=" text-xs">Unique Id</h1>
+            <h1  class=" text-xs">Unique Id</h1>
               <h1 id="uid" class="text-xs"><%= id %></h1>
             </div>
             </div>
@@ -37,7 +36,9 @@
             </div>
           <!-- Horizonatal line -->
           <div class="h-[1px] bg-blt  opacity-20 rounded-full "></div>
-           <!-- Unique Id Section -->
+         
+<% if (state === 'unset') { %>
+
            <div class=" flex gap-2 items-center  justify-between  pt-3">
             <div id="" class="flex items-center justify-center gap-1 w-full py-1 px-2 rounded-md border border-blb text-black bg-blh">
               <button id="" class="">Cancel</button>
@@ -45,12 +46,44 @@
             </div>
             <div id="requestBtn" class="flex items-center justify-center gap-1 w-full py-1 px-2 rounded-md border border-blb text-blm bg-blf">
                 <button id="" class="">Send Request</button>
-                
               </div>
               
-         
+        
           
             </div>
+            <% } %>
+            <% if (state === 'received') { %>
+              <div  class=" flex gap-2 items-center  justify-between  pt-3">
+               <div id="" class="flex items-center justify-center gap-1 w-full py-1 px-2 rounded-md border border-blb text-black bg-blh">
+                 <button id="" class="">Cancel</button>
+               </div>
+               <div id="removeBtn" rid="<%= rid %>"  class="flex items-center justify-center gap-1 w-full py-1 px-2 rounded-md border border-blb text-blm bg-blb">
+                   <button disabled id="" class="">Remove</button>
+                 </div>
+               </div>
+               <% } %>
+
+               <% if (state === 'connected') { %>
+                <div  class=" flex gap-2 items-center  justify-between  pt-3">
+                 <div id="" class="flex items-center justify-center gap-1 w-full py-1 px-2 rounded-md border border-blb text-black bg-blh">
+                   <button id="" class="">Cancel</button>
+                 </div>
+                 <div id="message" rid="<%= rid %>"  class="flex items-center justify-center gap-1 w-full py-1 px-2 rounded-md border border-blb text-blm bg-blf">
+                     <button  id="" class="">Message</button>
+                   </div>
+                 </div>
+                 <% } %>
+
+               <% if (state === 'sent') { %>
+                <div  class=" flex gap-2 items-center  justify-between  pt-3">
+                 <div id="acceptBtn" class="flex items-center justify-center gap-1 w-full py-1 px-2 rounded-md border border-blb text-black bg-blf">
+                   <button id="" class="">Accept</button>
+                 </div>
+                 <div rid="<%= rid %>" id="deleteBtn"  class="flex items-center justify-center gap-1 w-full py-1 px-2 rounded-md border border-blb text-blm bg-ble">
+                     <button  id="" class="">Delete</button>
+                   </div>
+                 </div>
+                 <% } %>
          
           </div>
 
@@ -61,17 +94,20 @@
 <%- include('./partials/warningBox.ejs') %>
 
 <script>
+const stateContainer = document.getElementById('state');
+const state =  stateContainer.getAttribute('state');
+const uid = document.getElementById('uid');
+const theirQuotes = document.getElementById("theirQuotes");
 
-  const sendRequest = document.getElementById('requestBtn');
-  const uid = document.getElementById('uid');
-   const theirQuotes = document.getElementById("theirQuotes");
-  
-
-   theirQuotes.addEventListener('click',(event)=>{
+theirQuotes.addEventListener('click',(event)=>{
    event.preventDefault();
    window.location.href =  `/quotes/${uid}`
-   });
+  });
 
+
+// case 1  state is unset
+if (state === 'unset'){
+  const sendRequest = document.getElementById('requestBtn');
   sendRequest.addEventListener('click',  (event) => {
     event.preventDefault(); // Prevent default form submission
     const id = uid.innerText.trim();
@@ -107,5 +143,110 @@ if(jsonData.status === 'exists'){
   return fail("Fail","Please Enter a valid UID or Try Again","/messages");
 })
 })
-   
+}
+
+// case 2 state sent
+if(state === 'received'){
+  const removeBtn = document.getElementById('removeBtn');
+  const rid = removeBtn.getAttribute('rid')
+  removeBtn.addEventListener('click',(event)=>{
+
+    fetch(`/requests/remove/${rid}`, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json; charset=UTF-8',
+              'Accept': 'application/json'
+            },
+           
+          }).then((data) => {
+            
+            return data.json();
+          }).then((jsonData) => {
+
+            if (jsonData.status === "success") {
+              successBox("Removed Successfully","You have remove your request","/requests")
+            }
+          })
+          .catch(err => {
+            fail("Some Issue,Try again","We encountered some issue in removing your request","/requests")
+           
+          });
+  })
+}
+
+// case 2 state sent
+if(state === 'sent'){
+  const acceptBtn = document.getElementById('acceptBtn');
+  const deleteBtn = document.getElementById('deleteBtn');
+  const rid = deleteBtn.getAttribute('rid')
+  acceptBtn.addEventListener('click',(event)=>{
+
+    fetch(`/requests/accept/${rid}`, {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json; charset=UTF-8',
+              'Accept': 'application/json'
+            },
+           
+          }).then((data) => {
+           
+            return data.json();
+          }).then((jsonData) => {
+
+            if (jsonData.status === "success") {
+              successBox("Accepted","You have accept the request","/messages")
+              
+            }
+          })
+          .catch(err => {
+            fail("Some Issue,Try again","We encountered some issue in accepting the request","/requests")
+            
+          });
+  })
+
+
+  deleteBtn.addEventListener('click',(event)=>{
+  fetch(`/requests/delete/${rid}`, {
+
+method: 'DELETE',
+headers: {
+  'Content-Type': 'application/json; charset=UTF-8',
+  'Accept': 'application/json'
+},
+
+}).then((data) => {
+
+return data.json();
+}).then((jsonData) => {
+
+if (jsonData.status === "success") {
+  successBox("Deleted","You have deleted the request","/requests")
+  
+}
+})
+.catch(err => {
+fail("Some Issue,Try again","We encountered some issue in deleting the request","/requests")
+
+});
+})
+
+}
+
+
+if(state === 'connected'){
+  message = document.getElementById('message');
+ const rid = message.getAttribute('rid');
+  message.addEventListener('click',(event)=>{
+    event.preventDefault();
+    window.location.href = `/messages/${rid}`
+  })
+}
+
+
+
+
+
+
+  
+ 
 </script>

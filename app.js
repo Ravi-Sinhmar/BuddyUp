@@ -376,6 +376,7 @@ if(result){
 
 app.get("/users/:uid", cookieAuth, async (req, res) => {
   const uid = req.params.uid;
+  const myId = req.id;
   if(uid === req.id){
   return res.redirect('/profile');
   }
@@ -392,9 +393,33 @@ app.get("/users/:uid", cookieAuth, async (req, res) => {
         }
       )
     }
-    const { _id: id, name, profilePic, bio } = user;
+    const { _id: id, name, profilePic, bio, } = user;
+let state = 'unset';
+let rid = ''
+   user.friendsDetails.forEach(el =>{
+if(el._id === `${myId}${uid}` || `${uid}${myId}`){
+state = el.state;
+rid = el._id;
+}
+    });
+
+if(state === 'blocked'){
+  return res.status(200).render('resultBox',
+    {
+      title:"Failed",
+      type:"fail",
+      status:"Blocked",
+      message:"Your are blocked by that person",
+      href:"/messages"
+    }
+  )
+}
+
+
+
+
     let title = `${name}-Profile`;
-    res.status(200).render("otherProfile", { id, name, profilePic, bio, title });
+    res.status(200).render("otherProfile", { id, name, profilePic, bio, title,state,rid});
   } catch (error) {
     return res.status(500).render('resultBox',
       {

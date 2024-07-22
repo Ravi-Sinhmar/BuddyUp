@@ -186,7 +186,7 @@ app.get("/",checkCookies, (req, res) => {
 
 // Register
 app.get("/register",checkCookies, (req, res) => {
-  if (req.cookies.token && req.uid) {
+  if (req.cookies.token && req.uid && req.uid.length != 24) {
     return res.status(301).redirect("messages");
   }
  res.status(200).render('register',{title:"Register"});
@@ -248,7 +248,7 @@ console.log("it is here");
 // Login
 
 app.get("/login", checkCookies, (req, res) => {
-  if (req.cookies.token && req.uid) {
+  if (req.cookies.token && req.uid && req.uid.length != 24) {
     return res.status(301).redirect("messages");
   }
   return res.render("login", { title: "Login" });

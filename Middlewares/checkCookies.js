@@ -10,7 +10,7 @@ const checkCookies = (req,res,next)=>{
     req.uid = data.id;
     console.log(data);
     
-    if(req.uid.length === 24){
+    if(req.uid){
      return res.redirect('messages');
     }
     else{

@@ -20,6 +20,5 @@ function setCookies(user){
       console.log(error);
     }
 
-  
   }
   module.exports = setCookies;

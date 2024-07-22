@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken');
 // Middleware to check if the user id is in the cookies or not
 const cookieAuth = (req, res, next) => {
-
     const token = req.cookies.token;
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
@@ -9,7 +8,7 @@ const cookieAuth = (req, res, next) => {
       req.name = decoded.name;
       req.profilePic = decoded.profilePic;
       req.bio = decoded.bio;
-      if(req.id && req.id.length === 24){
+      if(req.id){
         next();
       }
       else{

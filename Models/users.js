@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
-
 const userSchema = new mongoose.Schema({
+  _id: {
+    type: String, 
+    required: true,
+    
+  },
   name: {
     type: String,
     required: true,
@@ -12,7 +16,8 @@ const userSchema = new mongoose.Schema({
   profilePic: {
     type: String,
     default: "default.png",
-  }, bio: {
+  },
+  bio: {
     type: String,
     default: "When You Lose Interest In Life, Life Shows Interest In You - The Story Of 777 Charlie",
   },
@@ -39,10 +44,10 @@ const userSchema = new mongoose.Schema({
           type: String, // Optional: Reference to the chat document
           ref: "Chat",
         },
-       
       },
     ],
   },
 });
+
 
 module.exports = mongoose.model("User", userSchema);

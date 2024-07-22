@@ -50,25 +50,26 @@ const { rmSync } = require("fs");
 
 const wss = new WebSocket.Server({ server });
 
-function getFid(rid, sid) {
-  // Check if both rid and sid have the expected lengths
-  if (rid.length !== 48 || sid.length !== 24) {
-    return "Invalid input lengths. rid should be 48 characters, sid should be 24 characters.";
+
+
+function getFid(rid , sid) {
+  if (typeof rid !== "string" && typeof sid !== "string") {
+    return { error: "Invalid input: combinedString must be a string" };
   }
 
-  // Trim any leading or trailing spaces from rid and sid
-  const trimmedRid = rid.trim();
-  const trimmedSid = sid.trim();
+  const parts = rid.split('-');
 
-  // Check if the first 24 characters of trimmedRid match trimmedSid
-  if (trimmedRid.slice(0, 24) === trimmedSid) {
-    return trimmedRid.slice(24); // Return remaining characters of rid
-  } else if (trimmedRid.slice(-24) === trimmedSid) {
-    // Check if last 24 characters of rid match sid
-    return trimmedRid.slice(0, 24); // Return first 24 characters of rid
-  } else {
-    return "No matching FID found.";
+  if (parts.length !== 2) {
+    return { error: "Invalid format: expected a single hyphen in the combined string" };
   }
+
+  if(parts[0] === sid){
+    return parts[1]
+  }
+  else if (parts[1]=== sid){
+    return parts[0]
+  }
+
 }
 
 
@@ -191,7 +192,23 @@ app.get("/register",checkCookies, (req, res) => {
  res.status(200).render('register',{title:"Register"});
 });
 
+app.get('/registerc', async(req, res) => {
+  const { username } = req.query;
+   console.log(username);
+  // Query your database (pseudo-code)
+const userExists = await users.findById(username);
+console.log(userExists);
+ if(!userExists){
+  res.status(200).json({status:'success'})
+ }
+ else{
+  res.status(404).json({status:"fail"});
+ }
+});
+
+
 app.post("/register", async (req, res) => {
+console.log("it is here");
   try {
     const user = await users.create(req.body);
     if (!user) {
@@ -254,7 +271,8 @@ app.post("/login", checkCookies, async (req, res) => {
   const password = req.body.password;
 
   try {
-    const user = await users.find({ _id: uid, password: password });
+    const user = await users.findById({ _id: uid, password: password });
+     console.log(user);
     if (!user) {
       return res.status(404).render('resultBox',
         {
@@ -266,7 +284,7 @@ app.post("/login", checkCookies, async (req, res) => {
         }
       )
     }
-    const token = setCookies(user[0]); // Generate token
+    const token = setCookies(user); // Generate token
     console.log(token);
     res.cookie("token", token, { httpOnly: true }); // Set cookie after token generation
     return res.status(404).render('resultBox',
@@ -274,7 +292,7 @@ app.post("/login", checkCookies, async (req, res) => {
         title:"Success",
         type:"success",
         status:"Sucess",
-        message:`Welcome Back,${user[0].name}`,
+        message:`Welcome Back,${user.name}`,
         href:"/messages"
       }
     )
@@ -389,7 +407,9 @@ if(result){
 app.get("/users/:uid", cookieAuth, async (req, res) => {
   let uid = req.params.uid;
   const myId = req.id;
-  if(uid.length === 48){
+
+  
+  if(uid.includes('-')){
     let fid  = extractString(uid,myId);
     uid = fid[0];
   }
@@ -425,7 +445,7 @@ app.get("/users/:uid", cookieAuth, async (req, res) => {
     }
 let mstate = 'unset'
 user2.friendsDetails.forEach(el=>{
-  if(el._id === `${myId}${uid}` || `${uid}${myId}`){
+  if(el._id === `${myId}-${uid}` || `${uid}-${myId}`){
     mstate = el.state;
     }
 });
@@ -433,7 +453,7 @@ user2.friendsDetails.forEach(el=>{
 let fstate = 'unset';
 let rid = ''
    user.friendsDetails.forEach(el =>{
-if(el._id === `${myId}${uid}` || `${uid}${myId}`){
+if(el._id === `${myId}-${uid}` || `${uid}-${myId}`){
 fstate = el.state;
 rid = el._id;
 }
@@ -487,7 +507,7 @@ app.get("/profile", cookieAuth, (req, res) => {
   });
 });
 
-app.get("/profile/edit", cookieAuth, (req, res) => {
+app.get("/profile/edit",cookieAuth, (req, res) => {
   const { name, profilePic, bio } = req;
   res
     .status(200)
@@ -565,7 +585,7 @@ if(uid === receiverId){
     state: "received",
     name: req.name,
     profilePic: req.profilePic,
-    _id: `${uid}${receiverId}`,
+    _id: `${uid}-${receiverId}`,
   };
   try {
     let count = 0;
@@ -582,7 +602,7 @@ const receiverData = {
   state:"sent",
   name:userReceiver.name,
   profilePic:userReceiver.profilePic,
-  _id:`${uid}${receiverId}`,
+  _id:`${uid}-${receiverId}`,
 }
 
      const userSender = await users.updateOne(
@@ -702,15 +722,21 @@ app.patch("/requests/accept/:rid", async (req, res) => {
 
 });
 
-function extractString(userId) {
-  if (typeof userId !== "string" || userId.length !== 48) {
-    console.log("Either id is not string or not of length 48");
-    return res.status(404).json({
-      message: "Error",
-    });
+function extractString(combinedString) {
+  if (typeof combinedString !== "string") {
+    console.log("Either id is not string");
+    return null; // Or handle the error as needed
   }
-  const str1 = userId.slice(0, 24);
-  const str2 = userId.slice(24);
+
+  const parts = combinedString.split('-');
+
+  if (parts.length !== 2) {
+    console.log("Invalid format: Expected two parts separated by a hyphen");
+    return null; // Or handle the error as needed
+  }
+
+  const [str1, str2] = parts;
+
   return [str1, str2];
 }
 
@@ -789,7 +815,7 @@ if(user.modifiedCount === 1){
 
 // Logout User
 app.get("/logout", cookieAuth, (req, res) => {
-  if (req.id.length === 24) {
+  if (req.id) {
     res.clearCookie("token");
     return res.status(200).json({
       status: "success",
@@ -829,17 +855,7 @@ app.delete("/requests/delete/:rid", async (req, res) => {
   console.log("delete");
   console.log(userId);
 
-  function extractString(userId) {
-    if (typeof userId !== "string" || userId.length !== 48) {
-      console.log("Either id is not string or not of length 48");
-      return res.status(404).json({
-        message: "Error",
-      });
-    }
-    const str1 = userId.slice(0, 24);
-    const str2 = userId.slice(24);
-    return [str1, str2];
-  }
+ 
 
   const data = extractString(userId);
   try {
@@ -881,17 +897,6 @@ app.delete("/requests/remove/:rid", async (req, res) => {
   console.log("remove");
   console.log(userId);
 
-  function extractString(userId) {
-    if (typeof userId !== "string" || userId.length !== 48) {
-      console.log("Either id is not string or not of length 48");
-      return res.status(404).json({
-        message: "Error",
-      });
-    }
-    const str1 = userId.slice(0, 24);
-    const str2 = userId.slice(24);
-    return [str1, str2];
-  }
 
   const data = extractString(userId);
   try {

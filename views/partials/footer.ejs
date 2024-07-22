@@ -109,7 +109,7 @@ plsBt.addEventListener('click', (event) => {
 
     viewProfileBtn.addEventListener('click',(event)=>{
            const uid = uidReturn();
-           if(uid.length === 24){
+           if(uid){
            return window.location.href = `users/${uid}`;
            }
             });

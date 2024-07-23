@@ -33,4 +33,43 @@ function getTimeDifference(createdAt) {
     }
   }
 
-  module.exports = getTimeDifference;
+
+  function extractString(combinedString) {
+    if (typeof combinedString !== "string") {
+      console.log("Either id is not string");
+      return null; // Or handle the error as needed
+    }
+  
+    const parts = combinedString.split('-');
+  
+    if (parts.length !== 2) {
+      console.log("Invalid format: Expected two parts separated by a hyphen");
+      return null; // Or handle the error as needed
+    }
+  
+    const [str1, str2] = parts;
+  
+    return [str1, str2];
+  }
+
+  function getFid(rid, sid) {
+    if (typeof rid !== "string" && typeof sid !== "string") {
+      return { error: "Invalid input: combinedString must be a string" };
+    }
+  
+    const parts = rid.split("-");
+  
+    if (parts.length !== 2) {
+      return {
+        error: "Invalid format: expected a single hyphen in the combined string",
+      };
+    }
+  
+    if (parts[0] === sid) {
+      return parts[1];
+    } else if (parts[1] === sid) {
+      return parts[0];
+    }
+  }
+
+  module.exports = {getTimeDifference , extractString, getFid};

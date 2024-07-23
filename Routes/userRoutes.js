@@ -1,8 +1,18 @@
 const express = require("express");
 const router = express.Router();
-const userControllers = require('../Controllers/userControllers');
-
-
-
+const userControllers = require("./../Controllers/userControllers");
+const checkCookies = require("./../Middlewares/checkCookies");
+// Welcome
+router.get("/", userControllers.welcome);
+// Register
+router.get("/register", checkCookies, userControllers.getRegister);
+//   Check Username Existence
+router.get("/check", userControllers.check);
+//   Register User Post
+router.post("/register", userControllers.postRegister);
+// Login Get
+router.get("/login", checkCookies, userControllers.getLogin);
+// Login Post
+router.post("/login", checkCookies, userControllers.postLogin);
 
 module.exports = router;

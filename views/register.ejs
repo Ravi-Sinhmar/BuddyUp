@@ -145,7 +145,7 @@
 
     } else if ((isValid && allowedCharacters.test(inputValue)) && (isValid && inputValue.length <= 20)) {
       success();
-      const response = await fetch(`/registerc?username=${inputValue}`);
+      const response = await fetch(`/check?username=${inputValue}`);
       const data = await response.json();
       if (data.status === "success") {
         success();

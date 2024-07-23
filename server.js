@@ -9,7 +9,8 @@ const port = process.env.PORT || 3000;
 const connection = require("./Database/connection");
 
 // Imporing server form app.js
-const { server } = require("./app");
+
+const { server } = require("./webSockets/wss");
 
 // Server is listening
 server.listen(port || 3000, () => {

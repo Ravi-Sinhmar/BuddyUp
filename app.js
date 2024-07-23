@@ -39,6 +39,8 @@ app.use(userRoutes);
 const cookieAuth = require("./Middlewares/auth");
 const checkCookies = require("./Middlewares/checkCookies");
 const setCookies = require("./Controllers/setCookies");
+const getTimeDifference = require('./Controllers/timeDecoder');
+
 
 
 
@@ -175,7 +177,7 @@ console.log(rid);
 
 
 // Route 1 , /
-app.get("/",checkCookies, (req, res) => {
+app.get("/", (req, res) => {
   
   if (req.cookies.token && req.uid) {
     return res.status(301).redirect("messages");
@@ -326,9 +328,11 @@ app.get('/quotes/:uid',cookieAuth,async(req,res)=>{
       wPic: qData.wPic,
       wId: qData.wId , // Set default if profilePic is missing
       qId: qData._id,
-      quote : qData.quote,
+      quote : qData.quote, 
+      likes: qData.likes,
+      time : getTimeDifference(qData.createdAt)
     }));
-    res.render('yourQuotes.ejs',{title:"Quotes",allQuotes,myPic,myId ,navHead:"User Quotes",});
+    res.render('quotes.ejs',{title:"Quotes",allQuotes,myPic,myId,navHead:"User Quotes",});
   } catch (error) {
     console.log(error)
   }
@@ -348,9 +352,12 @@ app.get('/yourQuotes',cookieAuth,async(req,res)=>{
       wId: qData.wId , // Set default if profilePic is missing
       qId: qData._id,
       quote : qData.quote,
+       likes:qData.likes,
+      time : getTimeDifference(qData.createdAt),
+      
     }));
      
-    res.render('yourQuotes.ejs',{title:"Your Quotes",allQuotes,myPic,myId,navHead:"Your Quotes"});
+    res.render('quotes.ejs',{title:"Your Quotes",allQuotes,myPic,myId,navHead:"Your Quotes"});
   } catch (error) {
     console.log(error)
   
@@ -358,12 +365,6 @@ app.get('/yourQuotes',cookieAuth,async(req,res)=>{
 
 
 });
-
-
-
-
-
-
 app.get('/quotes',cookieAuth,async(req,res)=>{
   const myPic = req.profilePic;
   const myId = req.id;
@@ -374,10 +375,12 @@ app.get('/quotes',cookieAuth,async(req,res)=>{
       wPic: qData.wPic,
       wId: qData.wId , // Set default if profilePic is missing
       qId: qData._id,
-      quote : qData.quote,
+      quote : qData.quote, 
+      likes:qData.likes,
+      time : getTimeDifference(qData.createdAt)
     }));
 
-    res.render('quotes.ejs',{title:"Quotes",allQuotes,myPic,myId});
+    res.render('quotes.ejs',{title:"Quotes",allQuotes,myPic,myId,navHead:"All quotes"});
 
   } catch (error) {
     console.log(error)
@@ -399,7 +402,6 @@ console.log(result);
 if(result){
   res.status(201).json({status:'success',message:'Created'})
 }
-
 });
 
 
@@ -407,8 +409,6 @@ if(result){
 app.get("/users/:uid", cookieAuth, async (req, res) => {
   let uid = req.params.uid;
   const myId = req.id;
-
-  
   if(uid.includes('-')){
     let fid  = extractString(uid,myId);
     uid = fid[0];
@@ -565,7 +565,21 @@ app.get("/messages", cookieAuth, async (req, res) => {
       chatId: friend._id,
     })); // Create an array of friend objects with only name and profilePic
 
-    return res.status(200).render("messages", { friendData, title: "Messages", myPic });
+let custom = 'show';
+let allMsg = 'hidden';
+
+friendData.some(el => {
+  if (el.state === 'connected') {
+    custom = 'hidden';
+    allMsg = 'show';
+    return true; // Break the loop
+  }
+  return false; // Continue to the next element
+});
+  
+
+
+    return res.status(200).render("messages", { friendData, title: "Messages", myPic,custom,allMsg });
   } catch (error) {
     return res.status(500).render('resultBox',
       {
@@ -687,10 +701,38 @@ app.get("/requests", cookieAuth, async (req, res) => {
       chatId: friend._id,
     })); // Create an array of friend objects with only name and profilePic
 
+    let sCustom = 'show';
+    let rCustom = 'show';
+    let sSection = 'hidden';
+    let rSection = 'hidden';
+    
+    friendData.forEach(el => {
+      if (el.state === 'sent') {
+        sCustom = 'hidden';
+        sSection = 'show';
+      }
+      if(el.state === 'received'){
+        rCustom = 'hidden'
+        rSection = 'show'
+      }
+      if(sCustom === 'hidden' && rCustom === 'hidden'){
+        return true;
+      }
+      else{
+        return false; // Continue to the next element
+      }
+     
+    });
+
+
     res.status(200).render("requests", {
        friendData,
         title: "Requests",
         myPic,
+        rCustom,
+        sCustom,
+        sSection,
+        rSection
       
        });
   } catch (error) {

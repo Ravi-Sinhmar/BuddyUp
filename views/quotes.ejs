@@ -1,47 +1,64 @@
 
 
-<main style="z-index: 1;" class="h-svh z-10 flex flex-col pb-16 gap-1 bg-blm">
+<main style="z-index: 1;" class="h-svh z-10 flex flex-col pb-16  bg-blm">
     <nav class=" px-6 py-5 space-y-4  w-full  z-10 border-b border-b-blb ">
         <div class="flex  justify-between items-center">
-        <h1 class="font-[500] text-black text-xl" >All Quotes</h1>
-        <a href="/yourQuotes"  class=" text-xs bg-blf text-blm px-2 py-2 rounded-md font-[500] flex justify-between text-center items-center gap-1">Your quotes<span>
-        </span></a>
+        <h1 class="font-[500] text-black text-xl" ><%= navHead %></h1>
       </div>
-        
-      </nav>
-
-      
-       
-   
-
-
-    
-    <div id="quoteSection" class="h-full flex flex-col overflow-y-scroll bg-blm ">
+      </nav>            
+    <div id="quoteSection" class="h-full flex flex-col overflow-y-scroll  px-2 py-2 bg-blg gap-1 ">
       <div id="quotCustom" class="hidden flex h-full w-full flex-col justify-center items-center ">
-        <div class="flex flex-col justify-center items-center mb-20 ">
+        <div class="flex flex-col justify-center items-center mb-20  ">
          <img src="/bg/quotes.png"  alt="" class="w-32 h-32">
          <h1 class="font-[600] text-xl">No quotes</h1>
          <h1 class="text-blt ">All quotes will appear here</h1>
         </div>
        </div>
        <% allQuotes.forEach(el => { %>
-        <div class=" quot px-4 py-2 rounded-md bg-blm border-b-2 border-b-blg ">
-            <div class="flex w-full flex-col   py-2 px-2  " >
-                <div class="flex  text-black gap-4 w-full ">
-                   
-                     <img src="/img/<%= el.wPic %>" alt="" class=" h-12 min-h-12 w-12 min-w-12 rounded-full ring-2 ">
-                 
-            
-                  
-                 <div class="flex flex-col justify-center gap-1 ">
+        <div class="quot ps-3  rounded-md bg-blm shadow-sm  border-b-2 border border-blb ">
+            <div class="flex w-full flex-col py-3 px-2   " >
+                <div class="flex  text-black gap-5 w-full ">
+                   <a href="/users/<%= el.wId %>">
+                    <img  src="/img/<%= el.wPic %>" alt="" class=" wImage h-12 min-h-12 w-12 min-w-12 rounded-full ring-2  ">
 
-                    <h1 class="text-black font-[500]" uid="<%= el.wId %>" ><%= el.wName %></h1>
-                     <p  id="quote" qId="<%= el.qId %>" class="">
-                      <pre-wrap style="overflow-wrap: anywhere;" class="text-blt text-sm"><%= el.quote %></pre-wrap>
-                    </p>
+                   </a>
+                 
+            <div class=" bg- w-full ">
+              <div class="flex flex-col justify-center gap-1 ">
+                <div class="flex flex-col gap-4">
+                  <div 
+                  >
+                    <a href="/users/<%= el.wId %>" class="text-black font-[500] qHeading" uid="<%= el.wId %>" ><%= el.wName %></a>
+                    <p id="quote" qId="<%= el.qId %>" class="">
+                     <pre-wrap style="overflow-wrap: anywhere;" class="text-blt text-sm"><%= el.quote %></pre-wrap>
+                   </p>
                   </div>
+                
+                <div class="flex justify-between items-center pt-3 pr-4 pb-1 w-full">
+                                  <div class=" flex items-center justify-center gap-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                                  </svg>
+                                  <p class="text-xs"><%= el.likes %></p>
+                                  </div>
+                            
+                                  <p class="text-xs">
+                                    <%= el.time %>
+                                   
+                                  </p>
+                                </div>
+                </div>
+                                   
+                                   
+                                  </div>
+
+
+            </div>
+                  
+                 
                  
                  </div>
+                 
               </div>
             </div>
           
@@ -55,20 +72,10 @@
 <%- include('./partials/warningBox.ejs') %>
 
 
-
 <script>
-  const quoteSection = document.getElementById('quoteSection')
-  const quot = quoteSection.querySelectorAll('.quot');
-// const sen1 = document.querySelectorAll('.sen');
-const quotCustom = document.getElementById('quotCustom');
+  const qHeading = document.querySelectorAll('qHeading')
+  const wImage = document.querySelectorAll('wImage')
 
 
-if(quot.length === 0 ){
-  quotCustom.classList.remove('hidden');
-}
-else{
-  if(!quotCustom.classList.contains('hidden')){
-    quotCustom.classList.add('hidden');
-  }
-}
 </script>
+

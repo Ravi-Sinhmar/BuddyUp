@@ -12,8 +12,7 @@
   <nav class="px-6 py-5 space-y-4  w-full  z-10 shadow-sm shadow-blb">
     <div class="flex justify-between items-center">
       <h1 class="font-[500] text-black text-xl" >Requests</h1>
-      <a href="/blockedUsers"  class=" text-xs bg-blf text-blm px-2 py-2 rounded-md font-[500] flex justify-between text-center items-center gap-1">Blocked Users<span>
-      </span></a>
+     
     </div>
         <div class="flex justify-center items-start h-8">
           <div class="w-1/2 flex flex-col  items-center justify-start h-full">
@@ -34,39 +33,41 @@
           <!-- List of people with whom  user doing chat -->
            <div id="receivedSection" class="transition-transform duration-500 ease-in-out bg-blm flex flex-col space-y-3 px-4 fixed top-32 bottom-24 py-2 left-0 right-0 overflow-y-scroll">
            
-              <div id="recCustom" class="  flex h-full w-full flex-col justify-center items-center ">
+              <div id="recCustom" class="<%= rCustom %>  flex h-full w-full flex-col justify-center items-center ">
                 <div class="flex flex-col justify-center items-center mb-20 ">
                  <img src="/bg/requests.png"  alt="" class="w-32 h-32">
-                 <h1 class="font-[600] text-xl">No requests</h1>
-                 <h1 class="text-blt ">Your requests will appear here</h1>
+                 <h1 class="font-[600] text-xl">No received requests!</h1>
+                 <h1 class="text-blt ">Your don't have any received request</h1>
                 </div>
                </div>
-              <% friendData.forEach(friend => {  %>
-            <% if (friend.state === "received") { %>
-    <div  id="<%= friend.chatId %>" class="requestId rec bg-blh border border-blb rounded-xl  flex justify-between items-center px-4 py-4 relative ">
-      <div class="flex justify-center gap-2">
-        <img
-          class="profilePic w-12 h-12 rounded-full"
-          src="/img/<%= friend.profilePic %>"
-          alt=""
-        />
-        <div class="flex flex-col items-start justify-center gap-0.5">
-          <h1 class="name  text-sm text-black "><%= friend.name %></h1>
-          <!-- <p class="  text-blf  text-xs ">View Profile</p> -->
-        </div>
-      </div>
-      <div class="flex justify-center items-center gap-4">
-        <button id="Accept" class="accept px-2 py-1.5 bg-blm rounded-md border border-blb text-blf text-sm " >Accept</button>
-        <button id="Delete" class=" delete px-2 py-1.5 bg-red-600 rounded-md border border-blb  text-blm text-sm" >Delete</button>
-        
-      </div>
-  
-     
+     <div class="flex flex-col w-full h-full <%= rSection %>">
+      <% friendData.forEach(friend => {  %>
+        <% if (friend.state === "received") { %>
+<div  id="<%= friend.chatId %>" class="requestId rec bg-blh border border-blb rounded-xl  flex justify-between items-center px-4 py-4 relative ">
+  <div class="flex justify-center gap-2">
+    <img
+      class="profilePic w-12 h-12 rounded-full"
+      src="/img/<%= friend.profilePic %>"
+      alt=""
+    />
+    <div class="flex flex-col items-start justify-center gap-0.5">
+      <h1 class="name  text-sm text-black "><%= friend.name %></h1>
+      <!-- <p class="  text-blf  text-xs ">View Profile</p> -->
     </div>
-    <% } %>
-
+  </div>
+  <div class="flex justify-center items-center gap-4">
+    <button id="Accept" class="accept px-2 py-1.5 bg-blm rounded-md border border-blb text-blf text-sm " >Accept</button>
+    <button id="Delete" class=" delete px-2 py-1.5 bg-red-600 rounded-md border border-blb  text-blm text-sm" >Delete</button>
     
-    <% }) %>
+  </div>
+
+ 
+</div>
+<% } %>
+
+
+<% }) %>
+     </div>
   </div>
   
 
@@ -75,38 +76,40 @@
 
             
             <div id="sentSection" class=" translate-x-[120%] transition-transform duration-500 ease-in-out bg-blm flex flex-col space-y-3 px-4 fixed top-32 bottom-24 py-2 left-0 right-0 overflow-y-scroll">
-          
-            <div id="senCustom" class="  flex h-full w-full flex-col justify-center items-center ">
+            <div id="senCustom" class=" <%= sCustom %> flex h-full w-full flex-col justify-center items-center ">
               <div class="flex flex-col justify-center items-center mb-20 ">
                <img src="/bg/requests.png"  alt="" class="w-32 h-32">
-               <h1 class="font-[600] text-xl">No requests</h1>
-               <h1 class="text-blt ">Your requests will appear here</h1>
+               <h1 class="font-[600] text-xl">No sent requests!</h1>
+               <h1 class="text-blt ">Your haven't sent any request yet! </h1>
               </div>
              </div>
-              <% friendData.forEach(friend => {  %>     
-              <% if (friend.state === "sent") { %>
-            <div  id="<%= friend.chatId %>"  class="requestId sen bg-blh border border-blb rounded-xl  flex justify-between items-center px-4 py-4 relative ">
-              <div class="flex justify-center gap-2">
-                <img
-                  class="profilePic w-12 h-12 rounded-full"
-                  src="/img/<%= friend.profilePic %>"
-                  alt=""
-                />
-                <div class="flex flex-col items-start justify-center gap-0.5">
-                  <h1 class="name  text-sm text-black "><%= friend.name %></h1>
-                  <!-- <p class="  text-blf  text-xs ">View Profile</p> -->
-                </div>
-              </div>
-              <div class="flex justify-center items-center gap-4">
-                <button  class=" remove px-2 py-1.5 bg-red-600 rounded-md border border-blb  text-blm text-sm" >Remove</button>
-                
-              </div>
-          
+<div class="flex flex-col  w-full h-full <%= sSection %>">
+  <% friendData.forEach(friend => {  %>     
+    <% if (friend.state === "sent") { %>
+  <div  id="<%= friend.chatId %>"  class="requestId sen bg-blh border border-blb rounded-xl  flex justify-between items-center px-4 py-4 relative ">
+    <div class="flex justify-center gap-2">
+      <img
+        class="profilePic w-12 h-12 rounded-full"
+        src="/img/<%= friend.profilePic %>"
+        alt=""
+      />
+      <div class="flex flex-col items-start justify-center gap-0.5">
+        <h1 class="name  text-sm text-black "><%= friend.name %></h1>
+        <!-- <p class="  text-blf  text-xs ">View Profile</p> -->
+      </div>
+    </div>
+    <div class="flex justify-center items-center gap-4">
+      <button  class=" remove px-2 py-1.5 bg-red-600 rounded-md border border-blb  text-blm text-sm" >Remove</button>
       
-           </div>
-      
-           <% } %>
-    <% })  %>
+    </div>
+
+
+ </div>
+
+ <% } %>
+<% })  %>
+</div>
+            
 
                  </div>
               
@@ -135,35 +138,9 @@
   const receivedSection = document.getElementById('receivedSection');
   
 
-const rec = receivedSection.querySelectorAll('.rec');
-const sen = sentSection.querySelectorAll('.sen');
-// const sen1 = document.querySelectorAll('.sen');
-const recCustom = document.getElementById('recCustom');
-const senCustom = document.getElementById('senCustom');
 
-if(rec.length === 0 ){
-  if(recCustom.classList.contains('hidden')){
-    recCustom.classList.remove('hidden');
-  }
-}
-else{
-  if(!recCustom.classList.contains('hidden')){
-    
-    recCustom.classList.add('hidden');
-  }
-}
 
-if(sen.length === 0 ){
-  if(senCustom.classList.contains('hidden')){
-    senCustom.classList.remove('hidden');
-  }
-}
-else{
-  if(!senCustom.classList.contains('hidden')){
-    senCustom.classList.add('hidden');
 
-  }
-}
 
 received.addEventListener('click',(event)=>{
 sentUnderline.classList.remove('bg-blh')

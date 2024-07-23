@@ -616,10 +616,6 @@ video {
   left: 3rem;
 }
 
-.left-16{
-  left: 4rem;
-}
-
 .left-2{
   left: 0.5rem;
 }
@@ -636,6 +632,10 @@ video {
   left: 1.25rem;
 }
 
+.left-6{
+  left: 1.5rem;
+}
+
 .right-0{
   right: 0px;
 }
@@ -648,10 +648,6 @@ video {
   right: 50%;
 }
 
-.right-16{
-  right: 4rem;
-}
-
 .right-2{
   right: 0.5rem;
 }
@@ -662,6 +658,10 @@ video {
 
 .right-5{
   right: 1.25rem;
+}
+
+.right-6{
+  right: 1.5rem;
 }
 
 .right-8{
@@ -754,6 +754,10 @@ video {
   margin-top: 0.5rem;
 }
 
+.ml-5{
+  margin-left: 1.25rem;
+}
+
 .block{
   display: block;
 }
@@ -768,6 +772,11 @@ video {
 
 .aspect-square{
   aspect-ratio: 1 / 1;
+}
+
+.size-12{
+  width: 3rem;
+  height: 3rem;
 }
 
 .size-4{
@@ -801,10 +810,6 @@ video {
 
 .h-12{
   height: 3rem;
-}
-
-.h-14{
-  height: 3.5rem;
 }
 
 .h-16{
@@ -908,10 +913,6 @@ video {
   width: 3rem;
 }
 
-.w-14{
-  width: 3.5rem;
-}
-
 .w-16{
   width: 4rem;
 }
@@ -966,10 +967,6 @@ video {
 
 .w-\[1px\]{
   width: 1px;
-}
-
-.w-\[2px\]{
-  width: 2px;
 }
 
 .w-full{
@@ -1205,11 +1202,6 @@ video {
   border-bottom-color: rgb(228 228 228 / var(--tw-border-opacity));
 }
 
-.border-b-blg{
-  --tw-border-opacity: 1;
-  border-bottom-color: rgb(243 245 246 / var(--tw-border-opacity));
-}
-
 .border-b-blh{
   --tw-border-opacity: 1;
   border-bottom-color: rgb(226 230 251 / var(--tw-border-opacity));
@@ -1233,6 +1225,11 @@ video {
 .bg-blf{
   --tw-bg-opacity: 1;
   background-color: rgb(78 97 234 / var(--tw-bg-opacity));
+}
+
+.bg-blg{
+  --tw-bg-opacity: 1;
+  background-color: rgb(243 245 246 / var(--tw-bg-opacity));
 }
 
 .bg-blh{
@@ -1297,11 +1294,6 @@ video {
   padding-right: 2.5rem;
 }
 
-.px-12{
-  padding-left: 3rem;
-  padding-right: 3rem;
-}
-
 .px-2{
   padding-left: 0.5rem;
   padding-right: 0.5rem;
@@ -1330,6 +1322,11 @@ video {
 .px-7{
   padding-left: 1.75rem;
   padding-right: 1.75rem;
+}
+
+.px-8{
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
 
 .py-0{
@@ -1387,6 +1384,10 @@ video {
   padding-bottom: 2rem;
 }
 
+.pb-1{
+  padding-bottom: 0.25rem;
+}
+
 .pb-12{
   padding-bottom: 3rem;
 }
@@ -1413,6 +1414,10 @@ video {
 
 .ps-2{
   padding-inline-start: 0.5rem;
+}
+
+.ps-3{
+  padding-inline-start: 0.75rem;
 }
 
 .ps-6{
@@ -1451,6 +1456,11 @@ video {
   font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
+.text-2xl{
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
 .text-3xl{
   font-size: 1.875rem;
   line-height: 2.25rem;
@@ -1478,6 +1488,10 @@ video {
 .text-xs{
   font-size: 0.75rem;
   line-height: 1rem;
+}
+
+.text-\[10px\]{
+  font-size: 10px;
 }
 
 .font-\[500\]{

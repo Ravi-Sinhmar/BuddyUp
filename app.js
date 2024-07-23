@@ -419,6 +419,8 @@ app.get("/users/:uid", cookieAuth, async (req, res) => {
   }
   try {
     const user = await users.findById(uid);
+ console.log(user);
+
     if (!user) {
       return res.status(404).render('resultBox',
         {
@@ -445,17 +447,24 @@ app.get("/users/:uid", cookieAuth, async (req, res) => {
     }
 let mstate = 'unset'
 user2.friendsDetails.forEach(el=>{
-  if(el._id === `${myId}-${uid}` || `${uid}-${myId}`){
+  if(el._id === `${myId}-${uid}` || el._id === `${uid}-${myId}`){
+    console.log(myId);
+    console.log(uid);
     mstate = el.state;
+   return console.log("this is mstate",mstate)
+
     }
 });
     const { _id: id, name, profilePic, bio, } = user;
 let fstate = 'unset';
 let rid = ''
    user.friendsDetails.forEach(el =>{
-if(el._id === `${myId}-${uid}` || `${uid}-${myId}`){
+if(el._id === `${myId}-${uid}` || el._id === `${uid}-${myId}`){
 fstate = el.state;
 rid = el._id;
+console.log(myId);
+console.log(uid);
+return console.log("this is fstate",fstate);
 }
     });
 

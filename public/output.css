@@ -1387,10 +1387,6 @@ video {
   padding-bottom: 2rem;
 }
 
-.pb-10{
-  padding-bottom: 2.5rem;
-}
-
 .pb-12{
   padding-bottom: 3rem;
 }
@@ -1484,11 +1480,6 @@ video {
   line-height: 1rem;
 }
 
-.text-2xl{
-  font-size: 1.5rem;
-  line-height: 2rem;
-}
-
 .font-\[500\]{
   font-weight: 500;
 }
@@ -1503,10 +1494,6 @@ video {
 
 .font-semibold{
   font-weight: 600;
-}
-
-.font-\[800\]{
-  font-weight: 800;
 }
 
 .text-black{

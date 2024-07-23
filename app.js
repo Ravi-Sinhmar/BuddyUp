@@ -336,7 +336,7 @@ app.get('/quotes/:uid',cookieAuth,async(req,res)=>{
       wId: qData.wId , // Set default if profilePic is missing
       qId: qData._id,
       quote : qData.quote, 
-      likes: qData.likes,
+      
       time : getTimeDifference(qData.createdAt)
     }));
     res.render('quotes.ejs',{title:"Quotes",allQuotes,myPic,myId,navHead:"User Quotes",});
@@ -367,7 +367,7 @@ app.get('/yourQuotes',cookieAuth,async(req,res)=>{
       wId: qData.wId , // Set default if profilePic is missing
       qId: qData._id,
       quote : qData.quote,
-       likes:qData.likes,
+       
       time : getTimeDifference(qData.createdAt),
       
     }));
@@ -399,7 +399,6 @@ app.get('/quotes',cookieAuth,async(req,res)=>{
       wId: qData.wId , // Set default if profilePic is missing
       qId: qData._id,
       quote : qData.quote, 
-      likes:qData.likes,
       time : getTimeDifference(qData.createdAt)
     }));
 

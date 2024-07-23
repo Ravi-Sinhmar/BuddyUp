@@ -78,7 +78,6 @@ function getFid(rid , sid) {
 const allConnections = new Map();
 wss.on("connection",async(ws, req) => {
  
-  
   function validateToken(token) {
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
@@ -198,7 +197,8 @@ app.get('/registerc', async(req, res) => {
   const { username } = req.query;
    console.log(username);
   // Query your database (pseudo-code)
-const userExists = await users.findById(username);
+  try {
+    const userExists = await users.findById(username);
 console.log(userExists);
  if(!userExists){
   res.status(200).json({status:'success'})
@@ -206,6 +206,13 @@ console.log(userExists);
  else{
   res.status(404).json({status:"fail"});
  }
+  } catch (error) {
+    res.status(500).json({
+      status: "fail",
+      message: "500",
+    });
+  }
+
 });
 
 
@@ -334,7 +341,15 @@ app.get('/quotes/:uid',cookieAuth,async(req,res)=>{
     }));
     res.render('quotes.ejs',{title:"Quotes",allQuotes,myPic,myId,navHead:"User Quotes",});
   } catch (error) {
-    console.log(error)
+    return res.status(500).render('resultBox',
+      {
+        title:"Failed",
+        type:"500",
+        status:"Try Again",
+        message:"We Encountered a Problem with showing Posts",
+        href:"/quotes"
+      }
+    )
   }
 });
 
@@ -359,7 +374,15 @@ app.get('/yourQuotes',cookieAuth,async(req,res)=>{
      
     res.render('quotes.ejs',{title:"Your Quotes",allQuotes,myPic,myId,navHead:"Your Quotes"});
   } catch (error) {
-    console.log(error)
+    return res.status(500).render('resultBox',
+      {
+        title:"Failed",
+        type:"500",
+        status:"Try Again",
+        message:"We Encountered a Problem with showing Posts",
+        href:"/profile"
+      }
+    )
   
   }
 
@@ -383,7 +406,15 @@ app.get('/quotes',cookieAuth,async(req,res)=>{
     res.render('quotes.ejs',{title:"Quotes",allQuotes,myPic,myId,navHead:"All quotes"});
 
   } catch (error) {
-    console.log(error)
+    return res.status(500).render('resultBox',
+      {
+        title:"Failed",
+        type:"500",
+        status:"Try Again",
+        message:"We Encountered a Problem with showing Posts",
+        href:"/messages"
+      }
+    )
   
   }
 
@@ -397,11 +428,18 @@ const wId = req.id;
 const wName = req.name;
 const wPic = req.profilePic;
 const quote = req.body.quote;
-const result =await quotes.create({wId ,wName,wPic,quote})
+try {
+  const result =await quotes.create({wId ,wName,wPic,quote})
 console.log(result);
 if(result){
   res.status(201).json({status:'success',message:'Created'})
 }
+  
+} catch (error) {
+  res.status(404).json({status:'fail',message:'500'})
+
+}
+
 });
 
 
@@ -836,14 +874,21 @@ app.get("/blockedUsers", cookieAuth, async (req, res) => {
 app.patch("/unblock",cookieAuth,async(req,res)=>{
   const chatId = req.body.chatId;
 console.log(chatId);
-const user = await users.updateOne(
-  { _id: req.id, "friendsDetails._id": chatId }, // Filter by both user ID and chat ID
-  { $set: { "friendsDetails.$.state": "connected" } } // Update state using positional operator
-);
-
-if(user.modifiedCount === 1){
-  console.log("done");
-  res.status(200).json({status:'success',message:"unblock"})
+try {
+  const user = await users.updateOne(
+    { _id: req.id, "friendsDetails._id": chatId }, // Filter by both user ID and chat ID
+    { $set: { "friendsDetails.$.state": "connected" } } // Update state using positional operator
+  );
+  
+  if(user.modifiedCount === 1){
+    console.log("done");
+    res.status(200).json({status:'success',message:"unblock"})
+  }
+  
+  
+} catch (error) {
+  
+  res.status(500).json({status:'fail',message:'500'});
 }
 
 });
@@ -851,16 +896,22 @@ if(user.modifiedCount === 1){
 app.patch("/block",cookieAuth,async(req,res)=>{
   const chatId = req.body.chatId;
 console.log(chatId);
-
-const user = await users.updateOne(
-  { _id: req.id, "friendsDetails._id": chatId }, // Filter by both user ID and chat ID
-  { $set: { "friendsDetails.$.state": "blocked" } } // Update state using positional operator
-);
-
-if(user.modifiedCount === 1){
-  console.log("done");
-  res.status(200).json({status:'success',message:"blocked"})
+try {
+  
+  const user = await users.updateOne(
+    { _id: req.id, "friendsDetails._id": chatId }, // Filter by both user ID and chat ID
+    { $set: { "friendsDetails.$.state": "blocked" } } // Update state using positional operator
+  );
+  
+  if(user.modifiedCount === 1){
+    console.log("done");
+    res.status(200).json({status:'success',message:"blocked"})
+  }
+} catch (error) {
+  res.status(500).json({status:'fail',message:"500"})
 }
+
+
 
 });
 

@@ -36,9 +36,10 @@ wss.on("connection", async (ws, req) => {
     if (user && userId) {
       ws.userId = userId;
       ws.rid = conId;
-     sendMessageToAllConnections(userId, { state: "Online" });
+      sendMessageToAllConnections(userId, { state: "Online" });
       allConnections.set(userId, ws);
       ws.on("message", async (data) => {
+      sendMessageToAllConnections(userId, { state: "Online" });
         console.log(`Received message => ${data}`);
         let dataObj = JSON.parse(data);
         // Extracting data form msgs ->

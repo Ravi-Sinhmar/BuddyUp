@@ -213,30 +213,33 @@ friendPic.src = `/img/${localData.profilePic}`;
     return;
   }
 
-//   socket.addEventListener('close',(event)=>{
-// const message = {state:"Offline"}
-//     socket.send(JSON.stringify(message))
-//   //   state.innerText = 'Offline';
-//   //   if(!dot.classList.contains('bg-blb')){
-//   //     if(dot.classList.contains('bg-blf')){
-//   //       dot.classList.remove('bg-blf');
-//   //     }
-//   //     dot.classList.add('bg-blb')
-//   // }
-//   })
+
+
+  
+
 
   socket.addEventListener("message", function(event) {
     const data = JSON.parse(event.data);
-    alert(data.state);
-  // if(data.state === 'online'){
-  //   state.innerText = 'Online';
-  //   if(!dot.classList.contains('bg-blf')){
-  //     if(dot.classList.contains('bg-blb')){
-  //       dot.classList.remove('bg-blb');
-  //     }
-  //     dot.classList.add('bg-blf')
-  //   }
-  // }
+   
+  if(data.state === 'Online'){
+    state.innerText = 'Online';
+    if(!dot.classList.contains('bg-blf')){
+      if(dot.classList.contains('bg-blb')){
+        dot.classList.remove('bg-blb');
+      }
+      dot.classList.add('bg-blf')
+    }
+  }
+  if(data.state === 'Offline'){
+
+  state.innerText = 'Offline';
+    if(!dot.classList.contains('bg-blb')){
+      if(dot.classList.contains('bg-blf')){
+        dot.classList.remove('bg-blf');
+      }
+      dot.classList.add('bg-blb')
+  }
+}
   
     receiveSocket(data);
     const messageData = data.content;

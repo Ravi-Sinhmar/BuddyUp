@@ -10,11 +10,7 @@ const chats = require("./../Models/chats");
 const { getFid } = require('./../Controllers/common');
 const allConnections = new Map();
 wss.on("connection", async (ws, req) => {
-  const message = { state:'online'}
-  if (ws.readyState === WebSocket.OPEN) {
-    ws.send(JSON.stringify(message));
-  }
-
+  sendMessageToAllConnections(userId, { state: "Online" });
     function validateToken(token) {
       try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
@@ -104,7 +100,7 @@ wss.on("connection", async (ws, req) => {
     });
   
     ws.on("close", () => {
-      sendMessageToAllConnections(userId, { state: "offline" });
+      sendMessageToAllConnections(userId, { state: "Offline" });
       allConnections.delete(userId);
     });
   });

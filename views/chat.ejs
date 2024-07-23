@@ -13,8 +13,8 @@
       <div>
         <h1 id="fname" class="name text-sm text-black font-semibold">Dummy</h1>
         <div class="flex items-center justify-start gap-1">
-          <div class="h-2 w-2 bg-blf rounded-full"></div>
-          <p class="text-xs">Active</p>
+          <div id="dot" class="h-2 w-2 bg-blf rounded-full"></div>
+          <p id="state" class="text-xs">Offline</p>
         </div>
       </div>
     </div>
@@ -92,6 +92,8 @@ const tempMsg = document.getElementById('tempMsg');
 const fhead = document.getElementById('fhead');
 const back = document.getElementById('back');
 const backIcon = document.getElementById('backIcon');
+const dot = document.getElementById('dot');
+const state = document.getElementById('state');
 
 
 // block user click 
@@ -211,8 +213,31 @@ friendPic.src = `/img/${localData.profilePic}`;
     return;
   }
 
+//   socket.addEventListener('close',(event)=>{
+// const message = {state:"Offline"}
+//     socket.send(JSON.stringify(message))
+//   //   state.innerText = 'Offline';
+//   //   if(!dot.classList.contains('bg-blb')){
+//   //     if(dot.classList.contains('bg-blf')){
+//   //       dot.classList.remove('bg-blf');
+//   //     }
+//   //     dot.classList.add('bg-blb')
+//   // }
+//   })
+
   socket.addEventListener("message", function(event) {
     const data = JSON.parse(event.data);
+    alert(data.state);
+  // if(data.state === 'online'){
+  //   state.innerText = 'Online';
+  //   if(!dot.classList.contains('bg-blf')){
+  //     if(dot.classList.contains('bg-blb')){
+  //       dot.classList.remove('bg-blb');
+  //     }
+  //     dot.classList.add('bg-blf')
+  //   }
+  // }
+  
     receiveSocket(data);
     const messageData = data.content;
     appendMsg("justify-start", "rounded-bl-sm", messageData);

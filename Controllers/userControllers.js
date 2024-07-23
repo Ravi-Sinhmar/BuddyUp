@@ -1,4 +1,5 @@
-const users = require('../Models/users');
+const users = require('./../Models/users');
+const setCookies  = require('./setCookies');
 
 // welcome 
 exports.welcome = (req, res) => {
@@ -65,6 +66,7 @@ exports.postRegister = async (req, res) => {
              href :'/profile/edit',
         });
       } catch (error) {
+        console.log(error);
         return res.status(500).render('resultBox',
           {
             title:"Failed",

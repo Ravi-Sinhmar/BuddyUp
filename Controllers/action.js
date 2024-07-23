@@ -1,5 +1,5 @@
 // all blocked users
-
+const users = require('./../Models/users');
 exports.getBlockedUsers = async (req, res) => {
     const uid = req.id;
     const myPic = req.profilePic;

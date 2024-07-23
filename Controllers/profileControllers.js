@@ -1,4 +1,7 @@
 // see profile of any user
+const users = require('./../Models/users');
+const setCookies  = require('./setCookies');
+const { extractString , getTimeDifference , getFid } = require('./common')
 exports.userProfile = async (req, res) => {
   let uid = req.params.uid;
   const myId = req.id;
@@ -135,6 +138,7 @@ exports.SaveEditProfile = async (req, res) => {
     res.cookie("token", token, { httpOnly: true }); // Set cookie after token generation
     res.status(201).json({ status: "success", message: "Updated" });
   } catch (err) {
+    console.log(err);
     res.status(500).json({
       status: "fail",
       message: "500",

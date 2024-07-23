@@ -1,3 +1,8 @@
+
+const quotes = require('./../Models/quotes');
+const { extractString , getTimeDifference , getFid } = require('./common')
+
+
 exports.userQuotes = async(req,res)=>{
     const myPic = req.profilePic;
     const myId = req.id;

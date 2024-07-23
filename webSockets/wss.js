@@ -10,6 +10,11 @@ const chats = require("./../Models/chats");
 const { getFid } = require('./../Controllers/common');
 const allConnections = new Map();
 wss.on("connection", async (ws, req) => {
+  const message = { state:'online'}
+  if (ws.readyState === WebSocket.OPEN) {
+    ws.send(JSON.stringify(message));
+  }
+
     function validateToken(token) {
       try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
@@ -99,10 +104,17 @@ wss.on("connection", async (ws, req) => {
     });
   
     ws.on("close", () => {
-      console.log("I am out");
-      console.log("this is close time userid", userId);
+      sendMessageToAllConnections(userId, { state: "offline" });
       allConnections.delete(userId);
     });
   });
+
+  function sendMessageToAllConnections(userId, message) {
+    for (const [connectedUserId, ws] of allConnections.entries()) {
+      if (connectedUserId !== userId && ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify(message));
+      }
+    }
+  }
 
   module.exports = { server };

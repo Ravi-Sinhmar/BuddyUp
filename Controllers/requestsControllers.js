@@ -1,3 +1,7 @@
+const users = require('./../Models/users');
+const { extractString , getTimeDifference , getFid } = require('./common')
+
+
 exports.sendRequest = async (req, res) => {
     const uid = req.id;
     const receiverId = req.params.id;

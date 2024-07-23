@@ -10,7 +10,6 @@ const chats = require("./../Models/chats");
 const { getFid } = require('./../Controllers/common');
 const allConnections = new Map();
 wss.on("connection", async (ws, req) => {
-  sendMessageToAllConnections(userId, { state: "Online" });
     function validateToken(token) {
       try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
@@ -37,6 +36,7 @@ wss.on("connection", async (ws, req) => {
     if (user && userId) {
       ws.userId = userId;
       ws.rid = conId;
+     sendMessageToAllConnections(userId, { state: "Online" });
       allConnections.set(userId, ws);
       ws.on("message", async (data) => {
         console.log(`Received message => ${data}`);

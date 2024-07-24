@@ -9,7 +9,9 @@ const users = require("./../Models/users");
 const chats = require("./../Models/chats"); 
 const { getFid } = require('./../Controllers/common');
 const allConnections = new Map();
+
 wss.on("connection", async (ws, req) => {
+ 
     function validateToken(token) {
       try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
@@ -25,21 +27,31 @@ wss.on("connection", async (ws, req) => {
     console.log(token);
     console.log(conId);
     const userId = validateToken(token); // function defined above
+  
     const user = await users.find({
       "friendsDetails._id": conId, // friendId is a placeholder for your actual friend's _id field name
       "friendsDetails.state": "connected",
       _id: userId,
     });
+    const myFriends = user[0].friends
+   
     if (!user) {
+     
       return ws.terminate();
     }
     if (user && userId) {
+      
+       console.log("hi",myFriends);
       ws.userId = userId;
       ws.rid = conId;
-      sendMessageToAllConnections(userId, { state: "Online" });
       allConnections.set(userId, ws);
+      broadcastMessage(myFriends, { state: "Online" });
+      const onlineOnes = getOnlineFriends(myFriends);
+      if (ws && ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify({onlineOnly:onlineOnes}));
+      }
+      
       ws.on("message", async (data) => {
-      sendMessageToAllConnections(userId, { state: "Online" });
         console.log(`Received message => ${data}`);
         let dataObj = JSON.parse(data);
         // Extracting data form msgs ->
@@ -50,7 +62,6 @@ wss.on("connection", async (ws, req) => {
         const sname = dataObj.sname;
         const fid = getFid(rid, sid);
         console.log("this is chat id", rid);
-  
         if (allConnections.has(sid) && conId === rid) {
           console.log("this is rid and conId bellow ");
           console.log(conId);
@@ -101,17 +112,34 @@ wss.on("connection", async (ws, req) => {
     });
   
     ws.on("close", () => {
-      sendMessageToAllConnections(userId, { state: "Offline" });
+      broadcastMessage(myFriends, { state: "Offline" });
       allConnections.delete(userId);
     });
   });
 
-  function sendMessageToAllConnections(userId, message) {
-    for (const [connectedUserId, ws] of allConnections.entries()) {
-      if (connectedUserId !== userId && ws.readyState === WebSocket.OPEN) {
+
+
+
+  function broadcastMessage(myFriends, message) {
+    myFriends.forEach(friendId => {
+      const ws = allConnections.get(friendId);
+      if (ws && ws.readyState === WebSocket.OPEN) {
+        // Send your message here
         ws.send(JSON.stringify(message));
       }
-    }
+    });
+  }
+
+  function getOnlineFriends(myFriends) {
+    const onlineFriends = [];
+    myFriends.forEach(friendId => {
+      const ws = allConnections.get(friendId);
+      if (ws && ws.readyState === WebSocket.OPEN) {
+        onlineFriends.push(friendId);
+      }
+    });
+  
+    return onlineFriends;
   }
 
   module.exports = { server };

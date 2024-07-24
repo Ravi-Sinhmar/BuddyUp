@@ -672,6 +672,10 @@ video {
   top: 0px;
 }
 
+.top-1\/2{
+  top: 50%;
+}
+
 .top-10{
   top: 2.5rem;
 }
@@ -702,14 +706,6 @@ video {
 
 .top-5{
   top: 1.25rem;
-}
-
-.top-7{
-  top: 1.75rem;
-}
-
-.top-1\/2{
-  top: 50%;
 }
 
 .-z-10{
@@ -756,10 +752,6 @@ video {
 
 .mt-2{
   margin-top: 0.5rem;
-}
-
-.ml-5{
-  margin-left: 1.25rem;
 }
 
 .block{
@@ -1002,18 +994,13 @@ video {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-.translate-x-\[120\%\]{
-  --tw-translate-x: 120%;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-
-.translate-y-1\/2{
-  --tw-translate-y: 50%;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-
 .-translate-y-1\/2{
   --tw-translate-y: -50%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.translate-x-\[120\%\]{
+  --tw-translate-x: 120%;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
@@ -1480,6 +1467,10 @@ video {
   line-height: 2.25rem;
 }
 
+.text-\[10px\]{
+  font-size: 10px;
+}
+
 .text-\[8px\]{
   font-size: 8px;
 }
@@ -1502,10 +1493,6 @@ video {
 .text-xs{
   font-size: 0.75rem;
   line-height: 1rem;
-}
-
-.text-\[10px\]{
-  font-size: 10px;
 }
 
 .font-\[500\]{
@@ -1672,19 +1659,5 @@ video {
   --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
   --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
   box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-}
-
-@media (min-width: 640px){
-  .sm\:text-xs{
-    font-size: 0.75rem;
-    line-height: 1rem;
-  }
-}
-
-@media (min-width: 768px){
-  .md\:text-sm{
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-  }
 }
 

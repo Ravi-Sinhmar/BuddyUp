@@ -294,6 +294,7 @@ data.onlineOnly.forEach(el => {
    let time = Date.now();
    time = getLocalTimeString(time);
     appendMsg("items-start", "rounded-bl-sm",messageData , time);
+   if(data.content != ''){
     if(!custom.classList.contains('hidden')){
         custom.classList.add('hidden');
         if(chatSection.classList.contains('hidden')){
@@ -303,6 +304,9 @@ data.onlineOnly.forEach(el => {
       if(chatSection.classList.contains('hidden')){
         chatSection.classList.remove('hidden')
       }
+   }
+   
+   
     scrollToSet();
   });
 

@@ -43,8 +43,6 @@ function getTimeDifference(createdAt) {
   
     if (days > 0) {
       return `${days} day${days > 1 ? 's' : ''} ago`;
-    } else if (hours > 0) {
-      return `${hours} hr${hours > 1 ? 's' : ''} ago`;
     } else {
       // Include options for desired time format
       const options = {

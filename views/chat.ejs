@@ -1,7 +1,7 @@
 <section id="tops" class="h-svh w-full px-7 bg-blh">
   <!-- Top  -->
 
-  <header  id="fhead" toId="<%= toId %>" class="cursor-pointer flex justify-between items-center rounded-xl overflow-hidden fixed top-3 left-3 right-3 h-16 px-2 z-10 bg-blm">
+  <header style="z-index: 1;"  id="fhead" toId="<%= toId %>" class="cursor-pointer flex justify-between items-center rounded-xl overflow-hidden fixed top-3   overscroll-y-none left-3 right-3 h-16 px-2  bg-blm">
     <div class="flex items-center gap-2">
   <a id="back" href="/messages">
     <svg id="backIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -36,9 +36,9 @@
 
   <!-- Mid  -->
 
-  <div id="custom" class=" <%= custom %> flex h-full w-full flex-col justify-center items-center ">
+  <div id="custom" class=" <%= custom %>  fixed top-16  bottom-20 left-0 right-0 flex  w-full flex-col justify-center items-center ">
     <div class="flex flex-col justify-center items-center mb-20 ">
-     <img src="/bg/chats.png"  alt="" class="w-32 h-32">
+     <img src="/bg/chat.png"  alt="" class="w-32 h-32">
      <h1 class="font-[600] text-xl">Say them Hi!</h1>
      <h1 class="text-blt text-center ">Share your thoughts, you have only one life</h1>
     </div>
@@ -76,7 +76,7 @@
 
   <!-- Bottom  -->
 
-  <footer id="extraInfo" tid="<%= tid %>" rname="<%= message.rname %>"  rid="<%= chatId %>" sname="<%= userName %>" sid="<%= userId %>" class="flex justify-between px-2 items-center fixed z-30 bottom-3 left-3 right-3 py-2 rounded-xl bg-blm border overflow-hidden border-blb">
+  <footer id="extraInfo" tid="<%= tid %>" rname="<%= message.rname %>"  rid="<%= chatId %>" sname="<%= userName %>" sid="<%= userId %>" class="flex justify-between px-2 items-center fixed   bottom-3 left-3 right-3 py-2 rounded-xl bg-blm border overflow-hidden border-blb">
     <textarea id="sendMsg" name="" placeholder="Thingking..." id="" rows="2" style="outline: none; border: none; white-space: break-spaces" class="outline-none text-decoration-none bg-blm px-2 py-1 text-blt w-10/12 "></textarea>
     <div class="flex justify-between items-center gap-6">
 
@@ -94,6 +94,27 @@
 
 <script src="/js/localStorage.js"></script>
 <script>
+let keyboard = '';
+function detectDeviceType() {
+  const userAgent = navigator.userAgent.toLowerCase();
+  if (userAgent.includes('iphone') || userAgent.includes('ipod')) {
+   keyboard = 'true';
+    return 'iPhone';
+  } else if (userAgent.includes('ipad')) {
+   
+    return 'iPad';
+  } else if (userAgent.includes('android')) {
+    keyboard = 'true';
+    return 'Android';
+  } else if (userAgent.includes('windows phone')) {
+    keyboard = 'false';
+    return 'Windows Phone';
+  } else {
+    keyboard = 'false';
+    return 'Desktop';
+  }
+}
+detectDeviceType();
 
 
 function getLocalTimeString(timestamp) {
@@ -153,6 +174,43 @@ friendPic.src = `/img/${localData.profilePic}`;
   const sendButton = document.getElementById("sendBtn"); // Get the send button (image)
   const extraInfo = document.getElementById("extraInfo");
   let rid = extraInfo.getAttribute("rid");
+  
+ let classAdded = 'false';
+
+    if(keyboard === 'true' && sendInput.offsetWidth < 350){
+    sendInput.addEventListener('focus',(event)=>{
+    setTimeout(() => {
+    fhead.classList.remove("top-3");
+    chatSection.classList.remove("top-16");
+    custom.classList.remove("top-16");
+    fhead.classList.add("top-80");
+    chatSection.classList.add("top-96");
+    custom.classList.add("top-96");
+    return
+    }, 400);
+  
+  });
+
+    window.addEventListener('resize', (event) => {
+    if(fhead.classList.contains('top-80')){
+    setTimeout(() => {
+    fhead.classList.remove("top-80");
+    chatSection.classList.remove("top-96");
+    custom.classList.remove("top-96");
+    fhead.classList.add("top-3");
+    chatSection.classList.add("top-16");
+    custom.classList.add("top-16");
+    sendInput.blur();
+      }, 200);
+    }
+  });
+  
+}
+ 
+ 
+
+ 
+
   if(rid === ''){
     rid  = localData.rid;
   }
@@ -246,7 +304,6 @@ friendPic.src = `/img/${localData.profilePic}`;
 
 
 
-  
 
 
   socket.addEventListener("message", function(event) {
@@ -266,9 +323,6 @@ if(data.state === 'Offline'){
 }
   }  
   
-
-
-    
     
 if(data.onlineOnly){
   console.log("List come",data.onlineOnly);
@@ -289,12 +343,14 @@ data.onlineOnly.forEach(el => {
 }); 
 }
   
+
     receiveSocket(data);
     const messageData = data.content;
    let time = Date.now();
    time = getLocalTimeString(time);
     appendMsg("items-start", "rounded-bl-sm",messageData , time);
-   if(data.content != ''){
+   if(data.content){
+
     if(!custom.classList.contains('hidden')){
         custom.classList.add('hidden');
         if(chatSection.classList.contains('hidden')){

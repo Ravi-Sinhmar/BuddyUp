@@ -26,10 +26,24 @@ exports.getBlockedUsers = async (req, res) => {
         name: friend.name,
         profilePic: friend.profilePic,
         chatId: friend._id,
-        
       }));
+let custom = 'show';
+let allBlock = 'hidden';
+friendData.forEach(el =>{
+
+  if(el.state === 'blocked'){
+    custom = "hidden";
+    allBlock = "show";
+    return true;
+  }
+  else{
+    return false;
+  }
+
+});
+
     
-      res.status(200).render("blocked", { title: "Blocked", friendData, myPic });
+      res.status(200).render("blocked", { title: "Blocked", friendData, myPic ,custom ,allBlock});
     } catch (err) {
       return res.status(500).render('resultBox',
         {

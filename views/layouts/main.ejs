@@ -21,5 +21,12 @@
 </head>
 <body class="font-pop flex flex-col bg-blh h-full w-full">
     <%- body %>
+
+
+    <script>
+        document.body.addEventListener('selectstart', (event) => {
+    event.preventDefault();
+});
+    </script>
 </body>
 </html>

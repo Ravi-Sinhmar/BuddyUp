@@ -14,7 +14,7 @@
         <h1 id="fname" class="name text-sm text-black font-semibold">Dummy</h1>
         <div class="flex items-center justify-start gap-1">
           <div style="background: #676B73;" id="dot" class="h-2 w-2  rounded-full"></div>
-          <p id="state" class="text-xs">Offline</p>
+          <p style="color: #676B73;" id="state" class="text-xs">Offline</p>
         </div>
       </div>
     </div>
@@ -53,7 +53,7 @@
       <h1 class="text-xs bg-white px-3 py-2 shadow-black shadow-sm break-words rounded-2xl rounded-bl-sm max-w-10/12">
         <%= message.content %>
       </h1>
-      <span class="text-[8px]">2 days ago</span>
+      <span class="text-[8px]"><%= message.time %></span>
     </div>
     <% } %>
 
@@ -99,16 +99,8 @@ function getLocalTimeString(timestamp) {
 
   // Format the date according to your locale (replace 'en-US' if needed)
   const formattedTime = date.toLocaleTimeString('en-US', options);
-
   return formattedTime;
 }
-
-
-
-
-
-
-
 
 
 
@@ -162,9 +154,9 @@ friendPic.src = `/img/${localData.profilePic}`;
   const tid = extraInfo.getAttribute("tid");
   // Websocket code
   // Send MSG to Socket
-    // const socket = new WebSocket(`ws://localhost:3000/?tid=${tid}&rid=${rid}`);
+    const socket = new WebSocket(`ws://localhost:3000/?tid=${tid}&rid=${rid}`);
     
-    const socket = new WebSocket(`wss://msg-io.onrender.com/?tid=${tid}&rid=${rid}`);
+    // const socket = new WebSocket(`wss://msg-io.onrender.com/?tid=${tid}&rid=${rid}`);
   
 
 
@@ -264,6 +256,7 @@ if(data.state === 'Offline'){
  
   state.innerText = 'Offline';
     dot.style.background = "#676B73";
+    state.style.color = "#676B73";
 }
   }  
   
@@ -284,6 +277,8 @@ data.onlineOnly.forEach(el => {
    
     state.innerText = 'Offline';
     dot.style.background = "#676B73";
+    state.style.color = "#676B73";
+
   }
 }); 
 }

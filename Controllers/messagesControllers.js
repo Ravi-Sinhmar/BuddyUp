@@ -74,7 +74,7 @@ exports.allMessages = async (req, res) => {
           chatId: message.chatId,
           content: message.content,
           _id: message._id.toString(), // Convert ObjectId to string
-          time: message.createdAt.toLocaleString(), // Format time for display
+          time: getTimeDifference(message.createdAt)  // Format time for display
         }));
         // console.log(formattedMessages)
         return res.render("chat", {

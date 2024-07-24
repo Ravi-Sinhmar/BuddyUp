@@ -13,7 +13,7 @@
       <div>
         <h1 id="fname" class="name text-sm text-black font-semibold">Dummy</h1>
         <div class="flex items-center justify-start gap-1">
-          <div style="background: gray;" id="dot" class="h-2 w-2  rounded-full"></div>
+          <div style="background: #676B73;" id="dot" class="h-2 w-2  rounded-full"></div>
           <p id="state" class="text-xs">Offline</p>
         </div>
       </div>
@@ -40,7 +40,7 @@
     <% if (message.length > 0) { %>
     <% message.forEach(message => { %>
     <% if (message.sid === userId) { %>
-    <div uid="<%= message._id %>" rid="<%= message.chatId %>" sid="<%= userId %>" id="sMsg" class="px-2 py-1 flex items-center justify-end gap-1">
+    <div uid="<%= message._id %>" rid="<%= message.chatId %>" sid="<%= userId %>" id="sMsg" class="px-2 py-1 flex flex-col items-center justify-end gap-1">
       <h1 class="text-xs bg-white px-3 py-2 shadow-black shadow-sm break-words rounded-2xl rounded-br-sm max-w-10/12">
         <%= message.content %>
       </h1>
@@ -49,10 +49,11 @@
     <% } %>
 
     <% if (message.sid != userId && message.fid === userId) { %>
-    <div uid="<%= message._id %>" rid="<%= message.chatId %>" sid="<%= message.fid %>" id="rMsg" class="px-2 py-1 flex justify-start gap-1">
+    <div uid="<%= message._id %>" rid="<%= message.chatId %>" sid="<%= message.fid %>" id="rMsg" class="px-2 py-1 flex flex-col justify-start gap-1">
       <h1 class="text-xs bg-white px-3 py-2 shadow-black shadow-sm break-words rounded-2xl rounded-bl-sm max-w-10/12">
         <%= message.content %>
       </h1>
+      <span class="text-[8px]">2 days ago</span>
     </div>
     <% } %>
 
@@ -166,9 +167,15 @@ friendPic.src = `/img/${localData.profilePic}`;
         "px-2",
         "py-1",
         "flex",
+        "flex-col",
         `${side}`,
         "gap-1"
       );
+      const timeDiv = document.createElement("span");
+      timeDiv.textContent = new Date().toLocaleTimeString();
+      timeDiv.classList.add(
+        "text-[8px]"
+      )
 
       const messageText = document.createElement("h1");
       messageText.textContent = message;
@@ -186,6 +193,7 @@ friendPic.src = `/img/${localData.profilePic}`;
       );
 
       messageContentDiv.appendChild(messageText);
+      messageContentDiv.appendChild(timeDiv);
       newMessageDiv.appendChild(messageContentDiv);
       chatSection.appendChild(newMessageDiv);
       sendInput.value = ""; // Clear the input field
@@ -225,17 +233,18 @@ friendPic.src = `/img/${localData.profilePic}`;
     alert("he come");
     state.innerText = 'Online';
     dot.style.background = "#4E61EA";
+    state.style.color = "#4E61EA";
    }
   
 if(data.state === 'Offline'){
   alert("he out");
   state.innerText = 'Offline';
-    dot.style.background = "#E4E4E4";
+    dot.style.background = "#676B73";
 }
   }  
   else{
     state.innerText = 'Offline';
-    dot.style.background = "#E4E4E4";
+    dot.style.background = "#676B73";
   }
 
 
@@ -248,11 +257,12 @@ data.onlineOnly.forEach(el => {
     alert("he come and he'is online");
     state.innerText = 'Online';
     dot.style.background = "#4E61EA";
+    state.style.color = "#4E61EA";
   }
   else{
     alert("he come but he's not online");
     state.innerText = 'Offline';
-    dot.style.background = "#E4E4E4";
+    dot.style.background = "#676B73";
   }
 }); 
 }

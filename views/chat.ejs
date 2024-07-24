@@ -158,8 +158,6 @@ friendPic.src = `/img/${localData.profilePic}`;
     // const socket = new WebSocket(`ws://localhost:3000/?tid=${tid}&rid=${rid}`);
     
     const socket = new WebSocket(`wss://msg-io.onrender.com/?tid=${tid}&rid=${rid}`);
-  
-
 
   function sendSocket() {
     let messageContent = {

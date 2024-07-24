@@ -34,41 +34,29 @@ function getTimeDifference(createdAt) {
   }
 
   function getHourDifference(createdAt) {
-    // 1. Convert UTC timestamp to a Date object
     const then = new Date(createdAt);
-  
-    // 2. Get the current time in milliseconds (unchanged)
     const now = Date.now();
-  
-    // 3. Calculate the difference in milliseconds (unchanged)
     const differenceInMs = now - then;
   
-    // 4. Get the client's time zone offset in minutes
-    const clientTimezoneOffset = then.getTimezoneOffset(); // Adjust based on your needs
+    const hours = Math.floor(differenceInMs / (1000 * 60 * 60));
+    const days = Math.floor(differenceInMs / (1000 * 60 * 60 * 24));
   
-    // 5. Adjust the difference by the client's time zone offset
-    const adjustedDifferenceInMs = differenceInMs + (clientTimezoneOffset * 60 * 1000);
-  
-    // 6. Calculate hours and days based on the adjusted difference (unchanged)
-    const hours = Math.floor(adjustedDifferenceInMs / (1000 * 60 * 60));
-    const days = Math.floor(adjustedDifferenceInMs / (1000 * 60 * 60 * 24));
-  
-    // 7. Determine and format the time string
     if (days > 0) {
       return `${days} day${days > 1 ? 's' : ''} ago`;
     } else if (hours > 0) {
       return `${hours} hr${hours > 1 ? 's' : ''} ago`;
     } else {
+      // Include options for desired time format
       const options = {
-        hour: 'numeric',
-        minute: '2-digit',
-        hour12: true
+        timeZone: 'Asia/Kolkata',
+        hour: 'numeric', // Display hours as numbers
+        minute: '2-digit', // Pad minutes with leading zeros if needed
+        hour12: true   // Use 12-hour format (e.g., 2:40 PM)
       };
-      const thenTimeString = then.toLocaleTimeString('en-US', options);
+      const thenTimeString = then.toLocaleTimeString('en-IN', options);
       return thenTimeString;
     }
   }
-  
   
   
 

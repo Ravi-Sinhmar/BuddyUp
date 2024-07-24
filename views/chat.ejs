@@ -160,14 +160,14 @@ friendPic.src = `/img/${localData.profilePic}`;
   
 
 
-  function sendSocket(time) {
+  function sendSocket() {
     let messageContent = {
       content:sendInput.value.trim(),
       rid: rid,
       rname:rname,
       sid: sid,
       sname:sname,
-      createdAt:time
+     
     };
     messageContent = JSON.stringify(messageContent);
     socket.send(messageContent);
@@ -192,7 +192,7 @@ friendPic.src = `/img/${localData.profilePic}`;
         "gap-1"
       );
       const timeDiv = document.createElement("span");
-      timeDiv.textContent = getLocalTimeString(time)
+      timeDiv.textContent = time;
       timeDiv.classList.add(
         "text-[8px]" , "timeSpan"
       )
@@ -233,7 +233,6 @@ friendPic.src = `/img/${localData.profilePic}`;
   // Recive MSG from Socket
   function receiveSocket(data) {
     const content = data.content;
-    const time = data.createdAt;
     const senderId = data.senderId;
     return;
   }
@@ -285,7 +284,8 @@ data.onlineOnly.forEach(el => {
   
     receiveSocket(data);
     const messageData = data.content;
-    const time = data.time;
+   let time = Date.now();
+   time = getLocalTimeString(time);
     appendMsg("items-start", "rounded-bl-sm", messageData,time);
     scrollToSet();
   });
@@ -295,8 +295,9 @@ data.onlineOnly.forEach(el => {
   sendInput.addEventListener("keyup", (event) => {
     if (event.keyCode === 13 && sendInput.offsetWidth > 340) {
       event.preventDefault();
-      const time =  Date.now();
-      sendSocket(time);
+      let time =  Date.now();
+      time = getLocalTimeString(time);
+      sendSocket();
       const messageData = sendInput.value.trim(); // Get the trimmed message value
       appendMsg("items-end", "rounded-br-sm", messageData, time);
       if (chatSection.scrollHeight > 600) {
@@ -308,8 +309,9 @@ data.onlineOnly.forEach(el => {
 
   // Event listener for clicking the send button (image)
   sendButton.addEventListener("click", (event) => {
-    const time = new Date().toLocaleTimeString();
-    sendSocket(time);
+    let time = Date.now();
+     time =getLocalTimeString(time);
+    sendSocket();
     const messageData = sendInput.value.trim(); // Get the trimmed message value
     
     appendMsg("items-end", "rounded-br-sm",messageData,time);

@@ -34,34 +34,29 @@ function getTimeDifference(createdAt) {
   }
 
   function getHourDifference(createdAt) {
-    // Convert the createdAt timestamp to a Date object
     const then = new Date(createdAt);
-  
-    // Get the current time in milliseconds
     const now = Date.now();
+    const differenceInMs = now - then;
   
-    // Calculate the difference in milliseconds
-    const difference = now - then;
+    const hours = Math.floor(differenceInMs / (1000 * 60 * 60));
+    const days = Math.floor(differenceInMs / (1000 * 60 * 60 * 24));
   
-    // Define thresholds for different time units (hours, days)
-    const hourInMs = 1000 * 60 * 60; // One hour in milliseconds
-    const dayInMs = hourInMs * 24; // One day in milliseconds
-  
-    // Calculate the time units based on the difference
-    const hours = Math.floor(difference / hourInMs);
-    const days = Math.floor(difference / dayInMs);
-  
-    // Determine the appropriate time unit and format the string
     if (days > 0) {
       return `${days} day${days > 1 ? 's' : ''} ago`;
     } else if (hours > 0) {
       return `${hours} hr${hours > 1 ? 's' : ''} ago`;
     } else {
-      // If less than an hour, format as a time string
-      const thenTimeString = then.toLocaleTimeString();
+      // Include options for desired time format
+      const options = {
+        hour: 'numeric', // Display hours as numbers
+        minute: '2-digit', // Pad minutes with leading zeros if needed
+        hour12: true   // Use 12-hour format (e.g., 2:40 PM)
+      };
+      const thenTimeString = then.toLocaleTimeString('en-US', options);
       return thenTimeString;
     }
   }
+  
   
 
 

@@ -144,7 +144,6 @@ window.location.href = `/users/${href}`;
 const localData = getLocalData();
 console.log(localData);
 
-
 friendName.innerHTML = localData.name;
 friendPic.src = `/img/${localData.profilePic}`;
  
@@ -177,7 +176,6 @@ friendPic.src = `/img/${localData.profilePic}`;
       rname:rname,
       sid: sid,
       sname:sname,
-
     };
     messageContent = JSON.stringify(messageContent);
     socket.send(messageContent);
@@ -295,7 +293,16 @@ data.onlineOnly.forEach(el => {
     const messageData = data.content;
    let time = Date.now();
    time = getLocalTimeString(time);
-    appendMsg("items-start", "rounded-bl-sm", messageData,time);
+    appendMsg("items-start", "rounded-bl-sm",messageData , time);
+    if(!custom.classList.contains('hidden')){
+        custom.classList.add('hidden');
+        if(chatSection.classList.contains('hidden')){
+          chatSection.classList.remove('hidden')
+        }
+      }
+      if(chatSection.classList.contains('hidden')){
+        chatSection.classList.remove('hidden')
+      }
     scrollToSet();
   });
 

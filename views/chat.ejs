@@ -86,39 +86,23 @@
 <script>
 
 
-function getTimeDifference(createdAt) {
-    // Convert the createdAt timestamp to a Date object
-    const then = new Date(createdAt);
-  
-    // Get the current time in milliseconds
-    const now = Date.now();
-  
-    // Calculate the difference in milliseconds
-    const difference = now - then;
-  
-    // Define thresholds for different time units (seconds, minutes, hours, days)
-    const secondInMs = 1000;
-    const minuteInMs = secondInMs * 60;
-    const hourInMs = minuteInMs * 60;
-    const dayInMs = hourInMs * 24;
-  
-    // Calculate the time units based on the difference
-    let seconds = Math.floor(difference / secondInMs);
-    let minutes = Math.floor(difference / minuteInMs);
-    let hours = Math.floor(difference / hourInMs);
-    let days = Math.floor(difference / dayInMs);
-  
-    // Determine the appropriate time unit and format the string
-    if (days > 0) {
-      return `${days} day${days > 1 ? 's' : ''} ago`;
-    } else if (hours > 0) {
-      return `${hours} hour${hours > 1 ? 's' : ''} ago`;
-    } else if (minutes > 0) {
-      return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
-    } else {
-      return `${seconds} second${seconds > 1 ? 's' : ''} ago`;
-    }
-  }
+function getLocalTimeString(timestamp) {
+  // Create a new Date object from the timestamp in milliseconds
+  const date = new Date(timestamp);
+
+  // Get the options for formatting the date and time
+  const options = {
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true, // Use 12-hour format (e.g., 5:40 PM)
+  };
+
+  // Format the date according to your locale (replace 'en-US' if needed)
+  const formattedTime = date.toLocaleTimeString('en-US', options);
+
+  return formattedTime;
+}
+
 
 
 
@@ -216,7 +200,7 @@ friendPic.src = `/img/${localData.profilePic}`;
         "gap-1"
       );
       const timeDiv = document.createElement("span");
-      timeDiv.textContent = getTimeDifference(time)
+      timeDiv.textContent = getLocalTimeString(time)
       timeDiv.classList.add(
         "text-[8px]" , "timeSpan"
       )
@@ -316,7 +300,7 @@ data.onlineOnly.forEach(el => {
   sendInput.addEventListener("keyup", (event) => {
     if (event.keyCode === 13 && sendInput.offsetWidth > 340) {
       event.preventDefault();
-      const time = new Date.now();
+      const time =  Date.now();
       sendSocket(time);
       const messageData = sendInput.value.trim(); // Get the trimmed message value
       appendMsg("items-end", "rounded-br-sm", messageData, time);

@@ -75,7 +75,7 @@ wss.on("connection", async (ws, req) => {
             content: content,
             sname: sname,
             rname: rname,
-            createdAt:createdAt
+            
           };
           const newChat = await chats.create(doc);
           console.log(newChat);

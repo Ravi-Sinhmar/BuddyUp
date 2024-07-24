@@ -60,6 +60,7 @@ wss.on("connection", async (ws, req) => {
         let sid = dataObj.sid;
         const rname = dataObj.rname;
         const sname = dataObj.sname;
+        const createdAt = dataObj.createdAt;
         const fid = getFid(rid, sid);
         console.log("this is chat id", rid);
         if (allConnections.has(sid) && conId === rid) {
@@ -74,6 +75,7 @@ wss.on("connection", async (ws, req) => {
             content: content,
             sname: sname,
             rname: rname,
+            createdAt:createdAt
           };
           const newChat = await chats.create(doc);
           console.log(newChat);
@@ -91,6 +93,7 @@ wss.on("connection", async (ws, req) => {
                   senderId: sid,
                   sname: sname,
                   rname: rname,
+                  time:createdAt
                 })
               );
             } else {

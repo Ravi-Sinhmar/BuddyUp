@@ -82,8 +82,6 @@
 <%- include('./partials/navChat.ejs') %>
 <%- include('./partials/warningBox.ejs') %>
 
-
-
 <script src="/js/localStorage.js"></script>
 <script>
 const friendName =  document.getElementById('fname');
@@ -118,6 +116,7 @@ friendName.innerHTML = localData.name;
 friendPic.src = `/img/${localData.profilePic}`;
  
   const sendInput = document.getElementById("sendMsg"); // Get the input element
+ 
   const chatSection = document.getElementById("chatSection"); // Get the chat section
   const sendButton = document.getElementById("sendBtn"); // Get the send button (image)
   const extraInfo = document.getElementById("extraInfo");
@@ -140,21 +139,21 @@ friendPic.src = `/img/${localData.profilePic}`;
   
 
 
-  function sendSocket() {
+  function sendSocket(time) {
     let messageContent = {
-      content: sendInput.value.trim(),
+      content:sendInput.value.trim(),
       rid: rid,
       rname:rname,
       sid: sid,
       sname:sname,
+      createdAt:time
     };
     messageContent = JSON.stringify(messageContent);
     socket.send(messageContent);
   }
 
-
   // Function to create and add a new message
-  function appendMsg(side, radius, messageData) {
+  function appendMsg(side, radius, messageData ,time) {
     const message = messageData;
     if (message) {
       const newMessageDiv = document.createElement("div");
@@ -171,9 +170,9 @@ friendPic.src = `/img/${localData.profilePic}`;
         "gap-1"
       );
       const timeDiv = document.createElement("span");
-      timeDiv.textContent = new Date().toLocaleTimeString();
+      timeDiv.textContent = time;
       timeDiv.classList.add(
-        "text-[8px]"
+        "text-[8px]" , "timeSpan"
       )
 
       const messageText = document.createElement("h1");
@@ -212,10 +211,8 @@ friendPic.src = `/img/${localData.profilePic}`;
   // Recive MSG from Socket
   function receiveSocket(data) {
     const content = data.content;
+    const time = data.createdAt;
     const senderId = data.senderId;
-  
-   
-
     return;
   }
 
@@ -226,10 +223,8 @@ friendPic.src = `/img/${localData.profilePic}`;
 
   socket.addEventListener("message", function(event) {
     const data = JSON.parse(event.data);
-
     if(rid === `${data.id}-${sid}` || rid === `${sid}-${data.id}` ){
    if(data.state === 'Online'){
-   
     state.innerText = 'Online';
     dot.style.background = "#4E61EA";
     state.style.color = "#4E61EA";
@@ -241,10 +236,7 @@ if(data.state === 'Offline'){
     dot.style.background = "#676B73";
 }
   }  
-  else{
-    state.innerText = 'Offline';
-    dot.style.background = "#676B73";
-  }
+  
 
 
     
@@ -268,9 +260,9 @@ data.onlineOnly.forEach(el => {
   
     receiveSocket(data);
     const messageData = data.content;
-    appendMsg("items-start", "rounded-bl-sm", messageData);
+    const time = data.time;
+    appendMsg("items-start", "rounded-bl-sm", messageData,time);
     scrollToSet();
- 
   });
 
   // -------------------------------------- Sending Data ------------------------------------------------
@@ -278,9 +270,10 @@ data.onlineOnly.forEach(el => {
   sendInput.addEventListener("keyup", (event) => {
     if (event.keyCode === 13 && sendInput.offsetWidth > 340) {
       event.preventDefault();
-      sendSocket();
+      const time = new Date().toLocaleTimeString();
+      sendSocket(time);
       const messageData = sendInput.value.trim(); // Get the trimmed message value
-      appendMsg("items-end", "rounded-br-sm", messageData);
+      appendMsg("items-end", "rounded-br-sm", messageData, time);
       if (chatSection.scrollHeight > 600) {
         scrollToSet();
       }
@@ -290,9 +283,11 @@ data.onlineOnly.forEach(el => {
 
   // Event listener for clicking the send button (image)
   sendButton.addEventListener("click", (event) => {
-    sendSocket();
+    const time = new Date().toLocaleTimeString();
+    sendSocket(time);
     const messageData = sendInput.value.trim(); // Get the trimmed message value
-    appendMsg("items-end", "rounded-br-sm", messageData);
+    
+    appendMsg("items-end", "rounded-br-sm",messageData,time);
     if (chatSection.scrollHeight > 600) {
       scrollToSet();
     }

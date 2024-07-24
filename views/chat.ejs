@@ -40,7 +40,7 @@
     <% if (message.length > 0) { %>
     <% message.forEach(message => { %>
     <% if (message.sid === userId) { %>
-    <div uid="<%= message._id %>" rid="<%= message.chatId %>" sid="<%= userId %>" id="sMsg" class="px-2 py-1 flex flex-col items-center justify-end gap-1">
+    <div uid="<%= message._id %>" rid="<%= message.chatId %>" sid="<%= userId %>" id="sMsg" class="px-2 py-1 flex flex-col items-end justify-end gap-1">
       <h1 class="text-xs bg-white px-3 py-2 shadow-black shadow-sm break-words rounded-2xl rounded-br-sm max-w-10/12">
         <%= message.content %>
       </h1>
@@ -49,7 +49,7 @@
     <% } %>
 
     <% if (message.sid != userId && message.fid === userId) { %>
-    <div uid="<%= message._id %>" rid="<%= message.chatId %>" sid="<%= message.fid %>" id="rMsg" class="px-2 py-1 flex flex-col justify-start gap-1">
+    <div uid="<%= message._id %>" rid="<%= message.chatId %>" sid="<%= message.fid %>" id="rMsg" class="px-2 py-1 flex flex-col items-start justify-start gap-1">
       <h1 class="text-xs bg-white px-3 py-2 shadow-black shadow-sm break-words rounded-2xl rounded-bl-sm max-w-10/12">
         <%= message.content %>
       </h1>
@@ -147,7 +147,6 @@ friendPic.src = `/img/${localData.profilePic}`;
       rname:rname,
       sid: sid,
       sname:sname,
-
     };
     messageContent = JSON.stringify(messageContent);
     socket.send(messageContent);
@@ -230,14 +229,14 @@ friendPic.src = `/img/${localData.profilePic}`;
 
     if(rid === `${data.id}-${sid}` || rid === `${sid}-${data.id}` ){
    if(data.state === 'Online'){
-    alert("he come");
+   
     state.innerText = 'Online';
     dot.style.background = "#4E61EA";
     state.style.color = "#4E61EA";
    }
   
 if(data.state === 'Offline'){
-  alert("he out");
+ 
   state.innerText = 'Offline';
     dot.style.background = "#676B73";
 }
@@ -254,13 +253,13 @@ if(data.onlineOnly){
   console.log("List come",data.onlineOnly);
 data.onlineOnly.forEach(el => {
   if(rid === `${el}-${sid}` || rid === `${sid}-${el}`){
-    alert("he come and he'is online");
+  
     state.innerText = 'Online';
     dot.style.background = "#4E61EA";
     state.style.color = "#4E61EA";
   }
   else{
-    alert("he come but he's not online");
+   
     state.innerText = 'Offline';
     dot.style.background = "#676B73";
   }
@@ -269,7 +268,7 @@ data.onlineOnly.forEach(el => {
   
     receiveSocket(data);
     const messageData = data.content;
-    appendMsg("justify-start", "rounded-bl-sm", messageData);
+    appendMsg("items-start", "rounded-bl-sm", messageData);
     scrollToSet();
  
   });
@@ -281,7 +280,7 @@ data.onlineOnly.forEach(el => {
       event.preventDefault();
       sendSocket();
       const messageData = sendInput.value.trim(); // Get the trimmed message value
-      appendMsg("justify-end", "rounded-br-sm", messageData);
+      appendMsg("items-end", "rounded-br-sm", messageData);
       if (chatSection.scrollHeight > 600) {
         scrollToSet();
       }
@@ -293,7 +292,7 @@ data.onlineOnly.forEach(el => {
   sendButton.addEventListener("click", (event) => {
     sendSocket();
     const messageData = sendInput.value.trim(); // Get the trimmed message value
-    appendMsg("justify-end", "rounded-br-sm", messageData);
+    appendMsg("items-end", "rounded-br-sm", messageData);
     if (chatSection.scrollHeight > 600) {
       scrollToSet();
     }

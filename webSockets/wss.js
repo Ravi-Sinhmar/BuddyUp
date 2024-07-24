@@ -45,8 +45,8 @@ wss.on("connection", async (ws, req) => {
       ws.userId = userId;
       ws.rid = conId;
       allConnections.set(userId, ws);
-      broadcastMessage(myFriends, { state: "Online" });
-      const onlineOnes = getOnlineFriends(myFriends);
+      let onlineOnes = getOnlineFriends(myFriends);
+      broadcastMessage(onlineOnes, { state: "Online" , id:userId });
       if (ws && ws.readyState === WebSocket.OPEN) {
         ws.send(JSON.stringify({onlineOnly:onlineOnes}));
       }
@@ -112,7 +112,8 @@ wss.on("connection", async (ws, req) => {
     });
   
     ws.on("close", () => {
-      broadcastMessage(myFriends, { state: "Offline" });
+      let onlineOnes = getOnlineFriends(myFriends);
+      broadcastMessage(onlineOnes, { state: "Offline" , id:userId });
       allConnections.delete(userId);
     });
   });

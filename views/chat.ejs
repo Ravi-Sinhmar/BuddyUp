@@ -13,7 +13,7 @@
       <div>
         <h1 id="fname" class="name text-sm text-black font-semibold">Dummy</h1>
         <div class="flex items-center justify-start gap-1">
-          <div id="dot" class="h-2 w-2 bg-blb rounded-full"></div>
+          <div style="background: gray;" id="dot" class="h-2 w-2  rounded-full"></div>
           <p id="state" class="text-xs">Offline</p>
         </div>
       </div>
@@ -80,7 +80,6 @@
 <%- include('./partials/loader') %>
 <%- include('./partials/navChat.ejs') %>
 <%- include('./partials/warningBox.ejs') %>
-
 
 
 
@@ -220,36 +219,42 @@ friendPic.src = `/img/${localData.profilePic}`;
 
   socket.addEventListener("message", function(event) {
     const data = JSON.parse(event.data);
-   
-  if(data.state === 'Online'){
-    alert("online")
+
+    if(rid === `${data.id}-${sid}` || rid === `${sid}-${data.id}` ){
+   if(data.state === 'Online'){
+    alert("he come");
     state.innerText = 'Online';
-    if(!dot.classList.contains('bg-blf')){
-      if(dot.classList.contains('bg-blb')){
-        dot.classList.remove('bg-blb');
-      }
-      dot.classList.add('bg-blf')
-    }
-  }
-  if(data.state === 'Offline'){
-    alert("offline")
+    dot.style.background = "#4E61EA";
+   }
+  
+if(data.state === 'Offline'){
+  alert("he out");
   state.innerText = 'Offline';
-    if(!dot.classList.contains('bg-blb')){
-      if(dot.classList.contains('bg-blf')){
-        dot.classList.remove('bg-blf');
-      }
-      dot.classList.add('bg-blb')
-  }
+    dot.style.background = "#E4E4E4";
 }
+  }  
+  else{
+    state.innerText = 'Offline';
+    dot.style.background = "#E4E4E4";
+  }
+
+
+    
+    
 if(data.onlineOnly){
   console.log("List come",data.onlineOnly);
-  state.innerText = 'Offline';
-    if(!dot.classList.contains('bg-blb')){
-      if(dot.classList.contains('bg-blf')){
-        dot.classList.remove('bg-blf');
-      }
-      dot.classList.add('bg-blb')
+data.onlineOnly.forEach(el => {
+  if(rid === `${el}-${sid}` || rid === `${sid}-${el}`){
+    alert("he come and he'is online");
+    state.innerText = 'Online';
+    dot.style.background = "#4E61EA";
   }
+  else{
+    alert("he come but he's not online");
+    state.innerText = 'Offline';
+    dot.style.background = "#E4E4E4";
+  }
+}); 
 }
   
     receiveSocket(data);

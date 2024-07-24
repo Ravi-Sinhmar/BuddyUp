@@ -28,7 +28,7 @@
 <div class="h-[2px] bg-blb w-full rounded-full"></div>
    
     <div class="flex w-full">
-      <div id="clearChat" class="navBtns text-black flex justify-between text-center items-center gap-2"><span>
+      <div id="clearChat" class="navBtns cursor-pointer text-black flex justify-between text-center items-center gap-2"><span>
       <img src="/img/clearChat.png" alt="" class="w-4 h-4">
         
       </span>Clear Chat</div>
@@ -58,14 +58,27 @@
 
   const profile = document.getElementById('profile');
   const block = document.getElementById('block');
+const chatId = block.getAttribute('toId');
   const clearChat = document.getElementById('clearChat');
 
 
 
 // toggle button comes
-  navBtn.addEventListener('click',(event)=>{
-    
-   
+clearChat.addEventListener('click',(event)=>{
+fetch(`/messages/${chatId}`,{
+  method:'DELETE',
+}).then(data => data.json()).then(jsonData => {
+if(jsonData.status==="success"){
+  successBox("Cleared","We removed all the chats for both of you","/messages")
+}
+else{
+  fail("Failed","We encountered some issue in clearing the chats of this account. Please try again","/messages")
+}
+})
+})
+
+
+navBtn.addEventListener('click',(event)=>{
 nav.classList.add('visible');
 blurIn();
   });
@@ -80,8 +93,6 @@ blurIn();
   }
   );
   
-
-
   navBtns.forEach(el=>{
     el.addEventListener('click',(event)=>{
       nav.classList.remove('visible');
@@ -89,10 +100,6 @@ blurIn();
     })
     
   })
-
-
-
-
 
 
 </script>

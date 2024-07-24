@@ -1,4 +1,4 @@
-<section id="tops" class="top-0 left-0 right-0 bottom-0 h-svh  w-full px-7 bg-blh">
+<section id="tops" class="h-svh w-full px-7 bg-blh">
   <!-- Top  -->
 
   <header  id="fhead" toId="<%= toId %>" class="cursor-pointer flex justify-between items-center rounded-xl overflow-hidden fixed top-3 left-3 right-3 h-16 px-2 z-10 bg-blm">
@@ -35,8 +35,18 @@
        -->
 
   <!-- Mid  -->
+
+  <div id="custom" class=" <%= custom %> flex h-full w-full flex-col justify-center items-center ">
+    <div class="flex flex-col justify-center items-center mb-20 ">
+     <img src="/bg/chats.png"  alt="" class="w-32 h-32">
+     <h1 class="font-[600] text-xl">Say them Hi!</h1>
+     <h1 class="text-blt text-center ">Share your thoughts, you have only one life</h1>
+    </div>
+   </div>
+
+
  
-  <section id="chatSection" class="overflow-y-scroll bg-blh fixed top-16 py-8 px-2 bottom-20 left-0 right-0">
+  <section  id="chatSection" class=" <%= allChat %> overflow-y-scroll bg-blh fixed top-16 py-8 px-2 bottom-20 left-0 right-0">
     <% if (message.length > 0) { %>
     <% message.forEach(message => { %>
     <% if (message.sid === userId) { %>
@@ -67,7 +77,7 @@
   <!-- Bottom  -->
 
   <footer id="extraInfo" tid="<%= tid %>" rname="<%= message.rname %>"  rid="<%= chatId %>" sname="<%= userName %>" sid="<%= userId %>" class="flex justify-between px-2 items-center fixed z-30 bottom-3 left-3 right-3 py-2 rounded-xl bg-blm border overflow-hidden border-blb">
-    <textarea id="sendMsg" name="" placeholder="Thingking..." id="" rows="2" style="outline: none; border: none; white-space: break-spaces" class="outline-none text-decoration-none bg-blm px-2 py-1 text-blt w-10/12"></textarea>
+    <textarea id="sendMsg" name="" placeholder="Thingking..." id="" rows="2" style="outline: none; border: none; white-space: break-spaces" class="outline-none text-decoration-none bg-blm px-2 py-1 text-blt w-10/12 "></textarea>
     <div class="flex justify-between items-center gap-6">
 
       <svg id="sendBtn" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-12  text-blf rounded-md px-2 py-3">
@@ -114,6 +124,7 @@ const back = document.getElementById('back');
 const backIcon = document.getElementById('backIcon');
 const dot = document.getElementById('dot');
 const state = document.getElementById('state');
+const custom = document.getElementById('custom');
 
 
 // block user click 
@@ -301,6 +312,16 @@ data.onlineOnly.forEach(el => {
       if (chatSection.scrollHeight > 600) {
         scrollToSet();
       }
+      if(!custom.classList.contains('hidden')){
+        custom.classList.add('hidden');
+        if(chatSection.classList.contains('hidden')){
+          chatSection.classList.remove('hidden')
+        }
+      }
+      if(chatSection.classList.contains('hidden')){
+        chatSection.classList.remove('hidden')
+      }
+      
       sendInput.focus();
     }
   });
@@ -316,6 +337,15 @@ data.onlineOnly.forEach(el => {
     if (chatSection.scrollHeight > 600) {
       scrollToSet();
     }
+    if(!custom.classList.contains('hidden')){
+        custom.classList.add('hidden');
+        if(chatSection.classList.contains('hidden')){
+          chatSection.classList.remove('hidden')
+        }
+      }
+      if(chatSection.classList.contains('hidden')){
+        chatSection.classList.remove('hidden')
+      }
     sendInput.focus();
    
   });

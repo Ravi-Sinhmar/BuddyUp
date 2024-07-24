@@ -74,6 +74,21 @@ exports.allMessages = async (req, res) => {
           _id: message._id.toString(), // Convert ObjectId to string
           time: getHourDifference(message.createdAt)  // Format time for display
         }));
+        let custom = 'show';
+        let allChat = 'hidden';
+      
+        
+          if (formattedMessages.length > 0) {
+            custom = 'hidden';
+            allChat = 'show';
+          }
+         else{
+          custom = 'show',
+          allChat = 'hidden'
+         }
+        
+
+
         // console.log(formattedMessages)
         return res.render("chat", {
           message: formattedMessages,
@@ -83,6 +98,8 @@ exports.allMessages = async (req, res) => {
           tid,
           title: `Chats`,
           toId,
+          custom,
+          allChat
         });
       } catch (error) {
         return res.status(500).render('resultBox',
@@ -106,5 +123,35 @@ exports.allMessages = async (req, res) => {
           href:"/messages"
         }
       ) 
+    }
+  }
+
+
+
+  exports.clearChat = async (req,res)=>{
+    const chatId = req.params.chatId;
+
+    try {
+    const result = await chats.deleteMany({chatId});
+  
+    if(result.deletedCount > 0){
+      res.status(200).json({status:'success',message:'deleted'})
+    }
+    else{
+      res.status(404).json({status:'fail',message:'not deleted'})
+    }
+    
+    } catch (error) {
+      console.log(error);
+      return res.status(500).render('resultBox',
+        {
+          title:"Failed",
+          type:"500",
+          status:"Try Again",
+          message:"We Encountered a Problem, Plese try after some time",
+          href:"/messages"
+        }
+      ) 
+
     }
   }

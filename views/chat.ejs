@@ -92,13 +92,14 @@ function getLocalTimeString(timestamp) {
 
   // Get the options for formatting the date and time
   const options = {
+    timeZone: 'Asia/Kolkata',
     hour: 'numeric',
     minute: '2-digit',
     hour12: true, // Use 12-hour format (e.g., 5:40 PM)
   };
 
   // Format the date according to your locale (replace 'en-US' if needed)
-  const formattedTime = date.toLocaleTimeString('en-US', options);
+  const formattedTime = date.toLocaleTimeString('en-IN', options);
   return formattedTime;
 }
 

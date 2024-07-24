@@ -8,6 +8,7 @@ const wss = new WebSocket.Server({ server });
 const users = require("./../Models/users");
 const chats = require("./../Models/chats"); 
 const { getFid } = require('./../Controllers/common');
+const res = require("express/lib/response");
 const allConnections = new Map();
 
 wss.on("connection", async (ws, req) => {
@@ -60,7 +61,6 @@ wss.on("connection", async (ws, req) => {
         let sid = dataObj.sid;
         const rname = dataObj.rname;
         const sname = dataObj.sname;
-        const createdAt = dataObj.createdAt;
         const fid = getFid(rid, sid);
         console.log("this is chat id", rid);
         if (allConnections.has(sid) && conId === rid) {
@@ -77,8 +77,12 @@ wss.on("connection", async (ws, req) => {
             rname: rname,
             
           };
-          const newChat = await chats.create(doc);
+          try {
+            const newChat = await chats.create(doc);
           console.log(newChat);
+        const time = newChat.createdAt;
+        console.log(time);
+          
   
           //  2nd if to check weather reciver is present in connection or not
           if (allConnections.has(fid)) {
@@ -93,7 +97,7 @@ wss.on("connection", async (ws, req) => {
                   senderId: sid,
                   sname: sname,
                   rname: rname,
-                  time:createdAt
+                  time:time
                 })
               );
             } else {
@@ -102,7 +106,12 @@ wss.on("connection", async (ws, req) => {
           } else {
             console.log("Not In coonection");
           }
-        } else {
+        } catch (error) {
+          ws.terminate(); 
+           return console.log(error)
+        }
+        }  
+        else {
           return console.log("Not Authenicated");
         }
       });

@@ -166,14 +166,14 @@ friendPic.src = `/img/${localData.profilePic}`;
       rname:rname,
       sid: sid,
       sname:sname,
-     
+
     };
     messageContent = JSON.stringify(messageContent);
     socket.send(messageContent);
   }
 
   // Function to create and add a new message
-  function appendMsg(side, radius, messageData ,time) {
+  function appendMsg(side, radius, messageData,time) {
     const message = messageData;
    
     if (message) {

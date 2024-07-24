@@ -25,13 +25,44 @@ function getTimeDifference(createdAt) {
     if (days > 0) {
       return `${days} day${days > 1 ? 's' : ''} ago`;
     } else if (hours > 0) {
-      return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+      return `${hours} hr${hours > 1 ? 's' : ''} ago`;
     } else if (minutes > 0) {
-      return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+      return `${minutes} min${minutes > 1 ? 's' : ''} ago`;
     } else {
-      return `${seconds} second${seconds > 1 ? 's' : ''} ago`;
+      return `${seconds} sec${seconds > 1 ? 's' : ''} ago`;
     }
   }
+
+  function getHourDifference(createdAt) {
+    // Convert the createdAt timestamp to a Date object
+    const then = new Date(createdAt);
+  
+    // Get the current time in milliseconds
+    const now = Date.now();
+  
+    // Calculate the difference in milliseconds
+    const difference = now - then;
+  
+    // Define thresholds for different time units (hours, days)
+    const hourInMs = 1000 * 60 * 60; // One hour in milliseconds
+    const dayInMs = hourInMs * 24; // One day in milliseconds
+  
+    // Calculate the time units based on the difference
+    const hours = Math.floor(difference / hourInMs);
+    const days = Math.floor(difference / dayInMs);
+  
+    // Determine the appropriate time unit and format the string
+    if (days > 0) {
+      return `${days} day${days > 1 ? 's' : ''} ago`;
+    } else if (hours > 0) {
+      return `${hours} hr${hours > 1 ? 's' : ''} ago`;
+    } else {
+      // If less than an hour, format as a time string
+      const thenTimeString = then.toLocaleTimeString();
+      return thenTimeString;
+    }
+  }
+  
 
 
   function extractString(combinedString) {
@@ -72,4 +103,4 @@ function getTimeDifference(createdAt) {
     }
   }
 
-  module.exports = {getTimeDifference , extractString, getFid};
+  module.exports = {getTimeDifference , getHourDifference, extractString, getFid};

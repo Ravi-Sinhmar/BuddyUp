@@ -1,13 +1,11 @@
 
 const {getFid,
-    getTimeDifference,
+    getHourDifference,
     extractString,
   } = require("./common");
 
-  
 const users = require("./../Models/users");
 const chats = require("./../Models/chats");
-
 exports.allMessages = async (req, res) => {
     const userId = req.id;
     const myPic = req.profilePic;
@@ -74,7 +72,7 @@ exports.allMessages = async (req, res) => {
           chatId: message.chatId,
           content: message.content,
           _id: message._id.toString(), // Convert ObjectId to string
-          time: getTimeDifference(message.createdAt)  // Format time for display
+          time: getHourDifference(message.createdAt)  // Format time for display
         }));
         // console.log(formattedMessages)
         return res.render("chat", {

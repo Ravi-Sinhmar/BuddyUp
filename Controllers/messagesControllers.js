@@ -144,7 +144,7 @@ exports.allMessages = async (req, res) => {
       .find({ chatId:chatId , createdAt: { $lt: page } }) 
       .sort({ createdAt: -1 }) // Sort by createdAt descending
       .limit(limit)
-      .exec();
+      
       let slmt = (messages[messages.length - 1].createdAt);
       res.json({status:'success',messages:messages,slmt});
     } catch (error) {

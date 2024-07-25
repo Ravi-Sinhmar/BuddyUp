@@ -73,7 +73,7 @@
 
   <!-- Bottom  -->
 
-  <footer id="extraInfo" lmt="<%= createdAt %>" tid="<%= tid %>" rname="<%= message.rname %>"  rid="<%= chatId %>" sname="<%= userName %>" sid="<%= userId %>" class="flex justify-between px-2 items-center fixed   bottom-3 left-3 right-3 py-2 rounded-xl bg-blm border overflow-hidden border-blb">
+  <footer id="extraInfo" lmt="<%= createdAt %>" tid="<%= tid %>" rname="<%= message.rname %>"  rid="<%= chatId %>" sname="<%= userName %>" sid="<%= userId %>" class="flex justify-between px-2 items-center fixed  bottom-80 left-3 right-3 py-2 rounded-xl bg-blm border overflow-hidden border-blb">
     <textarea id="sendMsg" name="" placeholder="Thingking..." id="" rows="2" style="outline: none; border: none; white-space: break-spaces" class="outline-none text-decoration-none bg-blm px-2 py-1 text-blt w-10/12 "></textarea>
     <div class="flex justify-between items-center gap-6">
 
@@ -170,6 +170,16 @@ let href = fhead.getAttribute('toId');
 window.location.href = `/users/${href}`;
 }});
 
+document.addEventListener('scroll', (event) => {
+  alert('Document scrolled');
+  // Your logic for document scroll
+});
+
+
+
+
+
+
 const localData = getLocalData();
 console.log(localData);
 
@@ -184,39 +194,55 @@ friendPic.src = `/img/${localData.profilePic}`;
   let rid = extraInfo.getAttribute("rid");
 
   
-
-
  let classAdded = 'false';
+ 
+ 
 
-    if(keyboard === 'true' && sendInput.offsetWidth < 350){
     sendInput.addEventListener('focus',(event)=>{
+      
+      let device = "";
+      window.addEventListener('resize',(event)=>{
+     device = "phone";
+      });
+
     setTimeout(() => {
-    fhead.classList.remove("top-3");
-    chatSection.classList.remove("top-16");
-    custom.classList.remove("top-16");
-    fhead.classList.add("top-80");
-    chatSection.classList.add("top-96");
-    custom.classList.add("top-96");
-    return
-    }, 400);
+      if(device == 'phone'){
+ 
+  
+
+
+
+
+    //     fhead.classList.remove("top-3");
+    // chatSection.classList.remove("top-16");
+    // custom.classList.remove("top-16");
+    // fhead.classList.add("top-80");
+    // chatSection.classList.add("top-96");
+    // custom.classList.add("top-96");
+    // return
+      }
+    }, 600);
+   
+  
+   
   
   });
 
-    window.addEventListener('resize', (event) => {
-    if(fhead.classList.contains('top-80')){
-    setTimeout(() => {
-    fhead.classList.remove("top-80");
-    chatSection.classList.remove("top-96");
-    custom.classList.remove("top-96");
-    fhead.classList.add("top-3");
-    chatSection.classList.add("top-16");
-    custom.classList.add("top-16");
-    sendInput.blur();
-      }, 200);
-    }
-  });
+  //   window.addEventListener('resize', (event) => {
+  //   if(fhead.classList.contains('top-80')){
+  //   setTimeout(() => {
+  //   fhead.classList.remove("top-80");
+  //   chatSection.classList.remove("top-96");
+  //   custom.classList.remove("top-96");
+  //   fhead.classList.add("top-3");
+  //   chatSection.classList.add("top-16");
+  //   custom.classList.add("top-16");
+  //   sendInput.blur();
+  //     }, 200);
+  //   }
+  // });
   
-}
+
  
  
 
@@ -404,7 +430,6 @@ data.onlineOnly.forEach(el => {
 
 
 // fetching messages on scroll
-
 let lmt = extraInfo.getAttribute('lmt');
 function convertToISO8601(dateString) {
   const date = new Date(dateString);
@@ -415,8 +440,7 @@ const messagesPerPage = 20;
 
 
 
-let isLoading = false;
-let hasMoreMessages = true;
+
 
   // Function to create and add a new message
   function fetchAppend(side, radius, messageData,time) {
@@ -464,7 +488,8 @@ let hasMoreMessages = true;
     }
   }
 
-
+let isLoading = false;
+let hasMoreMessages = true;
 
 function fetchMessages(page,limit,href) {
   isLoading = true;
@@ -474,33 +499,42 @@ function fetchMessages(page,limit,href) {
       if (data.messages.length < limit) {
         hasMoreMessages = false;
       }
-      isLoading = false;
-     console.log(data.messages);
-
+    isLoading = false;
+    console.log(data.messages);
 data.messages.forEach(el =>{
   if(el.fid != sid){
     fetchAppend("items-end", "rounded-br-sm",el.content,getLocalTimeString(el.createdAt));
   }
   if(el.fid === sid ){
     fetchAppend("items-start", "rounded-bl-sm",el.content , getLocalTimeString(el.createdAt));
-   
   }
 });
-
-
-     function convertToFormattedString(isoString) {
-  const date = new Date(isoString);
-  return date.toLocaleString();
-}
-    extraInfo.setAttribute('lmt', convertToFormattedString(data.slmt));
-
-
+   extraInfo.setAttribute('lmt', data.slmt);
     })
     .catch(error => {
       console.error('Error fetching messages:', error);
       isLoading = false;
     });
 }
+function convertToISO8601(data) {
+  // Handle different data types
+  if (typeof data === 'string') {
+    // Attempt to parse the string as a date
+    const date = new Date(data);
+    if (isNaN(date.getTime())) {
+      console.error('Invalid date string:', data);
+      return null; // Or handle the error as needed
+    }
+    return date.toISOString();
+  } else if (data instanceof Date) {
+    return data.toISOString();
+  } else {
+    console.error('Unsupported data type:', typeof data);
+    return null; // Or handle the error as needed
+  }
+}
+
+
 
 chatSection.addEventListener('scroll', () => {
   let currentPage = extraInfo.getAttribute('lmt');
@@ -508,22 +542,13 @@ function convertToISO8601(dateString) {
   const date = new Date(dateString);
   return date.toISOString();
 }
-currentPage = convertToISO8601(currentPage)
-   const h = chatSection.scrollHeight;
-   const t = chatSection.scrollTop
-   const c =  chatSection.clientHeight
-   if((-t + c >= h-10)  && !isLoading && hasMoreMessages ){
-fetchMessages(currentPage,messagesPerPage,`message/${rid}`,isLoading);
+
+const threshold = 50; 
+   if(( - chatSection.scrollTop +  chatSection.clientHeight) >= (chatSection.scrollHeight - threshold) && !isLoading && hasMoreMessages ){
+   currentPage = convertToISO8601(currentPage)
+    fetchMessages(currentPage,messagesPerPage,`message/${rid}`);
 }
 });
-
-
-
-
-
-
-
-
 
 
 

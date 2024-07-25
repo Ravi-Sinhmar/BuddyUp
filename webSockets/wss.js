@@ -87,10 +87,7 @@ wss.on("connection", async (ws, req) => {
               lastMsg = newChat.content;
             }
              
-            else{
-              lastMsg = "Start a chat";
-              lastMsgTime = Date.now;
-            }
+          
               
       
      
@@ -108,7 +105,7 @@ wss.on("connection", async (ws, req) => {
                   senderId: sid,
                   sname: sname,
                   rname: rname,
-                  time:time
+               
                 })
               );
             } else {

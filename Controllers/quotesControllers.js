@@ -23,7 +23,15 @@ exports.userQuotes = async(req,res)=>{
         quote : qData.quote, 
         time : getTimeDifference(qData.createdAt)
       }));
-      res.render('quotes.ejs',{title:"Quotes",allQuotes,myPic,myId,navHead:"User Quotes",});
+
+      let custom = 'show';
+      let allQts = 'hidden';
+
+      if(data.length > 0){
+        custom = 'hidden';
+        allQts = 'show'
+      }
+      res.render('quotes.ejs',{title:"Quotes",allQuotes,myPic,myId,navHead:uid,custom ,allQts});
     } catch (error) {
       return res.status(500).render('resultBox',
         {
@@ -55,8 +63,16 @@ exports.myQuotes = async(req,res)=>{
         time : getTimeDifference(qData.createdAt),
         
       }));
+
+      let custom = 'show';
+      let allQts = 'hidden';
+
+      if(data.length > 0){
+        custom = 'hidden';
+        allQts = 'show'
+      }
        
-      res.render('quotes.ejs',{title:"Your Quotes",allQuotes,myPic,myId,navHead:"Your Quotes"});
+      res.render('quotes.ejs',{title:"Your Quotes",allQuotes,myPic,myId,navHead:"Your Quotes",custom ,allQts});
     } catch (error) {
       return res.status(500).render('resultBox',
         {
@@ -88,8 +104,15 @@ exports.allQuotes = async(req,res)=>{
         quote : qData.quote, 
         time : getTimeDifference(qData.createdAt)
       }));
+      let custom = 'show';
+      let allQts = 'hidden';
+
+      if(data.length > 0){
+        custom = 'hidden';
+        allQts = 'show'
+      }
   
-      res.render('quotes.ejs',{title:"Quotes",allQuotes,myPic,myId,navHead:"All quotes"});
+      res.render('quotes.ejs',{title:"Quotes",allQuotes,myPic,myId,navHead:"All quotes" ,custom,allQts});
   
     } catch (error) {
       return res.status(500).render('resultBox',

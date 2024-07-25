@@ -5,18 +5,22 @@
         <div class="flex  justify-between items-center">
         <h1 class="font-[500] text-black text-xl" ><%= navHead %></h1>
       </div>
-      </nav>            
-    <div id="quoteSection" class="h-full flex flex-col overflow-y-scroll  px-2 py-2 bg-blg gap-1 ">
-      <div id="quotCustom" class="hidden flex h-full w-full flex-col justify-center items-center ">
+      </nav>        
+      
+      <div id="quotCustom" class="<%= custom %> flex h-full w-full flex-col justify-center items-center ">
         <div class="flex flex-col justify-center items-center mb-20  ">
          <img src="/bg/quotes.png"  alt="" class="w-32 h-32">
          <h1 class="font-[600] text-xl">No quotes</h1>
          <h1 class="text-blt ">All quotes will appear here</h1>
         </div>
        </div>
+      
+
+    <div id="quoteSection" class=" <%= allQts %> h-full flex flex-col overflow-y-scroll  px-2 py-2 bg-blg gap-1 ">
        <% allQuotes.forEach(el => { %>
         <div class="quot ps-3  rounded-md bg-blm shadow-sm  border-b-2 border border-blb ">
-            <div class="flex w-full flex-col py-3 px-2   " >
+
+          <div class="flex w-full flex-col py-3 px-2   " >
                 <div class="flex  text-black gap-5 w-full ">
                    <a href="/users/<%= el.wId %>">
                     <img  src="/img/<%= el.wPic %>" alt="" class=" wImage h-12 min-h-12 w-12 min-w-12 rounded-full ring-2  ">

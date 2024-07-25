@@ -61,17 +61,23 @@ exports.allMessages = async (req, res) => {
         let skip = 0;
         const messages = await chats
           .find({ chatId })
-          .sort({ createdAt: 1 }) // Sort by createdAt descending
+          .sort({ createdAt: -1 }) // Sort by createdAt descending
           .skip(skip) // Skip the first 'skip' number of documents
           .limit(limit); // Limit the number of returned documents
   
+          let createdAt = "";
+          if(messages.length > 0){
+            createdAt = messages[messages.length - 1].createdAt
+          }
+          console.log(createdAt)
+
         const formattedMessages = messages.map((message) => ({
           sid: message.sid,
           fid: message.fid,
           rname:message.rname,
           chatId: message.chatId,
           content: message.content,
-          _id: message._id.toString(), // Convert ObjectId to string
+          _id: message._id.toString(),
           time: getHourDifference(message.createdAt)  // Format time for display
         }));
         let custom = 'show';
@@ -88,7 +94,8 @@ exports.allMessages = async (req, res) => {
          }
         
 
-
+         
+         
         // console.log(formattedMessages)
         return res.render("chat", {
           message: formattedMessages,
@@ -99,7 +106,8 @@ exports.allMessages = async (req, res) => {
           title: `Chats`,
           toId,
           custom,
-          allChat
+          allChat,
+          createdAt
         });
       } catch (error) {
         return res.status(500).render('resultBox',
@@ -123,6 +131,25 @@ exports.allMessages = async (req, res) => {
           href:"/messages"
         }
       ) 
+    }
+  }
+  
+
+  exports.scrollFetch = async (req, res) => {
+    const chatId = req.params.rid;
+    const { page, limit } = req.query;
+    
+    try {
+      const messages = await chats
+      .find({ chatId:chatId , createdAt: { $lt: page } }) 
+      .sort({ createdAt: -1 }) // Sort by createdAt descending
+      .limit(limit)
+      .exec();
+      let slmt = (messages[messages.length - 1].createdAt);
+      res.json({status:'success',messages:messages,slmt});
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
     }
   }
 

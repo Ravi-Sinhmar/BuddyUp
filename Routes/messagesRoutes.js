@@ -7,6 +7,5 @@ const cookieAuth = require("../Middlewares/auth");
 router.get("/messages", cookieAuth,messagesControllers.allMessages );
 router.get("/messages/:chatId",cookieAuth, messagesControllers.specificChat);
 router.delete("/messages/:chatId",cookieAuth, messagesControllers.clearChat);
-
-
+router.get('/message/:rid', messagesControllers.scrollFetch);
 module.exports = router;

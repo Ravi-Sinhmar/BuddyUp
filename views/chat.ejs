@@ -46,11 +46,11 @@
 
 
  
-  <section  id="chatSection" class=" <%= allChat %> overflow-y-scroll bg-blh fixed top-16 py-8 px-2 bottom-20 left-0 right-0">
+  <section  id="chatSection" class=" <%= allChat %> flex flex-col-reverse  overflow-y-scroll bg-blh gap-2 fixed top-16 py-8 px-2 bottom-20 left-0 right-0">
     <% if (message.length > 0) { %>
     <% message.forEach(message => { %>
     <% if (message.sid === userId) { %>
-    <div uid="<%= message._id %>" rid="<%= message.chatId %>" sid="<%= userId %>" id="sMsg" class="px-2 py-1 flex flex-col items-end justify-end gap-1">
+    <div uid="<%= message._id %>" rid="<%= message.chatId %>" sid="<%= userId %>" id="sMsg" class="px-2   py-1 flex flex-col items-end justify-end gap-1">
       <h1 class="text-xs bg-white px-3 py-2 shadow-black shadow-sm break-words rounded-2xl rounded-br-sm max-w-10/12">
         <%= message.content %>
       </h1>
@@ -66,17 +66,14 @@
       <span class="text-[8px]"><%= message.time %></span>
     </div>
     <% } %>
-
     <% }) %>
-
-
     <% } %>
   </section>
  
 
   <!-- Bottom  -->
 
-  <footer id="extraInfo" tid="<%= tid %>" rname="<%= message.rname %>"  rid="<%= chatId %>" sname="<%= userName %>" sid="<%= userId %>" class="flex justify-between px-2 items-center fixed   bottom-3 left-3 right-3 py-2 rounded-xl bg-blm border overflow-hidden border-blb">
+  <footer id="extraInfo" lmt="<%= createdAt %>" tid="<%= tid %>" rname="<%= message.rname %>"  rid="<%= chatId %>" sname="<%= userName %>" sid="<%= userId %>" class="flex justify-between px-2 items-center fixed   bottom-3 left-3 right-3 py-2 rounded-xl bg-blm border overflow-hidden border-blb">
     <textarea id="sendMsg" name="" placeholder="Thingking..." id="" rows="2" style="outline: none; border: none; white-space: break-spaces" class="outline-none text-decoration-none bg-blm px-2 py-1 text-blt w-10/12 "></textarea>
     <div class="flex justify-between items-center gap-6">
 
@@ -93,7 +90,14 @@
 <%- include('./partials/warningBox.ejs') %>
 
 <script src="/js/localStorage.js"></script>
+<script src="/js/scrollFetch.js"></script>
 <script>
+
+
+
+
+
+
 let keyboard = '';
 function detectDeviceType() {
   const userAgent = navigator.userAgent.toLowerCase();
@@ -116,24 +120,28 @@ function detectDeviceType() {
 }
 detectDeviceType();
 
-
-function getLocalTimeString(timestamp) {
-  // Create a new Date object from the timestamp in milliseconds
-  const date = new Date(timestamp);
-
-  // Get the options for formatting the date and time
-  const options = {
-    timeZone: 'Asia/Kolkata',
-    hour: 'numeric',
-    minute: '2-digit',
-    hour12: true, // Use 12-hour format (e.g., 5:40 PM)
-  };
-
-  // Format the date according to your locale (replace 'en-US' if needed)
-  const formattedTime = date.toLocaleTimeString('en-IN', options);
-  return formattedTime;
-}
-
+function getLocalTimeString(createdAt) {
+    const then = new Date(createdAt);
+    const now = Date.now();
+    const differenceInMs = now - then;
+  
+    const hours = Math.floor(differenceInMs / (1000 * 60 * 60));
+    const days = Math.floor(differenceInMs / (1000 * 60 * 60 * 24));
+  
+    if (days > 0) {
+      return `${days} day${days > 1 ? 's' : ''} ago`;
+    } else {
+      // Include options for desired time format
+      const options = {
+        timeZone: 'Asia/Kolkata',
+        hour: 'numeric', // Display hours as numbers
+        minute: '2-digit', // Pad minutes with leading zeros if needed
+        hour12: true   // Use 12-hour format (e.g., 2:40 PM)
+      };
+      const thenTimeString = then.toLocaleTimeString('en-IN', options);
+      return thenTimeString;
+    }
+  }
 
 
 
@@ -174,7 +182,10 @@ friendPic.src = `/img/${localData.profilePic}`;
   const sendButton = document.getElementById("sendBtn"); // Get the send button (image)
   const extraInfo = document.getElementById("extraInfo");
   let rid = extraInfo.getAttribute("rid");
+
   
+
+
  let classAdded = 'false';
 
     if(keyboard === 'true' && sendInput.offsetWidth < 350){
@@ -242,7 +253,6 @@ friendPic.src = `/img/${localData.profilePic}`;
   // Function to create and add a new message
   function appendMsg(side, radius, messageData,time) {
     const message = messageData;
-   
     if (message) {
       const newMessageDiv = document.createElement("div");
       newMessageDiv.id = "sMsg";
@@ -281,10 +291,12 @@ friendPic.src = `/img/${localData.profilePic}`;
       messageContentDiv.appendChild(messageText);
       messageContentDiv.appendChild(timeDiv);
       newMessageDiv.appendChild(messageContentDiv);
-      chatSection.appendChild(newMessageDiv);
+      chatSection.insertBefore(newMessageDiv,chatSection.firstChild);
       sendInput.value = ""; // Clear the input field
     }
   }
+
+
   // scroll to bootom on send or receive the message
   function scrollToSet() {
     chatSection.scrollTop = chatSection.scrollHeight; // Scroll to bottom
@@ -350,7 +362,6 @@ data.onlineOnly.forEach(el => {
    time = getLocalTimeString(time);
     appendMsg("items-start", "rounded-bl-sm",messageData , time);
    if(data.content){
-
     if(!custom.classList.contains('hidden')){
         custom.classList.add('hidden');
         if(chatSection.classList.contains('hidden')){
@@ -361,15 +372,13 @@ data.onlineOnly.forEach(el => {
         chatSection.classList.remove('hidden')
       }
    }
-   
-   
     scrollToSet();
   });
 
   // -------------------------------------- Sending Data ------------------------------------------------
   // Event listener for Enter key press
   sendInput.addEventListener("keyup", (event) => {
-    if (event.keyCode === 13 && sendInput.offsetWidth > 340) {
+    if (event.keyCode === 13 && sendInput.offsetWidth > 340 && sendInput.value.trim() != '') {
       event.preventDefault();
       let time =  Date.now();
       time = getLocalTimeString(time);
@@ -392,6 +401,131 @@ data.onlineOnly.forEach(el => {
       sendInput.focus();
     }
   });
+
+
+// fetching messages on scroll
+
+let lmt = extraInfo.getAttribute('lmt');
+function convertToISO8601(dateString) {
+  const date = new Date(dateString);
+  return date.toISOString();
+}
+lmt = convertToISO8601(lmt)
+const messagesPerPage = 20;
+
+
+
+let isLoading = false;
+let hasMoreMessages = true;
+
+  // Function to create and add a new message
+  function fetchAppend(side, radius, messageData,time) {
+    const message = messageData;
+    if (message) {
+      const newMessageDiv = document.createElement("div");
+      newMessageDiv.id = "sMsg";
+      newMessageDiv.classList.add("w-full");
+
+      const messageContentDiv = document.createElement("div");
+      messageContentDiv.classList.add(
+        "px-2",
+        "py-1",
+        "flex",
+        "flex-col",
+        `${side}`,
+        "gap-1"
+      );
+      const timeDiv = document.createElement("span");
+      timeDiv.textContent = time;
+      timeDiv.classList.add(
+        "text-[8px]" , "timeSpan"
+      )
+
+      const messageText = document.createElement("h1");
+      messageText.textContent = message;
+      messageText.classList.add(
+        "text-xs",
+        "bg-white",
+        "px-3",
+        "py-2",
+        "shadow-black",
+        "shadow-sm",
+        "break-words",
+        "rounded-2xl",
+        `${radius}`,
+        "max-w-64"
+      );
+
+      messageContentDiv.appendChild(messageText);
+      messageContentDiv.appendChild(timeDiv);
+      newMessageDiv.appendChild(messageContentDiv);
+      chatSection.appendChild(newMessageDiv,chatSection.firstChild);
+      
+    }
+  }
+
+
+
+function fetchMessages(page,limit,href) {
+  isLoading = true;
+  fetch(`/${href}?page=${page}&limit=${limit}`)
+    .then(response => response.json())
+    .then(data => {
+      if (data.messages.length < limit) {
+        hasMoreMessages = false;
+      }
+      isLoading = false;
+     console.log(data.messages);
+
+data.messages.forEach(el =>{
+  if(el.fid != sid){
+    fetchAppend("items-end", "rounded-br-sm",el.content,getLocalTimeString(el.createdAt));
+  }
+  if(el.fid === sid ){
+    fetchAppend("items-start", "rounded-bl-sm",el.content , getLocalTimeString(el.createdAt));
+   
+  }
+});
+
+
+     function convertToFormattedString(isoString) {
+  const date = new Date(isoString);
+  return date.toLocaleString();
+}
+    extraInfo.setAttribute('lmt', convertToFormattedString(data.slmt));
+
+
+    })
+    .catch(error => {
+      console.error('Error fetching messages:', error);
+      isLoading = false;
+    });
+}
+
+chatSection.addEventListener('scroll', () => {
+  let currentPage = extraInfo.getAttribute('lmt');
+function convertToISO8601(dateString) {
+  const date = new Date(dateString);
+  return date.toISOString();
+}
+currentPage = convertToISO8601(currentPage)
+   const h = chatSection.scrollHeight;
+   const t = chatSection.scrollTop
+   const c =  chatSection.clientHeight
+   if((-t + c >= h-10)  && !isLoading && hasMoreMessages ){
+fetchMessages(currentPage,messagesPerPage,`message/${rid}`,isLoading);
+}
+});
+
+
+
+
+
+
+
+
+
+
 
   // Event listener for clicking the send button (image)
   sendButton.addEventListener("click", (event) => {

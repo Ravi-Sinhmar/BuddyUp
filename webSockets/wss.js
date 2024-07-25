@@ -12,7 +12,6 @@ const res = require("express/lib/response");
 const allConnections = new Map();
 
 wss.on("connection", async (ws, req) => {
-  
   let lastMsgTime;
   let lastMsg;
  
@@ -40,13 +39,11 @@ wss.on("connection", async (ws, req) => {
     const myFriends = user[0].friends
    
     if (!user) {
-      console.log("not")
+      
       return ws.terminate();
     }
     if (user && userId) {
-      console.log("yes")
-
-      
+     
       console.log("hi",myFriends);
       ws.userId = userId;
       ws.rid = conId;
@@ -85,14 +82,17 @@ wss.on("connection", async (ws, req) => {
           console.log("hi")
           try {
             const newChat = await chats.create(doc);
-
             if(newChat){
-              console.log("new chaat")
               lastMsgTime = newChat.createdAt;
               lastMsg = newChat.content;
-              console.log(lastMsg , lastMsgTime);
-               
             }
+             
+            else{
+              lastMsg = "Start a chat";
+              lastMsgTime = Date.now;
+            }
+              
+      
      
   
           //  2nd if to check weather reciver is present in connection or not
@@ -135,10 +135,10 @@ wss.on("connection", async (ws, req) => {
     });
   
     ws.on("close", async () => {
-      const myw = allConnections.get(userId);
-      const chatId = myw.rid;
       let onlineOnes = getOnlineFriends(myFriends);
       broadcastMessage(onlineOnes, { state: "Offline" , id:userId });
+      const myw = allConnections.get(userId);
+      const chatId = myw.rid;
      console.log("closed");
       try {
      console.log("in try");
@@ -148,11 +148,11 @@ wss.on("connection", async (ws, req) => {
         );
         
         if(user.modifiedCount === 1){
-        return  console.log("done");
+          console.log("done");
   
         }
       } catch (error) {
-       return console.log("in catch")
+        console.log("in catch")
       }
       allConnections.delete(userId);
     });

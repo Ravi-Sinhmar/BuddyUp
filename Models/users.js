@@ -44,6 +44,14 @@ const userSchema = new mongoose.Schema({
           type: String, // Optional: Reference to the chat document
           ref: "Chat",
         },
+        lastMsg: {
+          type: String, // Optional: Reference to the chat document
+          default : "Start a Chat"
+        },
+        lastMsgTime: {
+          type: String, // Optional: Reference to the chat document
+          default : "Fri Jul 26 2024 01:50:44 GMT+0530 (India Standard Time)"
+        },
       },
     ],
   },

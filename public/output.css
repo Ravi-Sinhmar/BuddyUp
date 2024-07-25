@@ -600,8 +600,16 @@ video {
   bottom: 8rem;
 }
 
-.bottom-52{
-  bottom: 13rem;
+.bottom-\[1\.5svh\]{
+  bottom: 1.5svh;
+}
+
+.bottom-\[47svh\]{
+  bottom: 47svh;
+}
+
+.bottom-\[87svh\]{
+  bottom: 87svh;
 }
 
 .left-0{
@@ -618,10 +626,6 @@ video {
 
 .left-2{
   left: 0.5rem;
-}
-
-.left-3{
-  left: 0.75rem;
 }
 
 .left-36{
@@ -650,10 +654,6 @@ video {
 
 .right-2{
   right: 0.5rem;
-}
-
-.right-3{
-  right: 0.75rem;
 }
 
 .right-5{
@@ -708,24 +708,24 @@ video {
   top: 1.25rem;
 }
 
-.top-80{
-  top: 20rem;
+.top-\[8svh\]{
+  top: 8svh;
 }
 
-.top-96{
-  top: 24rem;
+.bottom-2{
+  bottom: 0.5rem;
 }
 
-.bottom-64{
-  bottom: 16rem;
+.bottom-\[3svh\]{
+  bottom: 3svh;
 }
 
-.bottom-72{
-  bottom: 18rem;
+.bottom-\[4svh\]{
+  bottom: 4svh;
 }
 
-.bottom-80{
-  bottom: 20rem;
+.bottom-\[5svh\]{
+  bottom: 5svh;
 }
 
 .-z-10{
@@ -844,6 +844,10 @@ video {
   height: 7rem;
 }
 
+.h-3{
+  height: 0.75rem;
+}
+
 .h-32{
   height: 8rem;
 }
@@ -905,10 +909,6 @@ video {
   width: 33.333333%;
 }
 
-.w-10{
-  width: 2.5rem;
-}
-
 .w-10\/12{
   width: 83.333333%;
 }
@@ -939,6 +939,10 @@ video {
 
 .w-28{
   width: 7rem;
+}
+
+.w-3{
+  width: 0.75rem;
 }
 
 .w-32{
@@ -1231,6 +1235,11 @@ video {
   border-bottom-color: rgb(228 228 228 / var(--tw-border-opacity));
 }
 
+.border-b-blg{
+  --tw-border-opacity: 1;
+  border-bottom-color: rgb(243 245 246 / var(--tw-border-opacity));
+}
+
 .border-b-blh{
   --tw-border-opacity: 1;
   border-bottom-color: rgb(226 230 251 / var(--tw-border-opacity));
@@ -1346,11 +1355,6 @@ video {
 .px-6{
   padding-left: 1.5rem;
   padding-right: 1.5rem;
-}
-
-.px-7{
-  padding-left: 1.75rem;
-  padding-right: 1.75rem;
 }
 
 .px-8{
@@ -1683,5 +1687,11 @@ video {
   --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
   --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
   box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+
+@media (min-width: 640px){
+  .sm\:bottom-\[87svh\]{
+    bottom: 87svh;
+  }
 }
 

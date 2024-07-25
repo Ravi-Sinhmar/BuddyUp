@@ -1,29 +1,56 @@
-<section id="tops" class="h-svh w-full px-7 bg-blh">
+<section id="tops" class="h-svh w-full  bg-blg">
   <!-- Top  -->
-
-  <header style="z-index: 1;"  id="fhead" toId="<%= toId %>" class="cursor-pointer flex justify-between items-center rounded-xl overflow-hidden fixed top-3   overscroll-y-none left-3 right-3 h-16 px-2  bg-blm">
-    <div class="flex items-center gap-2">
-  <a id="back" href="/messages">
-    <svg id="backIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
-    </svg>
-  </a>
-
-      <img id="fprofilePic" class="profilePic w-12 h-12 rounded-full" src="" alt="" />
-      <div>
-        <h1 id="fname" class="name text-sm text-black font-semibold">Dummy</h1>
-        <div class="flex items-center justify-start gap-1">
-          <div style="background: #676B73;" id="dot" class="h-2 w-2  rounded-full"></div>
-          <p style="color: #676B73;" id="state" class="text-xs">Offline</p>
-        </div>
+  <header style="z-index: 1;"  id="fhead" toId="<%= toId %>" class="cursor-pointer flex flex-col justify-end  py-1  overflow-hidden fixed top-0 bottom-[87svh]  sm:bottom-[87svh] overscroll-y-none left-0 right-0   bg-blm">
+    <div class="flex w-full py-1 px-2 justify-between rounded-full">
+      <div class="flex  h-3 w-3  justify-between bg-blb rounded-full">
       </div>
-    </div>
+      <div class="flex  h-3 w-3  justify-between bg-blt rounded-full">
+      </div>
+      <div class="flex  h-3 w-3  justify-between bg-blb rounded-full">
+      </div>
+      <div class="flex  h-3 w-3  justify-between bg-blt rounded-full">
+      </div>
+      <div class="flex  h-3 w-3  justify-between bg-blb rounded-full">
+      </div>
+      <div class="flex  h-3 w-3  justify-between bg-blb rounded-full">
+      </div>
+      <div class="flex  h-3 w-3  justify-between bg-blt rounded-full">
+      </div>
+      <div class="flex  h-3 w-3  justify-between bg-blb rounded-full">
+      </div>
+      <div class="flex  h-3 w-3  justify-between bg-blt rounded-full">
+      </div>
+      <div class="flex  h-3 w-3  justify-between bg-blb rounded-full">
+      </div>
+      
+      
 
-    <div id="navBtn" class="cursor-pointer  h-full w-10 flex justify-center items-center text-center">
-      <svg id="navIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-black more">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z" />
-      </svg>
     </div>
+    
+  </div>
+    <div class=" h-16 flex justify-between items-center  w-full">
+    <div class="flex items-center gap-2 px-4">
+      <a id="back" href="/messages">
+        <svg id="backIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+        </svg>
+      </a>
+    
+          <img id="fprofilePic" class="profilePic w-12 h-12 rounded-full" src="" alt="" />
+          <div>
+            <h1 id="fname" class="name text-sm text-black font-semibold">Dummy</h1>
+            <div class="flex items-center justify-start gap-1">
+              <div style="background: #676B73;" id="dot" class="h-2 w-2  rounded-full"></div>
+              <p style="color: #676B73;" id="state" class="text-xs">Offline</p>
+            </div>
+          </div>
+        </div>
+        <div id="navBtn" class="cursor-pointer h-full  flex justify-center items-center text-center px-4">
+          <svg id="navIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-black more">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z" />
+          </svg>
+        </div>
+  
   </header>
 
 
@@ -46,7 +73,7 @@
 
 
  
-  <section  id="chatSection" class=" <%= allChat %> flex flex-col-reverse  overflow-y-scroll bg-blh gap-2 fixed top-16 py-8 px-2 bottom-20 left-0 right-0">
+  <section  id="chatSection" class=" <%= allChat %> flex flex-col-reverse  overflow-y-scroll bg-blg gap-2 fixed top-[8svh] py-8 px-2 bottom-[5svh] left-0 right-0">
     <% if (message.length > 0) { %>
     <% message.forEach(message => { %>
     <% if (message.sid === userId) { %>
@@ -72,8 +99,7 @@
  
 
   <!-- Bottom  -->
-
-  <footer id="extraInfo" lmt="<%= createdAt %>" tid="<%= tid %>" rname="<%= message.rname %>"  rid="<%= chatId %>" sname="<%= userName %>" sid="<%= userId %>" class="flex justify-between px-2 items-center fixed  bottom-80 left-3 right-3 py-2 rounded-xl bg-blm border overflow-hidden border-blb">
+  <footer id="extraInfo" lmt="<%= createdAt %>" tid="<%= tid %>" rname="<%= message.rname %>"  rid="<%= chatId %>" sname="<%= userName %>" sid="<%= userId %>" class="flex justify-between px-2 items-center fixed border-b-2 border-b-blg  bottom-0 left-0 right-0 py-1  bg-blm border overflow-hidden border-blb">
     <textarea id="sendMsg" name="" placeholder="Thingking..." id="" rows="2" style="outline: none; border: none; white-space: break-spaces" class="outline-none text-decoration-none bg-blm px-2 py-1 text-blt w-10/12 "></textarea>
     <div class="flex justify-between items-center gap-6">
 
@@ -98,27 +124,6 @@
 
 
 
-let keyboard = '';
-function detectDeviceType() {
-  const userAgent = navigator.userAgent.toLowerCase();
-  if (userAgent.includes('iphone') || userAgent.includes('ipod')) {
-   keyboard = 'true';
-    return 'iPhone';
-  } else if (userAgent.includes('ipad')) {
-   
-    return 'iPad';
-  } else if (userAgent.includes('android')) {
-    keyboard = 'true';
-    return 'Android';
-  } else if (userAgent.includes('windows phone')) {
-    keyboard = 'false';
-    return 'Windows Phone';
-  } else {
-    keyboard = 'false';
-    return 'Desktop';
-  }
-}
-detectDeviceType();
 
 function getLocalTimeString(createdAt) {
     const then = new Date(createdAt);
@@ -170,18 +175,8 @@ let href = fhead.getAttribute('toId');
 window.location.href = `/users/${href}`;
 }});
 
-document.addEventListener('scroll', (event) => {
-  alert('Document scrolled');
-  // Your logic for document scroll
-});
-
-
-
-
-
-
 const localData = getLocalData();
-console.log(localData);
+
 
 friendName.innerHTML = localData.name;
 friendPic.src = `/img/${localData.profilePic}`;
@@ -192,14 +187,7 @@ friendPic.src = `/img/${localData.profilePic}`;
   const sendButton = document.getElementById("sendBtn"); // Get the send button (image)
   const extraInfo = document.getElementById("extraInfo");
   let rid = extraInfo.getAttribute("rid");
-
-  
- let classAdded = 'false';
- 
- 
-
     sendInput.addEventListener('focus',(event)=>{
-      
       let device = "";
       window.addEventListener('resize',(event)=>{
      device = "phone";
@@ -207,40 +195,27 @@ friendPic.src = `/img/${localData.profilePic}`;
 
     setTimeout(() => {
       if(device == 'phone'){
- 
-  
-
-
-
-
-    //     fhead.classList.remove("top-3");
-    // chatSection.classList.remove("top-16");
-    // custom.classList.remove("top-16");
-    // fhead.classList.add("top-80");
-    // chatSection.classList.add("top-96");
-    // custom.classList.add("top-96");
-    // return
+       fhead.classList.remove('bottom-[87svh]');
+       fhead.classList.add('bottom-[47svh]');
+      custom.classList.remove("top-16");
+    return
       }
-    }, 600);
+    }, 400);
    
   
-   
   
   });
 
-  //   window.addEventListener('resize', (event) => {
-  //   if(fhead.classList.contains('top-80')){
-  //   setTimeout(() => {
-  //   fhead.classList.remove("top-80");
-  //   chatSection.classList.remove("top-96");
-  //   custom.classList.remove("top-96");
-  //   fhead.classList.add("top-3");
-  //   chatSection.classList.add("top-16");
-  //   custom.classList.add("top-16");
-  //   sendInput.blur();
-  //     }, 200);
-  //   }
-  // });
+    window.addEventListener('resize', (event) => {
+    if(fhead.classList.contains('bottom-[47svh]')){
+    setTimeout(() => {
+    fhead.classList.add('bottom-[87svh]');
+    fhead.classList.remove('bottom-[47svh]');
+    custom.classList.add("top-16");
+    sendInput.blur();
+      }, 200);
+    }
+  });
   
 
  
@@ -363,7 +338,7 @@ if(data.state === 'Offline'){
   
     
 if(data.onlineOnly){
-  console.log("List come",data.onlineOnly);
+  
 data.onlineOnly.forEach(el => {
   if(rid === `${el}-${sid}` || rid === `${sid}-${el}`){
   
@@ -500,7 +475,7 @@ function fetchMessages(page,limit,href) {
         hasMoreMessages = false;
       }
     isLoading = false;
-    console.log(data.messages);
+  
 data.messages.forEach(el =>{
   if(el.fid != sid){
     fetchAppend("items-end", "rounded-br-sm",el.content,getLocalTimeString(el.createdAt));
@@ -512,7 +487,6 @@ data.messages.forEach(el =>{
    extraInfo.setAttribute('lmt', data.slmt);
     })
     .catch(error => {
-      console.error('Error fetching messages:', error);
       isLoading = false;
     });
 }
@@ -522,14 +496,14 @@ function convertToISO8601(data) {
     // Attempt to parse the string as a date
     const date = new Date(data);
     if (isNaN(date.getTime())) {
-      console.error('Invalid date string:', data);
+    
       return null; // Or handle the error as needed
     }
     return date.toISOString();
   } else if (data instanceof Date) {
     return data.toISOString();
   } else {
-    console.error('Unsupported data type:', typeof data);
+   
     return null; // Or handle the error as needed
   }
 }

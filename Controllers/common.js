@@ -55,6 +55,30 @@ function getTimeDifference(createdAt) {
       return thenTimeString;
     }
   }
+
+  function getLocalTimeString(createdAt) {
+    const then = new Date(createdAt);
+    const now = Date.now();
+    const differenceInMs = now - then;
+  
+    const hours = Math.floor(differenceInMs / (1000 * 60 * 60));
+    const days = Math.floor(differenceInMs / (1000 * 60 * 60 * 24));
+  
+    if (days > 0) {
+      return `${days} day${days > 1 ? 's' : ''} ago`;
+    } else {
+      // Include options for desired time format
+      const options = {
+        timeZone: 'Asia/Kolkata',
+        hour: 'numeric', // Display hours as numbers
+        minute: '2-digit', // Pad minutes with leading zeros if needed
+        hour12: true   // Use 12-hour format (e.g., 2:40 PM)
+      };
+      const thenTimeString = then.toLocaleTimeString('en-IN', options);
+      return thenTimeString;
+    }
+  }
+
   
   
 
@@ -97,4 +121,4 @@ function getTimeDifference(createdAt) {
     }
   }
 
-  module.exports = {getTimeDifference , getHourDifference, extractString, getFid};
+  module.exports = {getTimeDifference , getHourDifference, extractString,getLocalTimeString, getFid};

@@ -1,6 +1,8 @@
 
 const {getFid,
     getHourDifference,
+    getTimeDifference,
+    getLocalTimeString,
     extractString,
   } = require("./common");
 
@@ -20,6 +22,9 @@ exports.allMessages = async (req, res) => {
         name: friend.name,
         profilePic: friend.profilePic || "default.png", // Set default if profilePic is missing
         chatId: friend._id,
+        lastMsg :friend.lastMsg,
+        time: getLocalTimeString(friend.lastMsgTime)
+
       })); // Create an array of friend objects with only name and profilePic
   
   let custom = 'show';

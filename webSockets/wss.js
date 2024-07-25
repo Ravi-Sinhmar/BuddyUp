@@ -12,6 +12,9 @@ const res = require("express/lib/response");
 const allConnections = new Map();
 
 wss.on("connection", async (ws, req) => {
+  
+  let lastMsgTime;
+  let lastMsg;
  
     function validateToken(token) {
       try {
@@ -37,12 +40,14 @@ wss.on("connection", async (ws, req) => {
     const myFriends = user[0].friends
    
     if (!user) {
-     
+      console.log("not")
       return ws.terminate();
     }
     if (user && userId) {
+      console.log("yes")
+
       
-       console.log("hi",myFriends);
+      console.log("hi",myFriends);
       ws.userId = userId;
       ws.rid = conId;
       allConnections.set(userId, ws);
@@ -77,12 +82,18 @@ wss.on("connection", async (ws, req) => {
             rname: rname,
             
           };
+          console.log("hi")
           try {
             const newChat = await chats.create(doc);
-          console.log(newChat);
-        const time = newChat.createdAt;
-        console.log(time);
-          
+
+            if(newChat){
+              console.log("new chaat")
+              lastMsgTime = newChat.createdAt;
+              lastMsg = newChat.content;
+              console.log(lastMsg , lastMsgTime);
+               
+            }
+     
   
           //  2nd if to check weather reciver is present in connection or not
           if (allConnections.has(fid)) {
@@ -123,9 +134,26 @@ wss.on("connection", async (ws, req) => {
       console.error(`Error from ws.on error ${err}`);
     });
   
-    ws.on("close", () => {
+    ws.on("close", async () => {
+      const myw = allConnections.get(userId);
+      const chatId = myw.rid;
       let onlineOnes = getOnlineFriends(myFriends);
       broadcastMessage(onlineOnes, { state: "Offline" , id:userId });
+     console.log("closed");
+      try {
+     console.log("in try");
+        const user = await users.updateOne(
+          { _id: userId, "friendsDetails._id": chatId }, // Filter by both user ID and chat ID
+          { $set: { "friendsDetails.$.lastMsg": lastMsg , "friendsDetails.$.lastMsgTime": lastMsgTime } } // Update state using positional operator
+        );
+        
+        if(user.modifiedCount === 1){
+        return  console.log("done");
+  
+        }
+      } catch (error) {
+       return console.log("in catch")
+      }
       allConnections.delete(userId);
     });
   });

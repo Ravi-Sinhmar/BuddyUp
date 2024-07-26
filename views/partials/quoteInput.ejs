@@ -16,7 +16,7 @@ z-index: 20;
     
       <div id="quote" class=" flex flex-col relative w-full h py-2 min-h-40 text-black rounded-lg overflow-hidden px-2 gap-2">
        <div class="text-sm w-full">Write your post bellow...</div>
-        <p   id="message" contenteditable="true"  class="cursor-text outline-none bg-transparent rounded-md min-h-32  z-10 px-2 py-1 text-xs  border-2 border-blb ">
+        <p   id="message" contenteditable="true"  class="bg-transparent cursor-text outline-none  rounded-md min-h-32  z-10 px-2 py-1 text-xs  border-2 border-blb ">
         </p>
       </div>
     </div>
@@ -43,7 +43,12 @@ z-index: 20;
   
 
   const message = document.getElementById('message');
-  
+  message.addEventListener('click',(event)=>{
+    allowSelection = true;
+  })
+
+ 
+
 // cancel quote
 
 cancelQuote.addEventListener('click',(event)=>{

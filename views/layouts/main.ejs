@@ -24,11 +24,13 @@
 
 
     <script>
-//        document.body.addEventListener('selectstart', (event) => {
-//   if (event.target !== message) {
-//     event.preventDefault();
-//   }
-// });
+        let allowSelection = false; // Default is disabled
+     document.body.addEventListener('selectstart', (event) => {
+  if (!allowSelection) {
+    event.preventDefault();
+  }
+  allowSelection = false; // Reset flag after each event
+});
     </script>
 </body>
 </html>

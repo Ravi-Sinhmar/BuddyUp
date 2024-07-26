@@ -134,13 +134,13 @@ wss.on("connection", async (ws, req) => {
     ws.on("close", async () => {
       let onlineOnes = getOnlineFriends(myFriends);
       broadcastMessage(onlineOnes, { state: "Offline" , id:userId });
-      const myw = allConnections.get(userId);
-      const chatId = myw.rid;
+      
+      
      console.log("closed");
       try {
      console.log("in try");
         const user = await users.updateOne(
-          { _id: userId, "friendsDetails._id": chatId }, // Filter by both user ID and chat ID
+          { _id: userId, "friendsDetails._id": conId }, // Filter by both user ID and chat ID
           { $set: { "friendsDetails.$.lastMsg": lastMsg , "friendsDetails.$.lastMsgTime": lastMsgTime } } // Update state using positional operator
         );
         

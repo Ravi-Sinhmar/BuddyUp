@@ -3,18 +3,17 @@ const quotes = require('./../Models/quotes');
 const { extractString , getTimeDifference , getFid } = require('./common')
 
 
-exports.userQuotes = async(req,res)=>{
+exports.userPosts = async(req,res)=>{
     const myPic = req.profilePic;
     const myId = req.id;
     const uid = req.params.uid;
-  
     if(myId === uid){
-      return res.status(200).redirect('/yourQuotes');
+      return res.status(200).redirect('/yourPosts');
     }
     console.log(myId)
     try {
       const data = await quotes.find({wId:uid});
-      console.log("your quotes");
+      console.log("your posts");
       const allQuotes = data.map((qData) => ({
         wName: qData.wName,
         wPic: qData.wPic,
@@ -31,7 +30,7 @@ exports.userQuotes = async(req,res)=>{
         custom = 'hidden';
         allQts = 'show'
       }
-      res.render('quotes.ejs',{title:"Quotes",allQuotes,myPic,myId,navHead:uid,custom ,allQts});
+      res.render('quotes.ejs',{title:"Posts",allQuotes,myPic,myId,navHead:uid,custom ,allQts});
     } catch (error) {
       return res.status(500).render('resultBox',
         {
@@ -39,7 +38,7 @@ exports.userQuotes = async(req,res)=>{
           type:"500",
           status:"Try Again",
           message:"We Encountered a Problem with showing Posts",
-          href:"/quotes"
+          href:"/posts"
         }
       )
     }
@@ -47,7 +46,7 @@ exports.userQuotes = async(req,res)=>{
 
 
 //   my quotes 
-exports.myQuotes = async(req,res)=>{
+exports.myPosts = async(req,res)=>{
     const myPic = req.profilePic;
     const myId = req.id;
     console.log(myId)
@@ -72,7 +71,7 @@ exports.myQuotes = async(req,res)=>{
         allQts = 'show'
       }
        
-      res.render('quotes.ejs',{title:"Your Quotes",allQuotes,myPic,myId,navHead:"Your Quotes",custom ,allQts});
+      res.render('quotes.ejs',{title:"Your Posts",allQuotes,myPic,myId,navHead:"Your Posts",custom ,allQts});
     } catch (error) {
       return res.status(500).render('resultBox',
         {
@@ -91,7 +90,7 @@ exports.myQuotes = async(req,res)=>{
 
 //   all quotes 
 
-exports.allQuotes = async(req,res)=>{
+exports.allPosts = async(req,res)=>{
     const myPic = req.profilePic;
     const myId = req.id;
     try {
@@ -112,7 +111,7 @@ exports.allQuotes = async(req,res)=>{
         allQts = 'show'
       }
   
-      res.render('quotes.ejs',{title:"Quotes",allQuotes,myPic,myId,navHead:"All quotes" ,custom,allQts});
+      res.render('quotes.ejs',{title:"Quotes",allQuotes,myPic,myId,navHead:"All Posts" ,custom,allQts});
   
     } catch (error) {
       return res.status(500).render('resultBox',
@@ -131,7 +130,7 @@ exports.allQuotes = async(req,res)=>{
   }
 
 //  save patch quotes
-exports.addQuotes = async(req,res)=>{
+exports.addPosts = async(req,res)=>{
     const wId = req.id;
     const wName = req.name;
     const wPic = req.profilePic;

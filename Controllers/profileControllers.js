@@ -1,5 +1,6 @@
 // see profile of any user
 const users = require('./../Models/users');
+const quotes = require('./../Models/quotes');
 const setCookies  = require('./setCookies');
 const { extractString , getTimeDifference , getFid } = require('./common')
 exports.userProfile = async (req, res) => {
@@ -132,12 +133,68 @@ exports.SaveEditProfile = async (req, res) => {
     );
 
     if (!user) {
-      return res.status(400).json({ status: "fail", message: "Not Updated" });
+      console.log("no user");     
+      return res.status(400).json({ status: "fail", message: "notUser" });
     }
-    const token = setCookies(user); // Generate token
-    res.cookie("token", token, { httpOnly: true }); // Set cookie after token generation
-    res.status(201).json({ status: "success", message: "Updated" });
-  } catch (err) {
+    if(user){  
+      console.log("user upaded");
+      const data = await quotes.updateMany({wId:uid},{$set:{wName:name,wPic:profilePic}});
+    
+      if(!data){
+      const token = setCookies(user); 
+      res.cookie("token", token, { httpOnly: true }); // Set cookie after token generation
+      return res.status(404).json({
+        status: "fail",
+        message: "notQuotes",
+      })
+     }
+     
+      if(data){
+        console.log("quotes update");
+const bulkWriteOperations = [];
+const usersData = await users.find({ friends: { $in: [uid] } });
+usersData.forEach(user => {
+  const updateDoc = {
+    updateOne: {
+      filter: { _id: user._id, 'friendsDetails._id': { $regex: new RegExp(`^${uid}-|^-${uid}`) } },
+      update: {
+        $set: {
+          'friendsDetails.$[elem].name': name,
+          'friendsDetails.$[elem].profilePic':profilePic,
+        }
+      },
+      arrayFilters: [{ 'elem._id': { $regex: new RegExp(`^${uid}-|^-${uid}`) } }]
+    }
+  };
+  bulkWriteOperations.push(updateDoc);
+});
+
+const result = await users.bulkWrite(bulkWriteOperations);
+ console.log(result)
+
+ if(!result){
+  const token = setCookies(user); 
+   res.cookie("token", token, { httpOnly: true }); // Set cookie after token generation
+return res.status(404).json({
+  status: "fail",
+  message: "notMessages",
+})
+
+
+ }
+if(result){
+  const token = setCookies(user); 
+   res.cookie("token", token, { httpOnly: true }); // Set cookie after token generation
+ return res.status(201).json({ status: "success", message: "Updated" });
+}
+
+    }
+
+
+  
+  } 
+}
+  catch (err) {
     console.log(err);
     res.status(500).json({
       status: "fail",

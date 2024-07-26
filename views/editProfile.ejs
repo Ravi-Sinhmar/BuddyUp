@@ -87,6 +87,8 @@ let newName = name.value.trim();
 let newBio = bio.value.trim();
 
 const content = {name:`${newName}`, bio:`${newBio}`,profilePic:`${newProfilePic}`};
+loaderIn();
+blurIn();
 fetch('/profile/edit',{
   method:'PATCH',
   headers:{
@@ -103,7 +105,16 @@ fetch('/profile/edit',{
                             "/profile")
                        
                     } 
-                    else if(jsonData.status === "fail") {
+                    else if(jsonData.status === "fail" && jsonData.message === 'notUser') {
+                      networkEr("Try Again","We Encountered a Problem with updating your profile",'/profile')
+                    }
+                    else if(jsonData.status === "fail" && jsonData.message === 'notQuotes') {
+                      networkEr("Some Updated","Some linked doucuments still remaning to update , make sure you update again",'/profile')
+                    }
+                    else if(jsonData.status === "fail" && jsonData.message === 'notMessages') {
+                      networkEr("Some Updated","Some linked doucuments still remaning to update , make sure you update again",'/profile')
+                    }
+                    else if( jsonData.status === "fail" && jsonData.message === "500" ) {
                       networkEr("Try Again","We Encountered a Problem with updating your profile",'/profile')
                     }
 }).catch((err)=>{

@@ -15,7 +15,7 @@ z-index: 20;
     
     
       <div id="quote" class=" flex flex-col relative w-full h py-2 min-h-40 text-black rounded-lg overflow-hidden px-2 gap-2">
-       <div class="text-sm w-full">Write your quotes bellow...</div>
+       <div class="text-sm w-full">Write your post bellow...</div>
         <p   id="message" contenteditable="true"  class="cursor-text outline-none bg-transparent rounded-md min-h-32  z-10 px-2 py-1 text-xs  border-2 border-blb ">
         </p>
       </div>
@@ -55,9 +55,13 @@ cancelQuote.addEventListener('click',(event)=>{
 
 // Posting quote
 postQuote.addEventListener('click',(event)=>{
+  message.value = '';
+  loaderIn();
+  quoteInput.classList.remove('visible');
+
   
   const content = {quote:message.textContent}
-  fetch (`/quotes`, {
+  fetch (`/posts`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json; charset=UTF-8',
@@ -69,7 +73,7 @@ postQuote.addEventListener('click',(event)=>{
       return data.json();
     }).then((jsonData)=>{
     if(jsonData.status === 'success'){
-      window.location.href = '/quotes'
+      window.location.href = '/yourPosts'
     }
     }).catch(err => console.log(err));
 });

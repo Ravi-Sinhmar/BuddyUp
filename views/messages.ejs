@@ -3,7 +3,7 @@
 <!-- Messagees Content -->
 <main id="wrapper" style="z-index: 1;"
     class="  bg-blm z-0  h-svh top-0 bottom-0 left-0 right-0  flex flex-col justify-between items-center transition-colors duration-500 ease-in-out ">
-    <nav class="px-5 py-5 space-y-4  w-full  border-b border-b-blb">
+    <nav class="px-5 py-5 space-y-4  w-full  ">
         <div class="flex justify-between items-center">
         <h1 class="font-[500] text-black text-xl">Messages</h1>
         <a  id="navBtn" class="cursor-pointer">
@@ -12,20 +12,7 @@
               </svg>
             </a>
         </div>
-        <div class="flex justify-between  items-center gap-2 text-black">
-            <div class="flex justify-start items-center gap-4 border w-full bg-blh rounded-md px-2">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                    class="w-6 text-blt">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-                </svg>
-                <input placeholder="Search Messages..." type="text"
-                    class="w-8/12 bg-transparent outline-none  text-blt placeholder:text-blt  py-1">
-        
-            </div>
-          
-        </div>
+      
 
     </nav>
 
@@ -40,7 +27,7 @@
     <!-- List of people with whom  user doing chat -->
     
     <div id="allMsg"
-        class=" <%= allMsg %>  bg-blm flex flex-col space-y-3 px-4 fixed top-28 bottom-24 py-2 left-0 right-0 overflow-y-scroll">
+        class=" <%= allMsg %>  bg-blm flex flex-col space-y-3 px-4 h-svh w-full pt-3  overflow-y-scroll">
         <% friendData.forEach(friend => { %>
         <% if (friend.state == "connected") { %>
         <div id="<%= friend.chatId %>"

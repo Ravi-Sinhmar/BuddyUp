@@ -17,7 +17,8 @@ exports.allMessages = async (req, res) => {
       if (!user) {
       return res.status(404).redirect("/register");
       }
-      const friendData = user.friendsDetails.map((friend) => ({
+      const sortedFriendData = user.friendsDetails.sort((a, b) => b.lastMsgTime - a.lastMsgTime);
+      const friendData = sortedFriendData.map((friend) => ({
         state: friend.state,
         name: friend.name,
         profilePic: friend.profilePic, // Set default if profilePic is missing

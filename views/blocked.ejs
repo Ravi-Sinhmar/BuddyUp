@@ -18,7 +18,7 @@
           <!-- List of people with whom  user doing chat -->
           
          
-           <div class=" <%= allBlock %> bg-blm flex flex-col space-y-3 px-4 fixed top-20 bottom-24 py-2 left-0 right-0 overflow-y-scroll">
+           <div class=" <%= allBlock %> bg-blm flex flex-col space-y-3 px-2 fixed top-20 bottom-24 py-2 left-0 right-0 overflow-y-scroll">
             <% friendData.forEach(friend => {  %>
              <% if (friend.state == "blocked") { %>
     <div   class=" blockDiv bg-blh border border-blb rounded-xl  flex justify-between items-center px-4 py-4 relative ">
@@ -29,14 +29,14 @@
           alt=""
         />
         <div class="flex flex-col items-start justify-center gap-0.5">
-          <h1 class="name  text-sm text-black "><%= friend.name %></h1>
+          <h1 class="name text-sm text-black "><%= friend.name %></h1>
           <!-- <p class="  text-blf  text-xs ">View Profile</p> -->
         </div>
       </div>
-      <div class="flex justify-center items-center gap-4">
-        <button chatId="<%= friend.chatId %>"  class="viewProfile px-2 py-1.5 bg-blm rounded-md border border-blb text-blf text-xs " >View Profile</button>
+      <div class="flex justify-center items-center gap-1">
+        <button chatId="<%= friend.chatId %>"  class="viewProfile px-1 py-1 bg-blm rounded-md border border-blb text-blf text-xs " >Profile</button>
 
-        <button chatId="<%= friend.chatId %>"  class="unblock px-2 py-1.5 bg-blm rounded-md border border-blb text-blf text-xs" >Unblock</button>
+        <button chatId="<%= friend.chatId %>"  class="unblock px-1 py-1 bg-blm rounded-md border border-blb text-blf text-xs" >Unblock</button>
         
       </div>
   

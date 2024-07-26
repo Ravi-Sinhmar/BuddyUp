@@ -20,7 +20,7 @@ exports.allMessages = async (req, res) => {
       const friendData = user.friendsDetails.map((friend) => ({
         state: friend.state,
         name: friend.name,
-        profilePic: friend.profilePic || "default.png", // Set default if profilePic is missing
+        profilePic: friend.profilePic, // Set default if profilePic is missing
         chatId: friend._id,
         lastMsg :friend.lastMsg,
         time: getLocalTimeString(friend.lastMsgTime)

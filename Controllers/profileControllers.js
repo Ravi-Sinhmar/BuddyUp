@@ -151,26 +151,28 @@ exports.SaveEditProfile = async (req, res) => {
      
       if(data){
         console.log("quotes update");
-const bulkWriteOperations = [];
-const usersData = await users.find({ friends: { $in: [uid] } });
-usersData.forEach(user => {
-  const updateDoc = {
-    updateOne: {
-      filter: { _id: user._id, 'friendsDetails._id': { $regex: new RegExp(`^${uid}-|^-${uid}`) } },
-      update: {
-        $set: {
-          'friendsDetails.$[elem].name': name,
-          'friendsDetails.$[elem].profilePic':profilePic,
-        }
-      },
-      arrayFilters: [{ 'elem._id': { $regex: new RegExp(`^${uid}-|^-${uid}`) } }]
-    }
-  };
-  bulkWriteOperations.push(updateDoc);
-});
+        const bulkWriteOperations = [];
 
-const result = await users.bulkWrite(bulkWriteOperations);
- console.log(result)
+        const usersData = await users.find({ friends: { $in: [uid] } });
+   
+        usersData.forEach(user => {
+          const updateDoc = {
+            updateOne: {
+              filter: { _id: user._id, 'friendsDetails._id': { $in: [`${uid}-${user._id}`, `${user._id}-${uid}`] } },
+              update: {
+                $set: {
+                  'friendsDetails.$[elem].name': name,
+                  'friendsDetails.$[elem].profilePic': profilePic,
+                }
+              },
+              arrayFilters: [{ 'elem._id': { $in: [`${uid}-${user._id}`, `${user._id}-${uid}`] } }]
+            }
+          };
+          bulkWriteOperations.push(updateDoc);
+        });
+    
+        const result = await users.bulkWrite(bulkWriteOperations);
+      
 
  if(!result){
   const token = setCookies(user); 

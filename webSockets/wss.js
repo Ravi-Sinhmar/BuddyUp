@@ -85,6 +85,8 @@ wss.on("connection", async (ws, req) => {
             if(newChat){
               lastMsgTime = newChat.createdAt;
               lastMsg = newChat.content;
+              console("this is lmt and lm prevs", lastMsgTime,lastMsg)
+
             }
              
           
@@ -107,7 +109,15 @@ wss.on("connection", async (ws, req) => {
                   rname: rname,
                
                 })
+               
+                
+
               );
+              
+              lastMsgTime = Date.now.toString
+              lastMsg = content;
+              console("this is lmt and lm ", lastMsgTime,lastMsg)
+
             } else {
               console.log("May or may be online but connected");
             }

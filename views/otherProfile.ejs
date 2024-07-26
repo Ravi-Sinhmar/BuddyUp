@@ -1,12 +1,11 @@
 <main id="othersProfile" class=" rounded-xl h-svh w-full   gap-3 py-4 flex flex-col items-center  bg-blm transition-all duration-700 ease-in-out">
-  <nav class="px-8 py-4 space-y-4  w-full  z-10 border-b border-b-blb ">
+  <nav class="px-5 py-4 space-y-4  w-full  z-10  ">
     <div class="flex  justify-between items-center">
-    <h1 id="fstate" fstate="<%= fstate %>" mstate="<%= mstate %>" class="font-[500] text-black text-2xl" >Profile</h1>
-    <p id="theirQuotes" class=" text-sm cursor-pointer bg-blh font-[600] text-blf px-2 py-2 rounded-md  flex justify-between text-center items-center gap-1"> See Posts<span>
-    </span></p>
+    <h1 id="fstate" fstate="<%= fstate %>" mstate="<%= mstate %>" class="font-[500] text-black text-xl" >@<%= name %></h1>
+   
   </div>
   </nav>
-  <div class="flex flex-col  w-full  bg-red text-blh  justify-between rounded-lg px-8 py-4 ">
+  <div class="flex flex-col  w-full  bg-red text-blh  justify-between rounded-lg px-5 py-4 ">
            <div class="flex flex-col gap-4 ">
             <div class="  text-blm flex flex-col  justify-between items-center  py-1 px-4 gap-3 rounded-md" >
 
@@ -20,7 +19,8 @@
                   </div>
             </div>
           <!-- Unique Id Section -->
-          <div class="bg-blf text-blm rounded-md flex items-center  justify-between px-6 py-3 ">
+        <div class="w-full flex flex-col gap-1 items-center justify-center">
+          <div class="bg-blh border border-blb shadow-sm shadow-blb text-black rounded-md w-full flex items-center  justify-between px-6 py-3 ">
            
             <div class="flex  items-start gap-3 ">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6 ">
@@ -31,8 +31,14 @@
               <h1 id="uid" class="text-xs"><%= id %></h1>
             </div>
             </div>
-           
+            <button class="   text-blf justify-center flex items-center rounded-md">
+              <p id="theirQuotes" class=" text-sm cursor-pointer rounded-md font-[600]  px-2 py-2  flex justify-between text-center items-center gap-1"> See Posts<span>
+              </span></p>
+            </button>
             </div>
+           
+        </div>
+           
            </div>
         
          

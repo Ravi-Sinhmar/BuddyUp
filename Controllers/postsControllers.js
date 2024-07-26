@@ -51,14 +51,13 @@ exports.myPosts = async(req,res)=>{
     const myId = req.id;
     console.log(myId)
     try {
-      const data = await quotes.find({wId:myId});
+      const data = await quotes.find({wId:myId}).sort({ createdAt: -1 })
       const allQuotes = data.map((qData) => ({
         wName: qData.wName,
         wPic: qData.wPic,
         wId: qData.wId , // Set default if profilePic is missing
         qId: qData._id,
         quote : qData.quote,
-         
         time : getTimeDifference(qData.createdAt),
         
       }));
@@ -94,7 +93,7 @@ exports.allPosts = async(req,res)=>{
     const myPic = req.profilePic;
     const myId = req.id;
     try {
-      const data = await quotes.find({});
+      const data = await quotes.find({}).sort({ createdAt: -1 })
       const allQuotes = data.map((qData) => ({
         wName: qData.wName,
         wPic: qData.wPic,
@@ -103,6 +102,7 @@ exports.allPosts = async(req,res)=>{
         quote : qData.quote, 
         time : getTimeDifference(qData.createdAt)
       }));
+    
       let custom = 'show';
       let allQts = 'hidden';
 
@@ -148,3 +148,32 @@ exports.addPosts = async(req,res)=>{
     }
     
     }
+
+
+    // delete post 
+exports.deletePosts = async(req,res)=>{
+  const myId = req.id;
+const id = req.query.id;
+const wId = req.query.wId;
+
+
+if(wId != myId){
+  return res.status(404).json({status:'fail',message:'500'})
+}
+      try {
+        const result =await quotes.deleteOne({_id:id})
+      console.log(result);
+
+      if(result.deletedCount > 0){
+        res.status(201).json({status:'success',message:'deleted'})
+      }
+     else{
+    return  res.status(404).json({status:'fail',message:'500'})
+      }
+        
+      } catch (error) {
+      return  res.status(500).json({status:'fail',message:'500'})
+      
+      }
+      
+      }

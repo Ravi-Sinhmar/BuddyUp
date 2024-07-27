@@ -234,9 +234,9 @@ friendPic.src = `/img/${localData.profilePic}`;
   const tid = extraInfo.getAttribute("tid");
   // Websocket code
   // Send MSG to Socket
-    const socket = new WebSocket(`ws://localhost:3000/?tid=${tid}&rid=${rid}`);
+    // const socket = new WebSocket(`ws://localhost:3000/?tid=${tid}&rid=${rid}`);
     
-    // const socket = new WebSocket(`wss://msg-io.onrender.com/?tid=${tid}&rid=${rid}`);
+    const socket = new WebSocket(`wss://msg-io.onrender.com/?tid=${tid}&rid=${rid}`);
    
 
   function sendSocket() {

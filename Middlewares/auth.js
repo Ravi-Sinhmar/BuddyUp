@@ -12,22 +12,13 @@ const cookieAuth = (req, res, next) => {
         next();
       }
       else{
-        res.clearCookie('token', {
-          path: '/',
-          domain: 'localhost', // Or your domain if applicable
-          secure: false, // Set to true if using HTTPS
-          httpOnly: false // Set to true if necessary
-        });
+        res.clearCookie('token', { path: '/', domain: 'https://msg-io.onrender.com', secure: true, httpOnly: true });
         return res.redirect("/");
       }
     
     } catch (err) {
-      res.clearCookie('token', {
-        path: '/',
-        domain: 'localhost', // Or your domain if applicable
-        secure: false, // Set to true if using HTTPS
-        httpOnly: false // Set to true if necessary
-      });
+      res.clearCookie('token', { path: '/', domain: 'https://msg-io.onrender.com', secure: true, httpOnly: true });
+
       return res.redirect("/register");
     }
   };

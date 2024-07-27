@@ -181,7 +181,7 @@
         warningHeading.innerText = "Warning";
         warningMessage.innerText =
             "Before you logout make sure you remamber your UID otherwise you will never be able to login again";
-      warningRightBtn.style.background = "#E8FBE7" //info
+      warningRightBtn.style.background = "#DFAD34" //info
         warningBox.classList.add("visible");
         blurIn();
         warningRightBtn.innerText = "Logout";
@@ -205,7 +205,7 @@
                 .then((jsonData) => {
                     if (jsonData.status === "success") {
                         successBox("Successfully Logged Out",
-                            "You can login any time by using UID & Password",
+                            "You can login any time by using Username & Password",
                             "/")
                        
                     } else {
@@ -251,7 +251,7 @@
                       successBox("Account Deleted Successfully","Your all data , chats , friends has been removed from platform","/")
                         
                     } else {
-                        fail("Fail to Delete Account","Your account is not deleted yet. Please try again","/profile")
+                        fail("Fail to Delete Account","Your account is not deleted yet. Please try again")
                     }
                 })
                 .catch((err) => {
@@ -295,7 +295,7 @@
                     if (jsonData.status === "success") {
                       successBox("Blocked","Now if you want to chat again then go to profile section and then in blocked Users.Unblock whoever you want","/blockedUsers")
                     } else {
-                        fail("Fail to block user","We encountered some issue in blocking this account. Please try again","/messages")
+                        fail("Fail to block user","We encountered some issue in blocking this account. Please try again")
                     }
                 })
                 .catch((err) => {

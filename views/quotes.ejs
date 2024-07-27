@@ -98,15 +98,15 @@ el.addEventListener('click', (event)=>{
   method:"DELETE"
  }).then(data => data.json()).then((jsonData)=>{
 if(jsonData.status === "success"){
-return successBox("Success","Your post has been deleted successfully","/yourPosts")
+return successBox("Success","Your post has been deleted successfully")
 }
 else if(jsonData.status === "fail" && jsonData.message === "500")
 {
- return networkEr("Try Again","We Encountered a Problem with deleting your post",'/yourPosts')
+ return networkEr("Try Again","We Encountered a Problem with deleting your post")
 
 }
  }).catch(err =>{
- return networkEr("Try Again","We Encountered a Problem with deleting your post",'/yourPosts')
+ return networkEr("Try Again","We Encountered a Problem with deleting your post")
 
  });
   

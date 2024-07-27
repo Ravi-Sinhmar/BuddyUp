@@ -60,6 +60,9 @@ cancelQuote.addEventListener('click',(event)=>{
 
 // Posting quote
 postQuote.addEventListener('click',(event)=>{
+  if(message.value != ''){
+
+ 
   message.value = '';
   loaderIn();
   quoteInput.classList.remove('visible');
@@ -81,7 +84,11 @@ postQuote.addEventListener('click',(event)=>{
       window.location.href = '/yourPosts'
     }
     }).catch(err => console.log(err));
-});
+
+  }
+  });
+
+
   message.addEventListener("keyup", function() {
     const charLength = message.textContent.length;
     charCount.textContent = `${charLength}/140 characters`;

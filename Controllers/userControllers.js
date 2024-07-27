@@ -36,6 +36,25 @@ exports.check = async (req, res) => {
 
 // postRegister
 exports.postRegister = async (req, res) => {
+
+  const allowedCharactersRegex = /^[a-z][a-z0-9._]*$/;
+  function validateInput(inputString) {
+    return allowedCharactersRegex.test(inputString);
+  }
+const username = req.body._id;
+if(!validateInput(username) && username.length > 20){
+  return res.status(500).render('resultBox',
+    {
+      title:"Failed",
+      type:"500",
+      status:"Try Again",
+      message:"Validation Failed, Please provide valid",
+      href:"/register"
+    }
+  )
+}
+
+
     console.log("it is here");
       try {
         const user = await users.create(req.body);
@@ -120,8 +139,8 @@ exports.postLogin = async (req, res) => {
         {
           title:"Success",
           type:"success",
-          status:"Sucess",
-          message:`Welcome Back,${user.name}`,
+          status:"Success",
+          message:`Welcome Back , ${user.name}`,
           href:"/messages"
         }
       )

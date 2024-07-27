@@ -6,7 +6,9 @@ function setCookies(user){
     const bio = user.bio;
 
     // let generate jwt tockets here
-    const expiresIn = "3d";
+    const daysToExpire = 15;
+    const secondsPerDay = 24 * 60 * 60;
+    const expiresIn = daysToExpire * secondsPerDay;
     const payload = { id, name, profilePic , bio };
     try {
       const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, {expiresIn});

@@ -60,11 +60,14 @@
   const viewProfile = document.querySelectorAll('.viewProfile');
   const unblock = document.querySelectorAll('.unblock');
   const blockDiv = document.querySelectorAll('.blockDiv');
+
   
 viewProfile.forEach(el =>{
 el.addEventListener('click',(event)=>{
   event.preventDefault();
   const chatId = el.getAttribute('chatId');
+  alert(chatId);
+
   window.location.href = `/users/${chatId}`
 
 });

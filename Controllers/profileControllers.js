@@ -7,11 +7,11 @@ exports.userProfile = async (req, res) => {
   let uid = req.params.uid;
   const myId = req.id;
   if (uid.includes("-")) {
-    let fid = extractString(uid, myId);
-    uid = fid[0];
+    let fid = getFid(uid, myId);
+    uid = fid;
   }
 
-  if (uid === req.id) {
+  if (uid === myId) {
     return res.redirect("/profile");
   }
   try {

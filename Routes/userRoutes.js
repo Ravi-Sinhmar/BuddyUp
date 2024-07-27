@@ -6,7 +6,7 @@ let specialCase =0;
 // Welcome
 router.get("/", userControllers.welcome);
 // Register
-router.get("/register", checkCookies, userControllers.getRegister);
+router.get("/register", userControllers.getRegister);
 //   Check Username Existence
 router.get("/check", userControllers.check);
 //   Register User Post

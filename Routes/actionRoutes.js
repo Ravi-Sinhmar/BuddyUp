@@ -17,5 +17,5 @@ router.get("/blockedUsers", cookieAuth, actionControllers.getBlockedUsers);
   // Deleting account
   router.delete("/delete", cookieAuth,actionControllers.deleteAccount );
 
-
+router.get('/myCustomRef',cookieAuth, actionControllers.refresh)
 module.exports = router;

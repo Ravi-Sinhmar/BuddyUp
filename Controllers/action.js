@@ -2,11 +2,11 @@
 const chats = require('../Models/chats');
 const quotes = require('../Models/quotes');
 const users = require('./../Models/users');
+const { getLocalTimeString } = require('./common');
 exports.getBlockedUsers = async (req, res) => {
     const uid = req.id;
     const myPic = req.profilePic;
     try {
-     
       console.log(uid);
       const user = await users.findById(uid);
       console.log(user);
@@ -102,9 +102,6 @@ exports.block = async(req,res)=>{
   } catch (error) {
     res.status(500).json({status:'fail',message:"500"})
   }
-  
-  
-  
   }
 
 //   logout
@@ -222,4 +219,24 @@ return res.status(404).json({
   }
 
 
-  
+
+  exports.refresh = async(req,res) =>{
+    const refresh  = req.id;
+    let currentTime = new Date().toISOString();
+    currentTime = getLocalTimeString(currentTime);
+
+    try {
+      const user = users.findById(refresh);
+      if(user){
+       return res.status(200).render('refresh',{title:'refresh' ,status:'Refreshing Start from time:',message:currentTime, });
+
+      }
+      else{
+        return res.status(400).render('refresh',{title:'Fail' ,status:'Fail to Refresh',message:currentTime, });
+       }
+    } catch (error) {
+      console.log(error);
+      return res.status(500).render('refresh',{title:'Fail' ,status:'Fail to Refresh due to network error',message:currentTime, });
+    }
+   
+  }

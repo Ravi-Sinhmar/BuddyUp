@@ -1,0 +1,28 @@
+
+    <main class=" h-svh flex flex-col items-center justify-center bg-blm">
+        <div class="flex flex-col items-center  justify-center gap-6 border border-blt rounded-lg px-10 py-6  ">
+         
+            <div class="flex justify-center self-center items-center rounded-full"> <img src="/img/success.png" alt="" class="w-24 h-24 rounded-full">
+            </div>
+          
+             <div  class="flex flex-col justify-center items-center px-6">
+              
+                <h1 id="statusHeading" class="text-xl text-black font-[600]"><%= status %></h1>
+         <p  id="statusMessage" class="text-blt text-sm text-center"><%= message %></p>
+             </div>
+           
+         </div>
+         </div>
+    </main>
+
+
+    <script>
+        function autoReload() {
+    setTimeout(function() {
+      window.location.reload();
+    }, 10 * 60 * 1000);
+  }
+  
+  // Call the function to start automatic reloading
+  autoReload();
+    </script>

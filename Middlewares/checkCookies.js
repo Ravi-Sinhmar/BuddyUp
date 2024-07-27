@@ -14,23 +14,13 @@ const checkCookies = (req,res,next)=>{
      return res.redirect('messages');
     }
     else{
-        res.clearCookie('token', {
-            path: '/',
-            domain: 'localhost', // Or your domain if applicable
-            secure: false, // Set to true if using HTTPS
-            httpOnly: false // Set to true if necessary
-          });
+        res.clearCookie("token");
         next();
         return;
     }
     } catch (error) {
         console.log(error);
-        res.clearCookie('token', {
-            path: '/',
-            domain: 'localhost', // Or your domain if applicable
-            secure: false, // Set to true if using HTTPS
-            httpOnly: false // Set to true if necessary
-          });
+        res.clearCookie("token");
         return;
         
     }

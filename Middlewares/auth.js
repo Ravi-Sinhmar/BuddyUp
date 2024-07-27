@@ -18,7 +18,6 @@ const cookieAuth = (req, res, next) => {
     
     } catch (err) {
       res.clearCookie('token', { path: '/', domain: 'https://msg-io.onrender.com', secure: true, httpOnly: true });
-
       return res.redirect("/register");
     }
   };

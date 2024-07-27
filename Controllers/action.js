@@ -107,7 +107,7 @@ exports.block = async(req,res)=>{
 //   logout
 exports.logout =  (req, res) => {
     if (req.id) {
-      res.clearCookie('token', { path: '/', domain: 'https://msg-io.onrender.com', secure: true, httpOnly: true });
+      res.clearCookie('token', { path: '/', domain: 'https://msg-io.onrender.com' });
 
       return res.status(200).json({
         status: "success",
@@ -180,7 +180,7 @@ if(result && chatResult){
   console.log(chatResult);
 const user = await users.deleteOne({_id:uid});
 if (user.deletedCount === 1) {
-  
+
   console.log("Finaly Delted")
   res.clearCookie('token', { path: '/', domain: 'https://msg-io.onrender.com', secure: true, httpOnly: true });
   return res.json({ status: 'success', message: 'Your Account has been deleted permanently' });

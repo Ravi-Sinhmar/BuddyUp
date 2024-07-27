@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const userControllers = require("./../Controllers/userControllers");
 const checkCookies = require("./../Middlewares/checkCookies");
+let specialCase =0;
 // Welcome
 router.get("/", userControllers.welcome);
 // Register

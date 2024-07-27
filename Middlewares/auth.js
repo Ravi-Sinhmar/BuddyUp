@@ -12,12 +12,22 @@ const cookieAuth = (req, res, next) => {
         next();
       }
       else{
-        res.clearCookie("token");
+        res.clearCookie('token', {
+          path: '/',
+          domain: 'localhost', // Or your domain if applicable
+          secure: false, // Set to true if using HTTPS
+          httpOnly: false // Set to true if necessary
+        });
         return res.redirect("/");
       }
     
     } catch (err) {
-      res.clearCookie("token");
+      res.clearCookie('token', {
+        path: '/',
+        domain: 'localhost', // Or your domain if applicable
+        secure: false, // Set to true if using HTTPS
+        httpOnly: false // Set to true if necessary
+      });
       return res.redirect("/register");
     }
   };

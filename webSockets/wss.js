@@ -9,11 +9,16 @@ const users = require("./../Models/users");
 const chats = require("./../Models/chats"); 
 const { getFid } = require('./../Controllers/common');
 const res = require("express/lib/response");
+
+
+
+
+
 const allConnections = new Map();
 
 wss.on("connection", async (ws, req) => {
-  let lastMsgTime;
-  let lastMsg;
+  let myFriends;
+
  
     function validateToken(token) {
       try {
@@ -31,24 +36,27 @@ wss.on("connection", async (ws, req) => {
     console.log(conId);
     const userId = validateToken(token); // function defined above
   
-    const user = await users.find({
+    const user = await users.findOne({
       "friendsDetails._id": conId, // friendId is a placeholder for your actual friend's _id field name
       "friendsDetails.state": "connected",
       _id: userId,
     });
-    const myFriends = user[0].friends
+
+   console.log("this is user");
+   console.log(user);
+   console.log(conId);
    
     if (!user) {
       
       return ws.terminate();
     }
     if (user && userId) {
-     
+       myFriends = user.friends;
       console.log("hi",myFriends);
       ws.userId = userId;
       ws.rid = conId;
       allConnections.set(userId, ws);
-      let onlineOnes = getOnlineFriends(myFriends);
+      const onlineOnes = getOnlineFriends(myFriends);
       broadcastMessage(onlineOnes, { state: "Online" , id:userId });
       if (ws && ws.readyState === WebSocket.OPEN) {
         ws.send(JSON.stringify({onlineOnly:onlineOnes}));
@@ -80,25 +88,21 @@ wss.on("connection", async (ws, req) => {
             
           };
           console.log("hi")
+     console.log(myFriends);
+
           try {
             const newChat = await chats.create(doc);
-            if(newChat){
-              lastMsgTime = newChat.createdAt;
-              lastMsg = newChat.content;
+           
+
+    
           
-            }
-             
-          
-              
-      
-     
-  
           //  2nd if to check weather reciver is present in connection or not
           if (allConnections.has(fid)) {
             console.log("In connections");
             const myws = allConnections.get(fid);
   
             if (myws.readyState === WebSocket.OPEN && myws.rid === rid) {
+              
               console.log("Your Friend is online send any msg ");
               myws.send(
                 JSON.stringify({
@@ -129,6 +133,7 @@ wss.on("connection", async (ws, req) => {
           return console.log("Not Authenicated");
         }
       });
+    
     } else {
       ws.terminate(); // Close connection if authentication fails
     }
@@ -137,26 +142,26 @@ wss.on("connection", async (ws, req) => {
       console.error(`Error from ws.on error ${err}`);
     });
   
-    ws.on("close", async () => {
-      let onlineOnes = getOnlineFriends(myFriends);
-      broadcastMessage(onlineOnes, { state: "Offline" , id:userId });
-      
-      
+    ws.on("close",  () => {
      console.log("closed");
-      try {
-     console.log("in try");
-        const user = await users.updateOne(
-          { _id: userId, "friendsDetails._id": conId }, // Filter by both user ID and chat ID
-          { $set: { "friendsDetails.$.lastMsg": lastMsg , "friendsDetails.$.lastMsgTime": lastMsgTime } } // Update state using positional operator
-        );
+      const onlineOnesAf = getOnlineFriends(myFriends);
+      broadcastMessage(onlineOnesAf, { state: "Offline" , id:userId });
+      
+      
+    //   try {
+    //  console.log("in try");
+    //     const user = await users.updateOne(
+    //       { _id: userId, "friendsDetails._id": conId }, // Filter by both user ID and chat ID
+    //       { $set: { "friendsDetails.$.lastMsg": lastMsg , "friendsDetails.$.lastMsgTime": lastMsgTime } } // Update state using positional operator
+    //     );
         
-        if(user.modifiedCount === 1){
-          console.log("done");
+    //     if(user.modifiedCount === 1){
+    //       console.log("done");
   
-        }
-      } catch (error) {
-        console.log("in catch")
-      }
+    //     }
+    //   } catch (error) {
+    //     console.log("in catch")
+    //   }
       allConnections.delete(userId);
     });
   });
@@ -164,8 +169,8 @@ wss.on("connection", async (ws, req) => {
 
 
 
-  function broadcastMessage(myFriends, message) {
-    myFriends.forEach(friendId => {
+  function broadcastMessage(friendData, message) {
+    friendData.forEach(friendId => {
       const ws = allConnections.get(friendId);
       if (ws && ws.readyState === WebSocket.OPEN) {
         // Send your message here
@@ -174,9 +179,9 @@ wss.on("connection", async (ws, req) => {
     });
   }
 
-  function getOnlineFriends(myFriends) {
+  function getOnlineFriends(friendData) {
     const onlineFriends = [];
-    myFriends.forEach(friendId => {
+    friendData.forEach(friendId => {
       const ws = allConnections.get(friendId);
       if (ws && ws.readyState === WebSocket.OPEN) {
         onlineFriends.push(friendId);

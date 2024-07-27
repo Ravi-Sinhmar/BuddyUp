@@ -1,4 +1,6 @@
 // all blocked users
+const chats = require('../Models/chats');
+const quotes = require('../Models/quotes');
 const users = require('./../Models/users');
 exports.getBlockedUsers = async (req, res) => {
     const uid = req.id;
@@ -108,7 +110,12 @@ exports.block = async(req,res)=>{
 //   logout
 exports.logout =  (req, res) => {
     if (req.id) {
-      res.clearCookie("token");
+      res.clearCookie('token', {
+        path: '/',
+        domain: 'localhost', // Or your domain if applicable
+        secure: false, // Set to true if using HTTPS
+        httpOnly: false // Set to true if necessary
+      });
       return res.status(200).json({
         status: "success",
         messsage: "Your are successfully logged out",
@@ -120,26 +127,99 @@ exports.logout =  (req, res) => {
 exports.deleteAccount = async (req, res) => {
     const uid = req.id;
     try {
-      const result = await users.deleteOne({ _id: uid });
-      console.log(result.deletedCount);
-      if (result.deletedCount === 1) {
-        res.clearCookie("token");
-        res.status(200).json({
-          status: "success",
-          message: "Your Account has been deleted permanently",
-        });
-      } else {
-        res.status(404).json({
-          status: "fail",
-          message: "Try Again",
-        });
+const delPost = await quotes.deleteMany({wId:uid});
+if (!delPost) {
+  console.log("no user");     
+  return res.status(400).json({ status: "fail", message: "notPosts" });
+}
+
+if(delPost){
+  console.log("quotes update");
+  const bulkWriteOperations = [];
+  const usersData = await users.find({ friends: { $in: [uid] } });
+  
+  usersData.forEach(user => {
+    const chatId1 = `${uid}-${user._id}`;
+    const chatId2 = `${user._id}-${uid}`;
+  
+    const updateDoc = {
+      updateOne: {
+        filter: { _id: user._id },
+        update: {
+          $pull: {
+            friends: uid,
+            friendsDetails: {
+              _id: { $in: [chatId1, chatId2] }
+            }
+          }
+        }
       }
-    } catch (error) {
-      res.status(500).json({
+    };
+    bulkWriteOperations.push(updateDoc);
+  
+    // Delete chats
+    const deleteChatOp = {
+      deleteMany: {
+        filter: { chatId: { $in: [chatId1, chatId2] } }
+      }
+    };
+    bulkWriteOperations.push(deleteChatOp);
+  });
+  
+  const result = await users.bulkWrite(bulkWriteOperations);
+  const chatResult = await chats.bulkWrite(bulkWriteOperations);
+  
+  console.log(result);
+  console.log(chatResult);
+ 
+if(!result || !chatResult){
+  console.log("not rres not chatrers");
+  console.log(result);
+  console.log(chatResult);
+  return res.status(404).json({
+    status: "fail",
+    message: "notBoth",
+  })
+}
+if(result && chatResult){
+ console.log("Delted till now");
+  console.log(result);
+  console.log(chatResult);
+const user = await users.deleteOne({_id:uid});
+if (user.deletedCount === 1) {
+  console.log("Finaly Delted")
+  // res.clearCookie('token', {
+  //   path: '/',
+  //   domain: 'localhost', // Or your domain if applicable
+  //   secure: false, // Set to true if using HTTPS
+  //   httpOnly: false // Set to true if necessary
+  // });
+  return res.json({ status: 'success', message: 'Your Account has been deleted permanently' });
+} else {
+  console.log("User not delete at last step")
+  console.log(result);
+  console.log(chatResult);
+  console.log(user);
+
+return res.status(404).json({
+    status: "fail",
+    message: "Try Again",
+  });
+}
+
+}
+
+
+
+    }
+  }catch (error) {
+      console.log(error);
+       return res.status(500).json({
         status: "fail",
         message: "500",
       });
     }
   }
 
-  module.exports;
+
+  

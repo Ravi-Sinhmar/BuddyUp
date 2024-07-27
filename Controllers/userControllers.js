@@ -1,19 +1,14 @@
 const users = require('./../Models/users');
+const { specificChat } = require('./messagesControllers');
 const setCookies  = require('./setCookies');
 
 // welcome 
 exports.welcome = (req, res) => {
-    if (req.cookies.token && req.uid) {
-      return res.status(301).redirect("messages");
-    }
     res.render("welcome", { title: "Welcome" });
   }
 // register 
   exports.getRegister = (req, res) => {
-    if (req.cookies.token && req.uid && req.uid.length != 24) {
-      return res.status(301).redirect("/messages");
-    }
-   res.status(200).render('register',{title:"Register"});
+   res.status(200).render('register',{title:"Register" });
   }
 
 //   check 

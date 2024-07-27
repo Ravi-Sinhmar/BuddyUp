@@ -1223,6 +1223,11 @@ video {
   border-color: rgb(103 107 115 / var(--tw-border-opacity));
 }
 
+.border-bln{
+  --tw-border-opacity: 1;
+  border-color: rgb(232 251 231 / var(--tw-border-opacity));
+}
+
 .border-b-blb{
   --tw-border-opacity: 1;
   border-bottom-color: rgb(228 228 228 / var(--tw-border-opacity));

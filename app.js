@@ -6,6 +6,9 @@ const cookieParser = require("cookie-parser");
 const ejsLayouts = require("express-ejs-layouts");
 const express = require("express");
 
+
+
+
 // Create Express application
 const app = express();
 

@@ -231,9 +231,9 @@ friendPic.src = `/img/${localData.profilePic}`;
   const tid = extraInfo.getAttribute("tid");
   // Websocket code
   // Send MSG to Socket
-    // const socket = new WebSocket(`ws://localhost:3000/?tid=${tid}&rid=${rid}`);
+    const socket = new WebSocket(`ws://localhost:3000/?tid=${tid}&rid=${rid}`);
     
-    const socket = new WebSocket(`wss://msg-io.onrender.com/?tid=${tid}&rid=${rid}`);
+    // const socket = new WebSocket(`wss://msg-io.onrender.com/?tid=${tid}&rid=${rid}`);
 
   function sendSocket() {
     let messageContent = {
@@ -524,6 +524,9 @@ const threshold = 50;
 
   // Event listener for clicking the send button (image)
   sendButton.addEventListener("click", (event) => {
+    if(sendInput.value.trim() != ''){
+
+   
     let time = Date.now();
      time =getLocalTimeString(time);
     sendSocket();
@@ -543,6 +546,7 @@ const threshold = 50;
         chatSection.classList.remove('hidden')
       }
     sendInput.focus();
-   
+
+  }
   });
 </script>

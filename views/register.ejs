@@ -6,7 +6,7 @@
           <path fill-rule="evenodd" d="M7.72 12.53a.75.75 0 0 1 0-1.06l7.5-7.5a.75.75 0 1 1 1.06 1.06L9.31 12l6.97 6.97a.75.75 0 1 1-1.06 1.06l-7.5-7.5Z" clip-rule="evenodd" />
         </svg>
       </a>
-      <h1 class="font-[500] text-xl">Sign up</h1>
+      <h1 id="sp" class="font-[500] text-xl">Sign up</h1>
     </div>
   </nav>
 
@@ -58,7 +58,6 @@
   const invalid = document.getElementById("invalid");
   const signUp = document.getElementById("signUp");
   const alertMsg = document.getElementById("alertMsg");
-
   const fail = () => {
     signUp.disabled = true;
     if(!alertMsg.classList.contains('text-ble')){
@@ -130,7 +129,7 @@
     const inputValue = usernameInput.value;
     const isValid = inputValue.length > 0 && inputValue.trim() !== "";
     signUp.disabled = !isValid;
-    const allowedCharacters = /^[a-zA-Z][a-zA-Z0-9._]*$/;
+    const allowedCharacters = /^[a-z][a-z0-9._]*$/;
 
     if (!isValid) {
       fail();

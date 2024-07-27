@@ -9,7 +9,7 @@ const {getFid,
 const users = require("./../Models/users");
 const chats = require("./../Models/chats");
 exports.allMessages = async (req, res) => {
-  
+
     const userId = req.id;
     const myPic = req.profilePic;
     try {
@@ -189,3 +189,26 @@ exports.allMessages = async (req, res) => {
 
     }
   }
+
+
+// To update last message and last msg time 
+
+exports.LastMsg = async(req,res)=>{
+  console.log("heu")
+  const uid = req.id;
+  const { lm , lmt } = req.query;
+  console.log (lm , lmt);
+  try {
+    const user = await users.updateOne({_id:uid}, {lastMsg:lm, lastMsgTime:lmt});
+  
+    if(user){
+    console.log(user.modifiedCount);
+    res.status(201).json({status:'success',message:'Updated'});
+  }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({status:'fail',message:'500'});
+    
+  }
+  
+}

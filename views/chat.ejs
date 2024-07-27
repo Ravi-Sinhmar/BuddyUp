@@ -149,6 +149,9 @@ function getLocalTimeString(createdAt) {
   }
 
 
+  let lastMsg = '';
+  let lastMsgTime = '';
+
 
 const friendName =  document.getElementById('fname');
 const friendPic =  document.getElementById('fprofilePic');
@@ -234,6 +237,7 @@ friendPic.src = `/img/${localData.profilePic}`;
     const socket = new WebSocket(`ws://localhost:3000/?tid=${tid}&rid=${rid}`);
     
     // const socket = new WebSocket(`wss://msg-io.onrender.com/?tid=${tid}&rid=${rid}`);
+   
 
   function sendSocket() {
     let messageContent = {
@@ -315,6 +319,7 @@ friendPic.src = `/img/${localData.profilePic}`;
 
 
 
+
   socket.addEventListener("message", function(event) {
     const data = JSON.parse(event.data);
     if(rid === `${data.id}-${sid}` || rid === `${sid}-${data.id}` ){
@@ -329,7 +334,11 @@ if(data.state === 'Offline'){
   state.innerText = 'Offline';
     dot.style.background = "#676B73";
     state.style.color = "#676B73";
+  
+ 
 }
+
+
   }  
   
     
@@ -343,7 +352,6 @@ data.onlineOnly.forEach(el => {
     state.style.color = "#4E61EA";
   }
   else{
-   
     state.innerText = 'Offline';
     dot.style.background = "#676B73";
     state.style.color = "#676B73";
@@ -352,7 +360,6 @@ data.onlineOnly.forEach(el => {
 }); 
 }
   
-
     receiveSocket(data);
     const messageData = data.content;
    let time = Date.now();
@@ -378,6 +385,8 @@ data.onlineOnly.forEach(el => {
     if (event.keyCode === 13 && sendInput.offsetWidth > 340 && sendInput.value.trim() != '') {
       event.preventDefault();
       let time =  Date.now();
+      lastMsgTime = time;
+         lastMsg = sendInput.value.trim();       
       time = getLocalTimeString(time);
       sendSocket();
       const messageData = sendInput.value.trim(); // Get the trimmed message value
@@ -519,15 +528,15 @@ const threshold = 50;
     fetchMessages(currentPage,messagesPerPage,`message/${rid}`);
 }
 });
-
-
-
   // Event listener for clicking the send button (image)
   sendButton.addEventListener("click", (event) => {
     if(sendInput.value.trim() != ''){
 
    
     let time = Date.now();
+lastMsgTime = time;
+lastMsg = sendInput.value.trim();
+
      time =getLocalTimeString(time);
     sendSocket();
     const messageData = sendInput.value.trim(); // Get the trimmed message value

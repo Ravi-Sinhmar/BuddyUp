@@ -180,6 +180,7 @@ if(result && chatResult){
   console.log(chatResult);
 const user = await users.deleteOne({_id:uid});
 if (user.deletedCount === 1) {
+  
   console.log("Finaly Delted")
   res.clearCookie('token', { path: '/', domain: 'https://msg-io.onrender.com', secure: true, httpOnly: true });
   return res.json({ status: 'success', message: 'Your Account has been deleted permanently' });

@@ -9,6 +9,7 @@ const users = require("./../Models/users");
 const chats = require("./../Models/chats"); 
 const { getFid } = require('./../Controllers/common');
 const res = require("express/lib/response");
+const { getFips } = require("crypto");
 
 
 
@@ -17,6 +18,9 @@ const res = require("express/lib/response");
 const allConnections = new Map();
 
 wss.on("connection", async (ws, req) => {
+  let lm = '';
+  let lmt  = '';
+
   let myFriends;
 
  
@@ -85,14 +89,16 @@ wss.on("connection", async (ws, req) => {
             content: content,
             sname: sname,
             rname: rname,
-            
           };
           console.log("hi")
      console.log(myFriends);
 
           try {
             const newChat = await chats.create(doc);
-           
+           if(newChat){
+            ws.lm = newChat.content,
+            ws.lmt = newChat.createdAt
+           }
 
     
           
@@ -141,28 +147,46 @@ wss.on("connection", async (ws, req) => {
     ws.on("error", (err) => {
       console.error(`Error from ws.on error ${err}`);
     });
+
+   
   
-    ws.on("close",  () => {
+    ws.on("close", async () => {
+      console.log(ws.readyState)
      console.log("closed");
       const onlineOnesAf = getOnlineFriends(myFriends);
       broadcastMessage(onlineOnesAf, { state: "Offline" , id:userId });
       
-      
-    //   try {
-    //  console.log("in try");
-    //     const user = await users.updateOne(
-    //       { _id: userId, "friendsDetails._id": conId }, // Filter by both user ID and chat ID
-    //       { $set: { "friendsDetails.$.lastMsg": lastMsg , "friendsDetails.$.lastMsgTime": lastMsgTime } } // Update state using positional operator
-    //     );
-        
-    //     if(user.modifiedCount === 1){
-    //       console.log("done");
+      const userId2 = getFid(conId , userId)
+      console.log(userId2);
+      console.log(userId);
+     
+     if(ws.lm){
+      try {
+        // Update the first document
+        const user1 = await users.updateOne(
+          { _id: userId, "friendsDetails._id": conId },
+          { $set: { "friendsDetails.$.lastMsg": ws.lm, "friendsDetails.$.lastMsgTime": ws.lmt } }
+        );
+        // Update the second document
+        const user2 = await users.updateOne(
+          { _id: userId2, "friendsDetails._id": conId },
+          { $set: { "friendsDetails.$.lastMsg": ws.lm, "friendsDetails.$.lastMsgTime": ws.lmt } }
+        );
+    
+        if (user1.modifiedCount === 1 && user2.modifiedCount === 1) {
+          console.log("Both documents updated successfully");
+        } else {
+          console.log("Error updating documents");
+        }
+      } catch (error) {
+        console.error("Error updating documents:", error);
+      }
+     }
+    
+      console.log(ws.readyState)
   
-    //     }
-    //   } catch (error) {
-    //     console.log("in catch")
-    //   }
       allConnections.delete(userId);
+
     });
   });
 

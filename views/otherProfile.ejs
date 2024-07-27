@@ -119,12 +119,9 @@ const back = document.querySelectorAll('.back');
 back.forEach(el=>{
   el.addEventListener('click',(event)=>{
     event.preventDefault();
-    window.location.href = '/messages';
-
-
+    window.history.back();
   })
 })
-
 theirQuotes.addEventListener('click',(event)=>{
    event.preventDefault();
    window.location.href =  `/posts/${uid.innerText.trim()}`

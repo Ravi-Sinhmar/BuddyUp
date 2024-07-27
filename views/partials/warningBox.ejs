@@ -26,12 +26,12 @@
             </p>
         </div>
         <div id="bothBtn" class="flex justify-between items-center gap-4">
-            <button id="warningLeftBtn"
+            <button  id="warningLeftBtn"
                 class="bg-blm text-black px-4 py-2 rounded-lg border border-blb text-sm">
                 Cancel
             </button>
-            <button id="warningRightBtn"
-                class="bg-blf text-blm px-6 py-2 rounded-lg border border-blb text-sm">
+            <button style="background-color: #4E61EA;" id="warningRightBtn"
+                class=" text-blm px-6 py-2 rounded-lg border border-blb text-sm">
                 Continue
             </button>
         </div>
@@ -57,17 +57,20 @@
         warningHeading.innerText = heading;
         warningMessage.innerText = message;
         warningRightBtn.innerText = "Close";
-        warningRightBtn.classList.add('bg-blf');
-        warningRightBtn.classList.remove('bg-blin');
-        warningRightBtn.classList.remove('bg-ble');
+        warningRightBtn.style.background = "#4E61EA" //success
         warningLeftBtn.classList.add("hidden");
         blurIn();
         warningBox.classList.add("visible");
         warningRightBtn.addEventListener('click', (event) => {
             warningBox.classList.remove("visible");
             blurOut();
+            if(href){
+                window.location.href = `${href}`;
+            }
+            else{
+                window.location.reload();
+            }
 
-            window.location.href = `${href}`;
         });
     }
 
@@ -78,16 +81,19 @@
         warningHeading.innerText = heading;
         warningMessage.innerText = message;
         warningRightBtn.innerText = "Close";
-        warningRightBtn.classList.remove('bg-blf');
-        warningRightBtn.classList.add('bg-blin');
-        warningRightBtn.classList.remove('bg-ble');
+        warningRightBtn.style.background = "#E8FBE7" //info
         warningLeftBtn.classList.add("hidden");
         blurIn();
         warningBox.classList.add("visible");
         warningRightBtn.addEventListener('click', (event) => {
             warningBox.classList.remove("visible");
             blurOut();
-            window.location.href = `${href}`;
+            if(href){
+                window.location.href = `${href}`;
+            }
+            else{
+                window.location.reload();
+            }
         });
     }
 
@@ -100,15 +106,18 @@
         warningHeading.innerText = heading;
         warningMessage.innerText = message;
         warningRightBtn.innerText = "Close";
-        warningRightBtn.classList.remove('bg-blf');
-        warningRightBtn.classList.add('bg-blin');
-        warningRightBtn.classList.remove('bg-ble');
+        warningRightBtn.style.background = "#E8FBE7" //info
         warningLeftBtn.classList.add("hidden");
         warningBox.classList.add("visible");
         warningRightBtn.addEventListener('click', (event) => {
             warningBox.classList.remove("visible");
             blurOut();
-            window.location.href = `${href}`;
+            if(href){
+                window.location.href = `${href}`;
+            }
+            else{
+                window.location.reload();
+            }
         });
     }
 
@@ -121,15 +130,18 @@
         warningHeading.innerText = heading;
         warningMessage.innerText = message;
         warningRightBtn.innerText = "Try Again";
-        warningRightBtn.classList.remove('bg-blf');
-        warningRightBtn.classList.remove('bg-blin');
-        warningRightBtn.classList.add('bg-ble');
+        warningRightBtn.style.background = "#D4260E" //red
         warningLeftBtn.classList.add("hidden");
         warningBox.classList.add("visible");
         warningRightBtn.addEventListener('click', (event) => {
             warningBox.classList.remove("visible");
             blurOut();
-            window.location.href = `${href}`;
+            if(href){
+                window.location.href = `${href}`;
+            }
+            else{
+                window.location.reload();
+            }
         });
     }
 
@@ -141,15 +153,18 @@
         warningHeading.innerText = heading;
         warningMessage.innerText = message;
         warningRightBtn.innerText = "Try Again";
-        warningRightBtn.classList.remove('bg-blf');
-        warningRightBtn.classList.add('bg-blin');
-        warningRightBtn.classList.remove('bg-ble');
+        warningRightBtn.style.background = "#E8FBE7" //info
         warningLeftBtn.classList.add("hidden");
         warningBox.classList.add("visible");
         warningRightBtn.addEventListener('click', (event) => {
             warningBox.classList.remove("visible");
             blurOut();
-            window.location.href = `${href}`;
+            if(href){
+                window.location.href = `${href}`;
+            }
+            else{
+                window.location.reload();
+            }
         });
     }
     // -----------------------------------------done with custom boxes ------------
@@ -166,7 +181,7 @@
         warningHeading.innerText = "Warning";
         warningMessage.innerText =
             "Before you logout make sure you remamber your UID otherwise you will never be able to login again";
-        warningRightBtn.classList.add("bg-blin");
+      warningRightBtn.style.background = "#E8FBE7" //info
         warningBox.classList.add("visible");
         blurIn();
         warningRightBtn.innerText = "Logout";
@@ -209,9 +224,7 @@
         warningHeading.innerText = "Warning";
         warningMessage.innerText =
             "It will Permanently Delete your account. And your all chats, friends everything will be delted";
-        warningRightBtn.classList.add("bg-ble");
-        warningRightBtn.classList.remove("bg-blin");
-        warningRightBtn.classList.remove("bg-blf");
+            warningRightBtn.style.background = "#D4260E" //red
         warningBox.classList.add("visible");
         blurIn();
         warningRightBtn.innerText = "Delete Account";
@@ -255,9 +268,7 @@
         warningHeading.innerText = "Warning";
         warningMessage.innerText =
             "Do you really want to block. You will not able to Chat";
-        warningRightBtn.classList.add("bg-ble");
-        warningRightBtn.classList.remove("bg-blin");
-        warningRightBtn.classList.remove("bg-blf");
+            warningRightBtn.style.background = "#D4260E" //red
         warningBox.classList.add("visible");
         blurIn();
         warningRightBtn.innerText = "Block User";
@@ -298,9 +309,7 @@
         warningHeading.innerText = "Warning";
         warningMessage.innerText =
             "Do you really want to unblock";
-        warningRightBtn.classList.add("bg-blin");
-        warningRightBtn.classList.remove("bg-ble");
-        warningRightBtn.classList.remove("bg-blf");
+            warningRightBtn.style.background = "#DFAD34" //info
         warningBox.classList.add("visible");
         blurIn();
         warningRightBtn.innerText = "Unblock User";
@@ -335,9 +344,4 @@
                 });
         });
     };
-
-
-
-    
-
 </script>

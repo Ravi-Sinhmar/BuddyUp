@@ -1268,11 +1268,6 @@ video {
   background-color: rgb(226 230 251 / var(--tw-bg-opacity));
 }
 
-.bg-blin{
-  --tw-bg-opacity: 1;
-  background-color: rgb(223 173 52 / var(--tw-bg-opacity));
-}
-
 .bg-blm{
   --tw-bg-opacity: 1;
   background-color: rgb(251 251 252 / var(--tw-bg-opacity));

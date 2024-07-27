@@ -98,7 +98,7 @@ el.addEventListener('click', (event)=>{
   method:"DELETE"
  }).then(data => data.json()).then((jsonData)=>{
 if(jsonData.status === "success"){
-return  successBox("Success","Your post has been deleted successfully","/yourPosts")
+return successBox("Success","Your post has been deleted successfully","/yourPosts")
 }
 else if(jsonData.status === "fail" && jsonData.message === "500")
 {

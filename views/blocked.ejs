@@ -1,27 +1,32 @@
-
-<main style="z-index: 1;" id="wrapper" class=" bg-blm rounded-xl h-svh flex flex-col justify-between items-center ">
-  <nav class="px-6 py-5 pt-5 space-y-4  w-full  z-10 ">
+<main
+  style="z-index: 1"
+  id="wrapper"
+  class="bg-blm rounded-xl h-svh flex flex-col justify-between items-center"
+>
+  <nav class="px-6 py-5 pt-5 space-y-4 w-full z-10">
     <h1 class="font-[500] text-black text-xl">Blocked users</h1>
-    
-  
   </nav>
 
- 
-  <div id="blockCustom" class=" <%= custom %> flex h-full w-full flex-col justify-center items-center ">
-      <div class="flex flex-col justify-center items-center mb-20 ">
-       <img src="/bg/block.png"  alt="" class="w-32 h-32">
-       <h1 class="font-[600] text-xl">Empty blocked list</h1>
-       <h1 class="text-blt ">Blocked users will appear here</h1>
-      </div>
-     </div> 
+  <div
+    id="blockCustom"
+    class="<%= custom %> flex h-full w-full flex-col justify-center items-center"
+  >
+    <div class="flex flex-col justify-center items-center mb-20">
+      <img src="/bg/block.png" alt="" class="w-32 h-32" />
+      <h1 class="font-[600] text-xl">Empty blocked list</h1>
+      <h1 class="text-blt">Blocked users will appear here</h1>
+    </div>
+  </div>
 
-          <!-- List of people with whom  user doing chat -->
-          
-         
-           <div class=" <%= allBlock %> bg-blm flex flex-col space-y-3 px-2 fixed top-20 bottom-24 py-2 left-0 right-0 overflow-y-scroll">
-            <% friendData.forEach(friend => {  %>
-             <% if (friend.state == "blocked") { %>
-    <div   class=" blockDiv bg-blh border border-blb rounded-xl  flex justify-between items-center px-4 py-4 relative ">
+  <!-- List of people with whom  user doing chat -->
+
+  <div
+    class="<%= allBlock %> bg-blm flex flex-col space-y-3 px-2 fixed top-20 bottom-24 py-2 left-0 right-0 overflow-y-scroll"
+  >
+    <% friendData.forEach(friend => { %> <% if (friend.state == "blocked") { %>
+    <div
+      class="blockDiv bg-blh border border-blb rounded-xl flex justify-between items-center px-4 py-4 relative"
+    >
       <div class="flex justify-center gap-2">
         <img
           class="profilePic w-12 h-12 rounded-full"
@@ -29,58 +34,54 @@
           alt=""
         />
         <div class="flex flex-col items-start justify-center gap-0.5">
-          <h1 class="name text-sm text-black "><%= friend.name %></h1>
+          <h1 class="name text-sm text-black"><%= friend.name %></h1>
           <!-- <p class="  text-blf  text-xs ">View Profile</p> -->
         </div>
       </div>
       <div class="flex justify-center items-center gap-1">
-        <button chatId="<%= friend.chatId %>"  class="viewProfile px-2 py-1.5 bg-blm rounded-md border border-blb text-blf text-xs " >Profile</button>
+        <button
+          chatId="<%= friend.chatId %>"
+          class="viewProfile px-2 py-1.5 bg-blm rounded-md border border-blb text-blf text-xs"
+        >
+          Profile
+        </button>
 
-        <button chatId="<%= friend.chatId %>"  class="unblock px-2 py-1.5 bg-blm rounded-md border border-blb text-blf text-xs" >Unblock</button>
-        
+        <button
+          chatId="<%= friend.chatId %>"
+          class="unblock px-2 py-1.5 bg-blm rounded-md border border-blb text-blf text-xs"
+        >
+          Unblock
+        </button>
       </div>
-  
-     
-   </div>
-    <% } %>
-    <% }) %>
-   
-           </div>
-         
+    </div>
+    <% } %> <% }) %>
+  </div>
 
- <!-- Plus Anything, aboslute with above div  -->
-  
-       
+  <!-- Plus Anything, aboslute with above div  -->
 </main>
 
-<%- include('./partials/footer.ejs') %>
-<%- include('./partials/warningBox.ejs') %>
+<%- include('./partials/footer.ejs') %> <%- include('./partials/warningBox.ejs')
+%>
 
 <script>
-  const viewProfile = document.querySelectorAll('.viewProfile');
-  const unblock = document.querySelectorAll('.unblock');
-  const blockDiv = document.querySelectorAll('.blockDiv');
+  const viewProfile = document.querySelectorAll(".viewProfile");
+  const unblock = document.querySelectorAll(".unblock");
+  const blockDiv = document.querySelectorAll(".blockDiv");
 
-  
-viewProfile.forEach(el =>{
-el.addEventListener('click',(event)=>{
-  event.preventDefault();
-  const chatId = el.getAttribute('chatId');
-  alert(chatId);
+  viewProfile.forEach((el) => {
+    el.addEventListener("click", (event) => {
+      event.preventDefault();
+      const chatId = el.getAttribute("chatId");
+      alert(chatId);
 
-  window.location.href = `/users/${chatId}`
+      window.location.href = `/users/${chatId}`;
+    });
+  });
 
-});
-
-});
-  
-unblock.forEach(el =>{
-  el.addEventListener('click',(event)=>{
-   const chatId = el.getAttribute('chatId');
-    unblockUserFun(chatId);
-
-  })
-})
-
-
+  unblock.forEach((el) => {
+    el.addEventListener("click", (event) => {
+      const chatId = el.getAttribute("chatId");
+      unblockUserFun(chatId);
+    });
+  });
 </script>

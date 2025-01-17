@@ -6,9 +6,6 @@ const cookieParser = require("cookie-parser");
 const ejsLayouts = require("express-ejs-layouts");
 const express = require("express");
 
-
-
-
 // Create Express application
 const app = express();
 
@@ -33,6 +30,13 @@ const messagesRoutes = require("./Routes/messagesRoutes");
 const actionRoutes = require("./Routes/actionRoutes");
 
 // Mount route handlers
-app.use(userRoutes, messagesRoutes, requestsRoutes, quotesRoutes, profileRoutes, actionRoutes);
+app.use(
+  userRoutes,
+  messagesRoutes,
+  requestsRoutes,
+  quotesRoutes,
+  profileRoutes,
+  actionRoutes
+);
 
 module.exports = { app };
